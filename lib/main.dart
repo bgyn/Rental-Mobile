@@ -14,9 +14,6 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(
           title: const Text("Rentpal"),
         ),
-        body: const Center(
-          child: Text("Rentpal"),
-        ),
       ),
     );
   }
