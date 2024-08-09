@@ -1,0 +1,92 @@
+import 'package:flutter/material.dart';
+import 'package:rentpal/features/home/presentation/widgets/carousel.dart';
+import 'package:rentpal/features/home/presentation/widgets/rental_category.dart';
+import 'package:rentpal/features/home/presentation/widgets/rental_category_option.dart';
+
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
+  static route() => MaterialPageRoute(builder: (context) => const HomePage());
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: 0,
+        onTap: (val) {},
+        selectedItemColor: Colors.blue,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: "Home",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.login),
+            label: "Login",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.app_registration),
+            label: "Register",
+          )
+        ],
+      ),
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            // floating: true,
+            pinned: true,
+            expandedHeight: 70.0,
+
+            flexibleSpace: Container(
+              padding: const EdgeInsets.all(16.0),
+              color: Colors.blue,
+              child: Center(
+                child: SizedBox(
+                  width: double.infinity,
+                  child: TextField(
+                    decoration: InputDecoration(
+                        hintText: "Search",
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide.none,
+                        ),
+                        filled: true,
+                        fillColor: Colors.white,
+                        contentPadding:
+                            const EdgeInsets.symmetric(horizontal: 16.0)),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          const SliverToBoxAdapter(
+            child: RentalCategoryOption(),
+          ),
+          const SliverToBoxAdapter(
+            child: Carousel(),
+          ),
+          const SliverToBoxAdapter(
+            child: RentalCategory(
+              title: "Newest",
+            ),
+          ),
+          const SliverToBoxAdapter(
+            child: RentalCategory(
+              title: "Outdoor Gear",
+            ),
+          ),
+          const SliverToBoxAdapter(
+            child: RentalCategory(
+              title: "Sports",
+            ),
+          ),
+          const SliverToBoxAdapter(
+            child: RentalCategory(
+              title: "Party & Events",
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
