@@ -1,4 +1,4 @@
-package com.example.rentpal
+package com.rentpal
 
 import io.flutter.embedding.android.FlutterActivity
 
