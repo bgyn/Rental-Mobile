@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:rentpal/features/home/dummy_model.dart';
+import 'package:rentpal/features/home/presentation/widgets/rental_category.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ProductDetail extends StatelessWidget {
@@ -160,6 +161,45 @@ class ProductDetail extends StatelessWidget {
                       height: 5,
                     ),
                     Container(
+                      decoration: const BoxDecoration(color: Colors.white),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text("Other listing by Andrew"),
+                          const RentalCategory(),
+                          GestureDetector(
+                            onTap: () {},
+                            child: Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.symmetric(vertical: 15),
+                              decoration: BoxDecoration(
+                                border:
+                                    Border.all(color: Colors.blue, width: 2),
+                              ),
+                              child: const Center(
+                                  child: Text("See all Andrews's listing")),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Container(
+                      decoration: const BoxDecoration(color: Colors.white),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 20),
+                      child: const RentalCategory(
+                        title: "Similiar Listing",
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Container(
                       padding: const EdgeInsets.symmetric(
                           vertical: 10, horizontal: 20),
                       color: Colors.white,
@@ -185,26 +225,27 @@ class ProductDetail extends StatelessWidget {
         decoration: const BoxDecoration(
             color: Colors.white,
             border: Border.fromBorderSide(BorderSide(color: Colors.grey))),
-        padding: const EdgeInsets.symmetric(vertical: 20),
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  child: TextField(
-                    decoration: InputDecoration(
-                        hintText: "Type a message",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide.none,
-                        ),
-                        filled: true,
-                        fillColor: Colors.grey.shade200,
-                        contentPadding:
-                            const EdgeInsets.symmetric(horizontal: 16.0)),
+                Expanded(
+                  child: SizedBox(
+                    child: TextField(
+                      decoration: InputDecoration(
+                          hintText: "Type a message",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide.none,
+                          ),
+                          filled: true,
+                          fillColor: Colors.grey.shade200,
+                          contentPadding:
+                              const EdgeInsets.symmetric(horizontal: 16.0)),
+                    ),
                   ),
                 ),
                 IconButton(
@@ -219,11 +260,24 @@ class ProductDetail extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Text("\$ ${product.price} /day"),
+                RichText(
+                  text: TextSpan(
+                    text: "\$${product.price}",
+                    style: const TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.bold),
+                    children: const [
+                      TextSpan(
+                          text: " /day",
+                          style: TextStyle(fontWeight: FontWeight.normal))
+                    ],
+                  ),
+                ),
                 SizedBox(
                   width: MediaQuery.of(context).size.width * 0.6,
                   child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
+                          shape: ContinuousRectangleBorder(
+                              borderRadius: BorderRadius.circular(15)),
                           backgroundColor: Colors.blue,
                           elevation: 0,
                           shadowColor: Colors.transparent),

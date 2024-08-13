@@ -5,18 +5,20 @@ import 'package:rentpal/features/home/presentation/pages/product_detail.dart';
 import 'package:shimmer/shimmer.dart';
 
 class RentalCategory extends StatelessWidget {
-  const RentalCategory({super.key, required this.title});
+  const RentalCategory({super.key, this.title});
 
-  final String title;
+  final String? title;
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 10),
-          child: Text(title),
-        ),
+        title == null
+            ? const SizedBox()
+            : Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: Text(title.toString()),
+              ),
         SizedBox(
           height: 180,
           child: ListView.builder(
