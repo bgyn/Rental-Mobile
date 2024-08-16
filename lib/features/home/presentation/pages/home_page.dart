@@ -3,11 +3,16 @@ import 'package:rentpal/features/home/presentation/widgets/carousel.dart';
 import 'package:rentpal/features/home/presentation/widgets/rental_category.dart';
 import 'package:rentpal/features/home/presentation/widgets/rental_category_option.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   static route() => MaterialPageRoute(builder: (context) => const HomePage());
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,12 +38,10 @@ class HomePage extends StatelessWidget {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            // floating: true,
             pinned: true,
             expandedHeight: 70.0,
-
             flexibleSpace: Container(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(15),
               color: Colors.blue,
               child: Center(
                 child: SizedBox(
