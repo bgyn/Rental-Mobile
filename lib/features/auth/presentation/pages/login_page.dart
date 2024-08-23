@@ -1,23 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rentpal/core/constant/image_path.dart';
 import 'package:rentpal/core/extension/extension.dart';
-import 'package:rentpal/features/auth/presentation/cubit/password_visibility_cubit.dart';
+import 'package:rentpal/features/auth/presentation/widgets/auth_text_field.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => PasswordVisibilityCubit(),
-      child: const LoginView(),
-    );
-  }
-}
-
-class LoginView extends StatelessWidget {
-  const LoginView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -93,64 +80,37 @@ class LoginView extends StatelessWidget {
               ),
             ),
             SizedBox(height: 0.03.h(context)),
-            TextFormField(
-              cursorColor: Colors.blue,
-              decoration: const InputDecoration(
-                hintText: "Email",
-                hintStyle: TextStyle(
-                  color: Colors.grey,
-                  fontWeight: FontWeight.w400,
-                ),
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.grey,
-                  ),
-                ),
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.grey,
-                  ),
-                ),
-              ),
-              controller: emailCtrl,
+            RentpalTextField(
+              textEditingController: emailCtrl,
+              hintText: "Email",
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Email is required";
+                } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                  return 'Please enter a valid email address';
+                }
+                return null;
+              },
             ),
             SizedBox(height: 0.005.h(context)),
-            BlocBuilder<PasswordVisibilityCubit, bool>(
-                builder: (context, state) {
-              return TextFormField(
-                controller: passwordCtrl,
-                obscureText: state,
-                cursorColor: Colors.blue,
-                decoration: InputDecoration(
-                  hintText: "Password",
-                  suffixIcon: IconButton(
-                    onPressed: () => context
-                        .read<PasswordVisibilityCubit>()
-                        .toogleObscureText(),
-                    icon: Icon(state
-                        ? Icons.remove_red_eye
-                        : Icons.remove_red_eye_outlined),
-                  ),
-                  hintStyle: const TextStyle(
-                    color: Colors.grey,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  focusedBorder: const UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.grey,
-                    ),
-                  ),
-                  enabledBorder: const UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.grey,
-                    ),
-                  ),
-                ),
-              );
-            }),
+            RentpalTextField(
+              textEditingController: passwordCtrl,
+              hintText: "Password",
+              isObscure: true,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Password is required';
+                } else if (value.length < 6) {
+                  return 'Password must be at least 6 characters long';
+                }
+                return null;
+              },
+            ),
             SizedBox(height: 0.03.h(context)),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                if (key.currentState?.validate() ?? false) {}
+              },
               child: Container(
                 padding:
                     const EdgeInsets.symmetric(vertical: 10, horizontal: 20),

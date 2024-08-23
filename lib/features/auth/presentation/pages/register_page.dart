@@ -1,27 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rentpal/core/constant/image_path.dart';
 import 'package:rentpal/core/extension/extension.dart';
-import 'package:rentpal/features/auth/presentation/cubit/password_visibility_cubit.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => PasswordVisibilityCubit(),
-      child: const RegisterView(),
-    );
-  }
-}
-
-class RegisterView extends StatelessWidget {
-  const RegisterView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Register"),
+      ),
       body: SingleChildScrollView(
         child: Stack(
           children: [
