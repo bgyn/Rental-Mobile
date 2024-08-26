@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rentpal/features/home/presentation/widgets/carousel.dart';
 import 'package:rentpal/features/home/presentation/widgets/rental_category.dart';
-import 'package:rentpal/features/home/presentation/widgets/rental_category_option.dart';
+import 'package:rentpal/features/categories/presentation/widgets/rental_category_option.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
