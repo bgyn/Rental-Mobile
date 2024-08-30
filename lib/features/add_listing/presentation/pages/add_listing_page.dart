@@ -23,42 +23,42 @@ class AddListingPage extends StatelessWidget {
       body: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Stack(
-            alignment: Alignment.center,
-            children: [
-              SizedBox(
-                width: double.infinity,
-                height: 0.25.h(context),
-                child: CachedNetworkImage(
-                  imageUrl:
-                      "https://images.unsplash.com/photo-1724482606633-fa74fe4f5de1?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                  placeholder: (context, url) => SizedBox(
-                    width: double.infinity,
-                    height: 0.25.h(context),
-                    child: Shimmer.fromColors(
-                      baseColor: Colors.grey.shade300,
-                      highlightColor: Colors.white,
-                      child: Container(
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ),
-                  fit: BoxFit.cover,
-                ),
-              ),
-              Positioned(
-                bottom: 10,
-                child: Text(
-                  "put your stuff to work",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 0.028.toRes(context),
-                  ),
-                ),
-              )
-            ],
-          ),
+          // Stack(
+          //   alignment: Alignment.center,
+          //   children: [
+          //     SizedBox(
+          //       width: double.infinity,
+          //       height: 0.25.h(context),
+          //       child: CachedNetworkImage(
+          //         imageUrl:
+          //             "https://images.unsplash.com/photo-1724482606633-fa74fe4f5de1?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          //         placeholder: (context, url) => SizedBox(
+          //           width: double.infinity,
+          //           height: 0.25.h(context),
+          //           child: Shimmer.fromColors(
+          //             baseColor: Colors.grey.shade300,
+          //             highlightColor: Colors.white,
+          //             child: Container(
+          //               color: Colors.grey,
+          //             ),
+          //           ),
+          //         ),
+          //         fit: BoxFit.cover,
+          //       ),
+          //     ),
+          //     Positioned(
+          //       bottom: 10,
+          //       child: Text(
+          //         "put your stuff to work",
+          //         style: TextStyle(
+          //           color: Colors.white,
+          //           fontWeight: FontWeight.bold,
+          //           fontSize: 0.028.toRes(context),
+          //         ),
+          //       ),
+          //     )
+          //   ],
+          // ),
           SizedBox(
             height: 0.03.h(context),
           ),
@@ -158,14 +158,14 @@ class AddListingPage extends StatelessWidget {
               )
             ],
           ),
-          const Spacer(),
+          SizedBox(height: 0.03.h(context)),
           SizedBox(
             width: 0.85.w(context),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue,
                 shape: ContinuousRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(20),
                 ),
               ),
               onPressed: () {},

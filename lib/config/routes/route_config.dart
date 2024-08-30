@@ -34,7 +34,7 @@ final routeConfig = GoRouter(
         ),
         GoRoute(
           path: "/rentals",
-          builder: (context, state) => const RentalPage(),
+          builder: (context, state) => RentalPage(),
         ),
         GoRoute(
           path: "/add_listing",
