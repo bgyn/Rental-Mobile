@@ -6,6 +6,7 @@ import 'package:rentpal/features/auth/presentation/pages/register_page.dart';
 import 'package:rentpal/features/home/presentation/pages/home.dart';
 import 'package:rentpal/features/home/presentation/pages/home_page.dart';
 import 'package:rentpal/features/menu/presentation/pages/menu_page.dart';
+import 'package:rentpal/features/add_listing/presentation/pages/add_new_listing.dart';
 import 'package:rentpal/features/my_listing/presentation/pages/my_listing_page.dart';
 import 'package:rentpal/features/rentals/presentation/pages/rental_page.dart';
 
@@ -16,6 +17,10 @@ final routeConfig = GoRouter(
   navigatorKey: _rootNavigatorKey,
   initialLocation: '/',
   routes: <RouteBase>[
+    GoRoute(
+      path: "/add_listing/add_new_listing",
+      builder: (context, state) => const AddNewListing(),
+    ),
     ShellRoute(
       navigatorKey: _shellNavigatorKey,
       builder: (context, stae, child) => Home(child: child),

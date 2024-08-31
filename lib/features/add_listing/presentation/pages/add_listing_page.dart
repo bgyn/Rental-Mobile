@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rentpal/core/extension/extension.dart';
 
 class AddListingPage extends StatelessWidget {
@@ -166,7 +167,9 @@ class AddListingPage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                 ),
               ),
-              onPressed: () {},
+              onPressed: () {
+                GoRouter.of(context).push("/add_listing/add_new_listing");
+              },
               child: const Text(
                 "Get Started",
                 style:
