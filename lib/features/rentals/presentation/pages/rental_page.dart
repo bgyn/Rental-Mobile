@@ -36,7 +36,7 @@ class RentalPage extends StatelessWidget {
                 border: const OutlineInputBorder(
                   borderSide: BorderSide(
                     color: Colors.grey,
-                    width: 10,
+                    width: 2,
                     style: BorderStyle.solid,
                   ),
                 ),
