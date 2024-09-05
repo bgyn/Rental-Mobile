@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:rentpal/core/extension/extension.dart';
+import 'package:rentpal/features/add_listing/presentation/widgets/listing_drop_down.dart';
 import 'package:rentpal/features/add_listing/presentation/widgets/listing_text_field.dart';
+import 'package:rentpal/features/add_listing/presentation/widgets/address_bottom_sheet.dart';
+import 'package:rentpal/features/add_listing/presentation/widgets/show_popup.dart';
 
 class AddNewListing extends StatefulWidget {
   const AddNewListing({super.key});
@@ -34,7 +37,7 @@ class _AddNewListingState extends State<AddNewListing> {
                 alignment: Alignment.centerRight,
                 child: GestureDetector(
                   onTap: () {
-                    _showPopup(context);
+                    showPopup(context);
                   },
                   child: const Icon(Icons.lightbulb_outlined),
                 ),
@@ -73,7 +76,7 @@ class _AddNewListingState extends State<AddNewListing> {
                 alignment: Alignment.centerRight,
                 child: GestureDetector(
                   onTap: () {
-                    _showPopup(context);
+                    showPopup(context);
                   },
                   child: const Icon(Icons.lightbulb_outlined),
                 ),
@@ -83,7 +86,7 @@ class _AddNewListingState extends State<AddNewListing> {
                 controller: _titleController,
               ),
               ListingTextField(
-                title: "Price per day (\$)",
+                title: "Price per day (Rs.)",
                 controller: _pricePerDayController,
                 hintText: "Price",
                 textInputType: TextInputType.number,
@@ -99,74 +102,139 @@ class _AddNewListingState extends State<AddNewListing> {
                 hintText: "How many quantity do you have?",
                 textInputType: TextInputType.number,
               ),
-              ListingTextField(
-                title: "Primay Category",
-                controller: _quantityController,
-                hintText: "Choose",
-                textInputType: TextInputType.number,
+              ListingDropDown(
+                  items: const ["a", "b", "c", "d", "e"],
+                  title: "Primary Category",
+                  onChanged: (value) {}),
+              ListingDropDown(
+                  items: const ["A", "B", "C", "D", "E"],
+                  title: "Secondary Category (optional)",
+                  onChanged: (value) {}),
+              SizedBox(
+                height: 0.015.h(context),
               ),
-              ListingTextField(
-                title: "Secondary category (optional)",
-                controller: _quantityController,
-                hintText: "Choose",
-                textInputType: TextInputType.number,
+              const Divider(),
+              _location(context),
+              SizedBox(
+                height: 0.015.h(context),
+              ),
+              _rules(context),
+              SizedBox(
+                height: 0.03.h(context),
               ),
             ],
           ),
         ),
       ),
-      floatingActionButton: SizedBox(
+      bottomNavigationBar: Container(
+        padding: EdgeInsets.only(
+            left: 0.015.toRes(context),
+            right: 0.015.toRes(context),
+            bottom: 0.01.toRes(context)),
         width: 0.9.w(context),
-        child: FloatingActionButton(
-            shape: BeveledRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
+        child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10))),
             onPressed: () {},
-            child: Text("Publish")),
+            child: const Padding(
+              padding: EdgeInsets.symmetric(vertical: 12),
+              child: Text(
+                "Publish",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            )),
       ),
     );
   }
 
-  _showPopup(context) {
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return Dialog(
-            child: Container(
-              padding: EdgeInsets.all(0.015.toRes(context)),
-              width: 1.0.w(context),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.white,
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SizedBox(
-                    width: 0.8.w(context),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        elevation: 0,
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text(
-                        "Got It",
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
+  _location(context) {
+    return Column(
+      children: [
+        SizedBox(
+          height: 0.02.h(context),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text("Location:"),
+            GestureDetector(
+              onTap: () {
+                showPopup(context);
+              },
+              child: const Icon(Icons.lightbulb_outlined),
             ),
-          );
-        });
+          ],
+        ),
+        SizedBox(
+          height: 0.02.h(context),
+        ),
+        GestureDetector(
+          onTap: () => addressBottomSheet(context),
+          child: Container(
+            width: double.infinity,
+            height: 0.04.toRes(context),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Colors.blue)),
+            child: const Center(
+                child: Text(
+              "Add Address",
+              style: TextStyle(
+                color: Colors.blue,
+                fontWeight: FontWeight.bold,
+              ),
+            )),
+          ),
+        )
+      ],
+    );
+  }
+
+  _rules(context) {
+    return Column(
+      children: [
+        SizedBox(
+          height: 0.02.h(context),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text("Rules:"),
+            GestureDetector(
+              onTap: () {
+                showPopup(context);
+              },
+              child: const Icon(Icons.lightbulb_outlined),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 0.02.h(context),
+        ),
+        GestureDetector(
+          onTap: () {},
+          child: Container(
+            width: double.infinity,
+            height: 0.04.toRes(context),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Colors.blue)),
+            child: const Center(
+                child: Text(
+              "Add Rules",
+              style: TextStyle(
+                color: Colors.blue,
+                fontWeight: FontWeight.bold,
+              ),
+            )),
+          ),
+        )
+      ],
+    );
   }
 }
