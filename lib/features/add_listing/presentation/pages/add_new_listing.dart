@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rentpal/core/extension/extension.dart';
+import 'package:rentpal/features/add_listing/cubit/rules_cubit.dart';
 import 'package:rentpal/features/add_listing/presentation/widgets/listing_drop_down.dart';
 import 'package:rentpal/features/add_listing/presentation/widgets/listing_text_field.dart';
 import 'package:rentpal/features/add_listing/presentation/widgets/address_bottom_sheet.dart';
+import 'package:rentpal/features/add_listing/presentation/widgets/rules_bottom_sheet.dart';
 import 'package:rentpal/features/add_listing/presentation/widgets/show_popup.dart';
 
 class AddNewListing extends StatefulWidget {
@@ -118,7 +121,10 @@ class _AddNewListingState extends State<AddNewListing> {
               SizedBox(
                 height: 0.015.h(context),
               ),
-              _rules(context),
+              _rules(context, () {
+                context.read<RulesCubit>().copyRulesToTemp();
+                rulesBottomSheet(context);
+              }),
               SizedBox(
                 height: 0.03.h(context),
               ),
@@ -161,7 +167,8 @@ class _AddNewListingState extends State<AddNewListing> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text("Location:"),
+            const Text("Location:",
+                style: TextStyle(fontWeight: FontWeight.bold)),
             GestureDetector(
               onTap: () {
                 showPopup(context);
@@ -195,7 +202,7 @@ class _AddNewListingState extends State<AddNewListing> {
     );
   }
 
-  _rules(context) {
+  _rules(context, onTap) {
     return Column(
       children: [
         SizedBox(
@@ -204,7 +211,10 @@ class _AddNewListingState extends State<AddNewListing> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text("Rules:"),
+            const Text(
+              "Rules:",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
             GestureDetector(
               onTap: () {
                 showPopup(context);
@@ -216,8 +226,43 @@ class _AddNewListingState extends State<AddNewListing> {
         SizedBox(
           height: 0.02.h(context),
         ),
+        BlocBuilder<RulesCubit, RulesState>(builder: (context, state) {
+          if (state.rules.isEmpty) {
+            return const SizedBox();
+          } else {
+            return Column(
+              children: state.rules
+                  .map((rule) => Padding(
+                        padding: EdgeInsets.only(
+                          bottom: 0.01.toRes(context),
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              height: 5,
+                              width: 5,
+                              decoration: BoxDecoration(
+                                color: Colors.black,
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 0.02.w(context),
+                            ),
+                            Text(rule),
+                          ],
+                        ),
+                      ))
+                  .toList(),
+            );
+          }
+        }),
+        SizedBox(
+          height: 0.015.h(context),
+        ),
         GestureDetector(
-          onTap: () {},
+          onTap: onTap,
           child: Container(
             width: double.infinity,
             height: 0.04.toRes(context),

@@ -4,6 +4,7 @@ import 'package:rentpal/config/routes/route_config.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:rentpal/core/permission/permission_handler.dart';
 import 'package:rentpal/features/add_listing/cubit/address_cubit.dart';
+import 'package:rentpal/features/add_listing/cubit/rules_cubit.dart';
 import 'package:rentpal/features/auth/presentation/cubit/password_visibility_cubit.dart';
 import 'package:rentpal/features/categories/presentation/bloc/category_list_bloc.dart';
 import 'package:rentpal/features/categories/presentation/bloc/category_list_event.dart';
@@ -39,6 +40,7 @@ class _MyAppState extends State<MyApp> {
       providers: [
         BlocProvider(create: (_) => PasswordVisibilityCubit()),
         BlocProvider(create: (_) => AddressCubit()),
+        BlocProvider(create: (_) => RulesCubit()),
         BlocProvider(
             create: (_) =>
                 CategoryListBloc(sl())..add(const FetchCategoryList()))
