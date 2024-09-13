@@ -1,7 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:rentpal/core/extension/extension.dart';
+import 'package:rentpal/features/add_listing/cubit/image_handler_cubit.dart';
 import 'package:rentpal/features/add_listing/cubit/rules_cubit.dart';
+import 'package:rentpal/features/add_listing/presentation/widgets/add_photo_option.dart';
 import 'package:rentpal/features/add_listing/presentation/widgets/listing_drop_down.dart';
 import 'package:rentpal/features/add_listing/presentation/widgets/listing_text_field.dart';
 import 'package:rentpal/features/add_listing/presentation/widgets/address_bottom_sheet.dart';
@@ -20,12 +26,28 @@ class _AddNewListingState extends State<AddNewListing> {
   final _pricePerDayController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _quantityController = TextEditingController();
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _pricePerDayController.dispose();
+    _descriptionController.dispose();
+    _quantityController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+            onPressed: () {
+              GoRouter.of(context).go("/");
+            },
+            icon: const Icon(Icons.home)),
         backgroundColor: Colors.white,
         title: const Text("Add a new listing"),
+        centerTitle: true,
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(
@@ -45,32 +67,128 @@ class _AddNewListingState extends State<AddNewListing> {
                   child: const Icon(Icons.lightbulb_outlined),
                 ),
               ),
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.grey,
-                  ),
-                  color: Colors.grey.shade300,
-                ),
-                padding: EdgeInsets.symmetric(
-                  vertical: 0.015.toRes(context),
-                  horizontal: 0.01.toRes(context),
-                ),
-                child: Column(
+              BlocBuilder<ImageHandlerCubit, List<XFile>>(
+                  builder: (contex, state) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Icon(
-                      Icons.image,
-                      size: 0.04.toRes(context),
+                    Visibility(
+                      visible: state.isNotEmpty,
+                      child: const Text("Tap to select a cover photo"),
                     ),
-                    Text(
-                      "Add photo",
-                      style: TextStyle(
-                        fontSize: 0.015.toRes(context),
-                      ),
+                    SizedBox(
+                      height: 0.01.h(context),
+                    ),
+                    Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () => addPhotoOption(context),
+                          child: Container(
+                            height: 0.135.h(context),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.grey,
+                              ),
+                              color: Colors.grey.shade300,
+                            ),
+                            padding: EdgeInsets.symmetric(
+                              vertical: 0.015.toRes(context),
+                              horizontal: 0.005.toRes(context),
+                            ),
+                            child: Column(
+                              children: [
+                                Icon(
+                                  Icons.image,
+                                  size: 0.04.toRes(context),
+                                ),
+                                Text(
+                                  "Add photo",
+                                  style: TextStyle(
+                                    fontSize: 0.012.toRes(context),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 0.01.w(context),
+                        ),
+                        Expanded(
+                            child: state.isEmpty
+                                ? const SizedBox()
+                                : SizedBox(
+                                    height: 0.135.h(context),
+                                    child: ListView.builder(
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount: state.length,
+                                        itemBuilder: (contex, index) {
+                                          final image = File(state[index].path);
+                                          return index == 0
+                                              ? Container(
+                                                  padding:
+                                                      const EdgeInsets.all(5),
+                                                  decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                        color: Colors.blue),
+                                                  ),
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    children: [
+                                                      Expanded(
+                                                        child: SizedBox(
+                                                          width:
+                                                              0.25.w(context),
+                                                          height:
+                                                              0.05.h(context),
+                                                          child: Image.file(
+                                                            image,
+                                                            fit: BoxFit.cover,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      const Text("Cover Photo")
+                                                    ],
+                                                  ),
+                                                )
+                                              : Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(5),
+                                                  child: Stack(
+                                                    children: [
+                                                      SizedBox(
+                                                        width: 0.25.w(context),
+                                                        height: 0.1.h(context),
+                                                        child: AspectRatio(
+                                                          aspectRatio: 16 / 9,
+                                                          child: Image.file(
+                                                            image,
+                                                            fit: BoxFit.cover,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      const Positioned(
+                                                        top: 3,
+                                                        right: 3,
+                                                        child: Center(
+                                                            child: Text(
+                                                          "X",
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.white),
+                                                        )),
+                                                      )
+                                                    ],
+                                                  ),
+                                                );
+                                        }),
+                                  )),
+                      ],
                     ),
                   ],
-                ),
-              ),
+                );
+              }),
               SizedBox(
                 height: 0.02.h(context),
               ),
