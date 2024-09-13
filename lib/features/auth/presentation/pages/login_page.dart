@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rentpal/core/constant/image_path.dart';
 import 'package:rentpal/core/extension/extension.dart';
+import 'package:rentpal/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:rentpal/features/auth/presentation/widgets/auth_text_field.dart';
 
 class LoginPage extends StatelessWidget {
@@ -109,7 +111,9 @@ class LoginPage extends StatelessWidget {
             SizedBox(height: 0.03.h(context)),
             GestureDetector(
               onTap: () {
-                if (key.currentState?.validate() ?? false) {}
+                if (key.currentState?.validate() ?? false) {
+                  context.read<AuthCubit>().login();
+                }
               },
               child: Container(
                 padding:

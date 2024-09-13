@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rentpal/core/extension/extension.dart';
+import 'package:rentpal/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:rentpal/features/menu/presentation/widgets/menu_option_tiles.dart';
 import 'package:rentpal/features/menu/presentation/widgets/version_info.dart';
 
@@ -38,7 +40,13 @@ class _MenuPageState extends State<MenuPage> {
               SizedBox(
                 height: 0.05.h(context),
               ),
-              const MenuOptionTiles(icon: Icons.logout, title: "logout"),
+              GestureDetector(
+                onTap: (){
+                  context.read<AuthCubit>();
+                },
+                child:
+                    const MenuOptionTiles(icon: Icons.logout, title: "logout"),
+              ),
               SizedBox(
                 height: 0.05.h(context),
               ),

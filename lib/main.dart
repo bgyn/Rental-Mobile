@@ -6,6 +6,7 @@ import 'package:rentpal/core/permission/permission_handler.dart';
 import 'package:rentpal/features/add_listing/cubit/address_cubit.dart';
 import 'package:rentpal/features/add_listing/cubit/image_handler_cubit.dart';
 import 'package:rentpal/features/add_listing/cubit/rules_cubit.dart';
+import 'package:rentpal/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:rentpal/features/auth/presentation/cubit/password_visibility_cubit.dart';
 import 'package:rentpal/features/categories/presentation/bloc/category_list_bloc.dart';
 import 'package:rentpal/features/categories/presentation/bloc/category_list_event.dart';
@@ -43,6 +44,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (_) => AddressCubit()),
         BlocProvider(create: (_) => RulesCubit()),
         BlocProvider(create: (_) => ImageHandlerCubit()),
+        BlocProvider(create: (_) => AuthCubit()),
         BlocProvider(
             create: (_) =>
                 CategoryListBloc(sl())..add(const FetchCategoryList()))
@@ -53,7 +55,10 @@ class _MyAppState extends State<MyApp> {
           useMaterial3: true,
           scaffoldBackgroundColor: Colors.white,
         ),
-        routerConfig: routeConfig,
+        // routerConfig: routeConfig,
+        routerDelegate: routeConfig.routerDelegate,
+        routeInformationParser: routeConfig.routeInformationParser,
+        routeInformationProvider: routeConfig.routeInformationProvider,
       ),
     );
   }

@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:rentpal/features/add_listing/presentation/pages/add_listing_page.dart';
+import 'package:rentpal/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:rentpal/features/auth/presentation/pages/login_page.dart';
+import 'package:rentpal/features/auth/presentation/pages/register_page.dart';
+import 'package:rentpal/features/home/presentation/pages/dashboard_page.dart';
+import 'package:rentpal/features/menu/presentation/pages/menu_page.dart';
+import 'package:rentpal/features/my_listing/presentation/pages/my_listing_page.dart';
+import 'package:rentpal/features/rentals/presentation/pages/rental_page.dart';
 
 class Home extends StatefulWidget {
-  final Widget child;
-  const Home({super.key, required this.child});
+  const Home({super.key});
 
   @override
   State<Home> createState() => _HomeState();
@@ -13,47 +20,52 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int currentIndex = 0;
 
-  void onChanged(int index) {
-    switch (index) {
-      case 0:
-        context.go("/");
-        break;
-      case 1:
-        context.go("/rentals");
-        break;
-      case 2:
-        context.go("/add_listing");
-        break;
-      case 3:
-        context.go("/my_listing");
-        break;
-      case 4:
-        context.go("/menu");
-        break;
-    }
-    setState(() {
-      currentIndex = index;
-    });
-  }
+  List loggedInRoute = [
+    const HomePage(),
+    RentalPage(),
+    const AddListingPage(),
+    const MyListingPage(),
+    const MenuPage(),
+  ];
+
+  List loggedOutRoute = [
+    const HomePage(),
+    const LoginPage(),
+    const RegisterPage(),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: widget.child,
-      bottomNavigationBar: GNav(
+        body: BlocBuilder<AuthCubit, AuthState>(builder: (context, state) {
+      return state.isLoggedIn == true
+          ? loggedInRoute[currentIndex]
+          : loggedOutRoute[currentIndex];
+    }), bottomNavigationBar:
+            BlocBuilder<AuthCubit, AuthState>(builder: (context, state) {
+      return GNav(
         iconSize: 22,
         selectedIndex: currentIndex,
-        onTabChange: onChanged,
+        onTabChange: (value) {
+          currentIndex = value;
+          setState(() {});
+        },
         activeColor: Colors.blue,
         color: Colors.black,
-        tabs: const [
-          GButton(icon: Icons.home),
-          GButton(icon: Icons.message),
-          GButton(icon: Icons.add),
-          GButton(icon: Icons.list_alt_outlined),
-          GButton(icon: Icons.menu),
-        ],
-      ),
-    );
+        tabs: state.isLoggedIn == true
+            ? const [
+                GButton(icon: Icons.home),
+                GButton(icon: Icons.message),
+                GButton(icon: Icons.add),
+                GButton(icon: Icons.list_alt_outlined),
+                GButton(icon: Icons.menu),
+              ]
+            : const [
+                GButton(icon: Icons.home),
+                GButton(icon: Icons.login),
+                GButton(icon: Icons.app_registration_rounded)
+              ],
+      );
+    }));
   }
 }
