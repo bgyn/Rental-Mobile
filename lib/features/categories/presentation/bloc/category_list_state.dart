@@ -1,7 +1,7 @@
-import 'package:rentpal/features/categories/domain/entities/categories_list.dart';
+import 'package:rentpal/features/categories/domain/entities/category_entity.dart';
 
 abstract class CategoryListState {
-  final List<CategoryListEntity>? categoryList;
+  final List<CategoryEntity>? categoryList;
 
   CategoryListState({
     this.categoryList,
@@ -11,6 +11,6 @@ abstract class CategoryListState {
 class CategoryListLoading extends CategoryListState {}
 
 class CategoryListSuccessful extends CategoryListState {
-  final List<CategoryListEntity> data;
+  final List<CategoryEntity> data;
   CategoryListSuccessful({required this.data}) : super(categoryList: data);
 }
