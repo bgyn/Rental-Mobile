@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:fpdart/fpdart.dart';
 import 'package:rentpal/core/error/faliure.dart';
@@ -21,8 +22,14 @@ class CategoryListRepositoryImpl implements CategoryListRepository {
       final result =
           jsonList.map((e) => CategoryListModel.fromJson(e)).toList();
       return right(result);
+    } on SocketException {
+      return left(const ServerFailure("No internet connection"));
+    } on HttpException {
+      return left(const ServerFailure("Couldn't find the resource"));
+    } on FormatException {
+      return left(const ServerFailure("Bad Response format"));
     } catch (e) {
-      return left(const HttpException("Error"));
+      return left(ServerFailure("$e"));
     }
   }
 }
