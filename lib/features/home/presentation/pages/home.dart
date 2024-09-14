@@ -5,21 +5,21 @@ import 'package:rentpal/features/add_listing/presentation/pages/add_listing_page
 import 'package:rentpal/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:rentpal/features/auth/presentation/pages/login_page.dart';
 import 'package:rentpal/features/auth/presentation/pages/register_page.dart';
+import 'package:rentpal/features/home/presentation/cubit/navigator_cubit.dart';
 import 'package:rentpal/features/home/presentation/pages/dashboard_page.dart';
 import 'package:rentpal/features/menu/presentation/pages/menu_page.dart';
 import 'package:rentpal/features/my_listing/presentation/pages/my_listing_page.dart';
 import 'package:rentpal/features/rentals/presentation/pages/rental_page.dart';
 
 class Home extends StatefulWidget {
-  const Home({super.key});
+  final Widget child;
+  const Home({super.key, required this.child});
 
   @override
   State<Home> createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
-  int currentIndex = 0;
-
   List loggedInRoute = [
     const HomePage(),
     RentalPage(),
@@ -36,36 +36,42 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: BlocBuilder<AuthCubit, AuthState>(builder: (context, state) {
-      return state.isLoggedIn == true
-          ? loggedInRoute[currentIndex]
-          : loggedOutRoute[currentIndex];
-    }), bottomNavigationBar:
-            BlocBuilder<AuthCubit, AuthState>(builder: (context, state) {
-      return GNav(
-        iconSize: 22,
-        selectedIndex: currentIndex,
-        onTabChange: (value) {
-          currentIndex = value;
-          setState(() {});
+    final currentIndex = context.watch<NavigatorCubit>();
+    return BlocListener<AuthCubit, AuthState>(
+      listener: (context, authState) {
+        if (authState.isloading == true) {
+          context.read<NavigatorCubit>().reset();
+        }
+      },
+      child: BlocBuilder<AuthCubit, AuthState>(
+        builder: (context, authState) {
+          return Scaffold(
+            body: authState.isLoggedIn == true
+                ? loggedInRoute[currentIndex.state]
+                : loggedOutRoute[currentIndex.state],
+            bottomNavigationBar: GNav(
+              iconSize: 22,
+              selectedIndex: currentIndex.state,
+              onTabChange: context.read<NavigatorCubit>().onChanged,
+              activeColor: Colors.blue,
+              color: Colors.black,
+              tabs: authState.isLoggedIn == true
+                  ? const [
+                      GButton(icon: Icons.home),
+                      GButton(icon: Icons.message),
+                      GButton(icon: Icons.add),
+                      GButton(icon: Icons.list_alt_outlined),
+                      GButton(icon: Icons.menu),
+                    ]
+                  : const [
+                      GButton(icon: Icons.home),
+                      GButton(icon: Icons.login),
+                      GButton(icon: Icons.app_registration_rounded),
+                    ],
+            ),
+          );
         },
-        activeColor: Colors.blue,
-        color: Colors.black,
-        tabs: state.isLoggedIn == true
-            ? const [
-                GButton(icon: Icons.home),
-                GButton(icon: Icons.message),
-                GButton(icon: Icons.add),
-                GButton(icon: Icons.list_alt_outlined),
-                GButton(icon: Icons.menu),
-              ]
-            : const [
-                GButton(icon: Icons.home),
-                GButton(icon: Icons.login),
-                GButton(icon: Icons.app_registration_rounded)
-              ],
-      );
-    }));
+      ),
+    );
   }
 }

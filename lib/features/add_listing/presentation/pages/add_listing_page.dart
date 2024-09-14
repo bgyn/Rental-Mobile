@@ -168,7 +168,7 @@ class AddListingPage extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                GoRouter.of(context).push("/add_listing/add_new_listing");
+                context.go("/add_listing/add_new_listing");
               },
               child: const Text(
                 "Get Started",

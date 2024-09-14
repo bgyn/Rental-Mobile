@@ -41,8 +41,8 @@ class _MenuPageState extends State<MenuPage> {
                 height: 0.05.h(context),
               ),
               GestureDetector(
-                onTap: (){
-                  context.read<AuthCubit>();
+                onTap: () {
+                  context.read<AuthCubit>().logout();
                 },
                 child:
                     const MenuOptionTiles(icon: Icons.logout, title: "logout"),

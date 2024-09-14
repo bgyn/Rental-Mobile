@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rentpal/features/home/dummy_model.dart';
-import 'package:rentpal/features/home/presentation/pages/product_detail.dart';
 import 'package:shimmer/shimmer.dart';
 
 class RentalCategory extends StatelessWidget {
@@ -28,13 +28,7 @@ class RentalCategory extends StatelessWidget {
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            ProductDetail(product: productsList[index]),
-                      ),
-                    );
+                    context.push("/product-detail", extra: productsList[index]);
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(10),

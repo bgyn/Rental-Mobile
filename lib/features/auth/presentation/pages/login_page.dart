@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rentpal/core/constant/image_path.dart';
 import 'package:rentpal/core/extension/extension.dart';
 import 'package:rentpal/features/auth/presentation/cubit/auth_cubit.dart';
@@ -10,193 +11,194 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        title: const Text("Login"),
-      ),
-      body: SingleChildScrollView(
-        child: Stack(
-          children: [
-            Container(
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height * 0.18,
-              decoration: const BoxDecoration(color: Colors.blue),
-              child: const Center(
-                child: Text(
-                  "Rentpal",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 30,
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                top: MediaQuery.of(context).size.height * 0.12,
-                left: MediaQuery.of(context).size.width * 0.074,
-                right: MediaQuery.of(context).size.width * 0.075,
-              ),
-              child: _loginForm(context),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-  _loginForm(BuildContext context) {
     final key = GlobalKey<FormState>();
     final emailCtrl = TextEditingController();
     final passwordCtrl = TextEditingController();
-
-    return Container(
-      width: 0.85.w(context),
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(10),
-          topRight: Radius.circular(10),
-        ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Login"),
       ),
-      child: Form(
-        key: key,
-        child: Column(
-          children: [
-            SizedBox(height: 0.02.h(context)),
-            const Text(
-              "Welcome Back!",
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 0.005.h(context)),
-            const Text(
-              "Sign in to your account",
-              style: TextStyle(
-                color: Colors.black54,
-                fontSize: 16,
-              ),
-            ),
-            SizedBox(height: 0.03.h(context)),
-            RentpalTextField(
-              textEditingController: emailCtrl,
-              hintText: "Email",
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return "Email is required";
-                } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                  return 'Please enter a valid email address';
-                }
-                return null;
-              },
-            ),
-            SizedBox(height: 0.005.h(context)),
-            RentpalTextField(
-              textEditingController: passwordCtrl,
-              hintText: "Password",
-              isObscure: true,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Password is required';
-                } else if (value.length < 6) {
-                  return 'Password must be at least 6 characters long';
-                }
-                return null;
-              },
-            ),
-            SizedBox(height: 0.03.h(context)),
-            GestureDetector(
-              onTap: () {
-                if (key.currentState?.validate() ?? false) {
-                  context.read<AuthCubit>().login();
-                }
-              },
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                width: MediaQuery.of(context).size.width * 0.5,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  color: Colors.blue,
-                ),
+      body: LayoutBuilder(builder: (context, constraint) {
+        return SingleChildScrollView(
+          child: Stack(
+            children: [
+              Container(
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height * 0.18,
+                decoration: const BoxDecoration(color: Colors.blue),
                 child: const Center(
-                    child: Text(
-                  "Login",
-                  style: TextStyle(
+                  child: Text(
+                    "Rentpal",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 30,
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.height * 0.12,
+                  left: MediaQuery.of(context).size.width * 0.074,
+                  right: MediaQuery.of(context).size.width * 0.075,
+                ),
+                child: Container(
+                  width: 0.85.w(context),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                  decoration: const BoxDecoration(
                     color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      topRight: Radius.circular(10),
+                    ),
                   ),
-                )),
-              ),
-            ),
-            SizedBox(height: 0.02.h(context)),
-            GestureDetector(
-              onTap: () {},
-              child: const Text(
-                "Forgot Password",
-                style: TextStyle(
-                  color: Colors.blue,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            Divider(
-              indent: 50,
-              endIndent: 50,
-              color: Colors.grey.shade300,
-            ),
-            const Text(
-              "or sign in with",
-              style: TextStyle(
-                color: Colors.black54,
-                fontSize: 14,
-              ),
-            ),
-            SizedBox(height: 0.02.h(context)),
-            GestureDetector(
-              onTap: () {},
-              child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                width: MediaQuery.of(context).size.width * 0.5,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  border: Border.all(color: Colors.black38),
-                ),
-                child: Center(
-                    child: Image.asset(
-                  googleLogo,
-                  height: 0.025.h(context),
-                )),
-              ),
-            ),
-            SizedBox(height: 0.02.h(context)),
-            const Text(
-              "Don't have an account",
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.black54,
-              ),
-            ),
-            SizedBox(height: 0.005.h(context)),
-            GestureDetector(
-                onTap: () {},
-                child: const Text(
-                  "Sign Up",
-                  style: TextStyle(
-                    color: Colors.blue,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
+                  child: Form(
+                    key: key,
+                    child: Column(
+                      children: [
+                        SizedBox(height: 0.02.h(context)),
+                        const Text(
+                          "Welcome Back!",
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 0.005.h(context)),
+                        const Text(
+                          "Sign in to your account",
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 16,
+                          ),
+                        ),
+                        SizedBox(height: 0.03.h(context)),
+                        RentpalTextField(
+                          textEditingController: emailCtrl,
+                          hintText: "Email",
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "Email is required";
+                            } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
+                                .hasMatch(value)) {
+                              return 'Please enter a valid email address';
+                            }
+                            return null;
+                          },
+                        ),
+                        SizedBox(height: 0.005.h(context)),
+                        RentpalTextField(
+                          textEditingController: passwordCtrl,
+                          hintText: "Password",
+                          isObscure: true,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Password is required';
+                            } else if (value.length < 6) {
+                              return 'Password must be at least 6 characters long';
+                            }
+                            return null;
+                          },
+                        ),
+                        SizedBox(height: 0.03.h(context)),
+                        GestureDetector(
+                          onTap: () {
+                            if (key.currentState?.validate() ?? false) {
+                              context.read<AuthCubit>().login();
+                              if (context.canPop()) {
+                                context.pop();
+                              }
+                            }
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 20),
+                            width: MediaQuery.of(context).size.width * 0.5,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              color: Colors.blue,
+                            ),
+                            child: const Center(
+                                child: Text(
+                              "Login",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )),
+                          ),
+                        ),
+                        SizedBox(height: 0.02.h(context)),
+                        GestureDetector(
+                          onTap: () {},
+                          child: const Text(
+                            "Forgot Password",
+                            style: TextStyle(
+                              color: Colors.blue,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        Divider(
+                          indent: 50,
+                          endIndent: 50,
+                          color: Colors.grey.shade300,
+                        ),
+                        const Text(
+                          "or sign in with",
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 14,
+                          ),
+                        ),
+                        SizedBox(height: 0.02.h(context)),
+                        GestureDetector(
+                          onTap: () {},
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(vertical: 8),
+                            width: MediaQuery.of(context).size.width * 0.5,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              border: Border.all(color: Colors.black38),
+                            ),
+                            child: Center(
+                                child: Image.asset(
+                              googleLogo,
+                              height: 0.025.h(context),
+                            )),
+                          ),
+                        ),
+                        SizedBox(height: 0.02.h(context)),
+                        const Text(
+                          "Don't have an account",
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.black54,
+                          ),
+                        ),
+                        SizedBox(height: 0.005.h(context)),
+                        GestureDetector(
+                            onTap: () {},
+                            child: const Text(
+                              "Sign Up",
+                              style: TextStyle(
+                                color: Colors.blue,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            ))
+                      ],
+                    ),
                   ),
-                ))
-          ],
-        ),
-      ),
+                ),
+              )
+            ],
+          ),
+        );
+      }),
     );
   }
 }
