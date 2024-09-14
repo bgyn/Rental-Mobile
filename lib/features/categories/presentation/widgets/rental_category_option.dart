@@ -13,18 +13,33 @@ class RentalCategoryOption extends StatelessWidget {
         builder: (_, state) {
       if (state is CategoryListLoading) {
         return Padding(
-            padding: const EdgeInsets.only(top: 20, bottom: 20),
-            child: SizedBox(
-              height: 50,
-              child: Shimmer.fromColors(
-                baseColor: Colors.grey.shade300,
-                highlightColor: Colors.white,
-                child: const SizedBox(
-                  width: double.infinity,
-                  height: 30,
-                ),
-              ),
-            ));
+          padding: const EdgeInsets.only(top: 20, bottom: 20),
+          child: SizedBox(
+            height: 40,
+            child: ListView.builder(
+              // Placeholder items for the shimmer effect
+              scrollDirection: Axis.horizontal,
+              itemCount: 6, // Number of shimmer items
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Shimmer.fromColors(
+                    baseColor: Colors.grey[300]!,
+                    highlightColor: Colors.grey[100]!,
+                    child: Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: Colors.grey,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        );
       }
       if (state is CategoryListSuccessful) {
         return Padding(

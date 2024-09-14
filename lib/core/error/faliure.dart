@@ -16,6 +16,11 @@ class ServerFailure extends Failure {
   const ServerFailure(super.errorMessage, this.statusCode);
 }
 
+class HttpException extends Failure {
+  final int? statusCode;
+  const HttpException(super.errorMessage, {this.statusCode});
+}
+
 /// Cancel token failure
 class CancelTokenFailure extends Failure {
   final int? statusCode;

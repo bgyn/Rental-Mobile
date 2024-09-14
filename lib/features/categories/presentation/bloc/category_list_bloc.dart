@@ -13,6 +13,11 @@ class CategoryListBloc extends Bloc<CategoryListEvent, CategoryListState> {
   void _onGetCategoryList(
       FetchCategoryList evevnt, Emitter<CategoryListState> emit) async {
     final data = await _getCategoryList.call();
-    emit(CategoryListSuccessful(data: data));
+    data.fold(
+      (l) => CategoryListLoading(),
+      (r) => emit(
+        CategoryListSuccessful(data: r),
+      ),
+    );
   }
 }
