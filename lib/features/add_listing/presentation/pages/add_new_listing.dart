@@ -27,12 +27,21 @@ class _AddNewListingState extends State<AddNewListing> {
   final _descriptionController = TextEditingController();
   final _quantityController = TextEditingController();
 
+  late ImageHandlerCubit _imageHandlerCubit;
+
+  @override
+  void initState() {
+    super.initState();
+    _imageHandlerCubit = context.read<ImageHandlerCubit>();
+  }
+
   @override
   void dispose() {
     _titleController.dispose();
     _pricePerDayController.dispose();
     _descriptionController.dispose();
     _quantityController.dispose();
+    _imageHandlerCubit.reset(); 
     super.dispose();
   }
 
@@ -152,34 +161,55 @@ class _AddNewListingState extends State<AddNewListing> {
                                                     ],
                                                   ),
                                                 )
-                                              : Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(5),
-                                                  child: Stack(
-                                                    children: [
-                                                      SizedBox(
-                                                        width: 0.25.w(context),
-                                                        height: 0.1.h(context),
-                                                        child: AspectRatio(
-                                                          aspectRatio: 16 / 9,
-                                                          child: Image.file(
-                                                            image,
-                                                            fit: BoxFit.cover,
+                                              : GestureDetector(
+                                                  onTap: () {
+                                                    context
+                                                        .read<
+                                                            ImageHandlerCubit>()
+                                                        .replaceCover(
+                                                            index: index);
+                                                  },
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(5),
+                                                    child: Stack(
+                                                      children: [
+                                                        SizedBox(
+                                                          width:
+                                                              0.25.w(context),
+                                                          height:
+                                                              0.1.h(context),
+                                                          child: AspectRatio(
+                                                            aspectRatio: 16 / 9,
+                                                            child: Image.file(
+                                                              image,
+                                                              fit: BoxFit.cover,
+                                                            ),
                                                           ),
                                                         ),
-                                                      ),
-                                                      const Positioned(
-                                                        top: 3,
-                                                        right: 3,
-                                                        child: Center(
-                                                            child: Text(
-                                                          "X",
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.white),
-                                                        )),
-                                                      )
-                                                    ],
+                                                        Positioned(
+                                                          top: 3,
+                                                          right: 3,
+                                                          child:
+                                                              GestureDetector(
+                                                            onTap: () => context
+                                                                .read<
+                                                                    ImageHandlerCubit>()
+                                                                .deleteImage(
+                                                                    index:
+                                                                        index),
+                                                            child: const Center(
+                                                              child: Icon(
+                                                                size: 22,
+                                                                Icons.delete,
+                                                                color:
+                                                                    Colors.red,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        )
+                                                      ],
+                                                    ),
                                                   ),
                                                 );
                                         }),

@@ -12,4 +12,26 @@ class ImageHandlerCubit extends Cubit<List<XFile>> {
     emit([...state, file]);
   }
 
+  void replaceCover({required int index}) {
+    final updatedState = List.of(state);
+    final temp = updatedState[0];
+    updatedState[0] = updatedState[index];
+    updatedState[index] = temp;
+    emit(updatedState);
+  }
+
+  void deleteImage({required int index}) {
+    final updatedState = state
+        .asMap()
+        .entries
+        .where((e) => e.key != index)
+        .map((entry) => entry.value)
+        .toList();
+    emit(updatedState);
+  }
+
+  void reset() {
+    print("Resetting ImageHandlerCubit");
+    emit([]);
+  }
 }
