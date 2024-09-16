@@ -31,7 +31,6 @@ class ImageHandlerCubit extends Cubit<List<XFile>> {
   }
 
   void reset() {
-    print("Resetting ImageHandlerCubit");
     emit([]);
   }
 }
