@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:rentpal/core/extension/extension.dart';
 
@@ -9,16 +7,17 @@ class ListingDropDown extends StatelessWidget {
       required this.items,
       required this.title,
       required this.onChanged,
+      this.validator,
       this.value});
 
   final List<String> items;
   final String title;
-  final Function(dynamic) onChanged;
+  final Function(String?) onChanged;
+  final FormFieldValidator<String>? validator;
   final String? value;
 
   @override
   Widget build(BuildContext context) {
-    log(items.toString());
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -41,7 +40,12 @@ class ListingDropDown extends StatelessWidget {
                 ),
               ),
               focusedBorder: OutlineInputBorder(),
+              errorBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.red),
+              ),
             ),
+            dropdownColor: Colors.grey.shade100,
+            menuMaxHeight: 0.3.h(context),
             items: items
                 .map(
                   (item) => DropdownMenuItem(
@@ -50,6 +54,7 @@ class ListingDropDown extends StatelessWidget {
                   ),
                 )
                 .toList(),
+            validator: validator,
             onChanged: onChanged),
       ],
     );

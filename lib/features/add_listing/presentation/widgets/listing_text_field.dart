@@ -7,11 +7,13 @@ class ListingTextField extends StatelessWidget {
       required this.title,
       this.hintText,
       this.textInputType,
+      this.validator,
       required this.controller});
   final String title;
   final String? hintText;
   final TextEditingController controller;
   final TextInputType? textInputType;
+  final FormFieldValidator<String?>? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -41,8 +43,19 @@ class ListingTextField extends StatelessWidget {
                 color: Colors.grey,
               ),
             ),
+            errorBorder: const OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Colors.red,
+              ),
+            ),
+            focusedErrorBorder: const OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Colors.red,
+              ),
+            ),
             focusedBorder: const OutlineInputBorder(),
           ),
+          validator: validator,
         ),
       ],
     );

@@ -26,6 +26,7 @@ class _AddNewListingState extends State<AddNewListing> {
   final _pricePerDayController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _quantityController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   late ImageHandlerCubit _imageHandlerCubit;
 
@@ -41,7 +42,7 @@ class _AddNewListingState extends State<AddNewListing> {
     _pricePerDayController.dispose();
     _descriptionController.dispose();
     _quantityController.dispose();
-    _imageHandlerCubit.reset(); 
+    _imageHandlerCubit.reset();
     super.dispose();
   }
 
@@ -64,219 +65,260 @@ class _AddNewListingState extends State<AddNewListing> {
           vertical: 0.015.toRes(context),
         ),
         child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Align(
-                alignment: Alignment.centerRight,
-                child: GestureDetector(
-                  onTap: () {
-                    showPopup(context);
-                  },
-                  child: const Icon(Icons.lightbulb_outlined),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: GestureDetector(
+                    onTap: () {
+                      showPopup(context);
+                    },
+                    child: const Icon(Icons.lightbulb_outlined),
+                  ),
                 ),
-              ),
-              BlocBuilder<ImageHandlerCubit, List<XFile>>(
-                  builder: (contex, state) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Visibility(
-                      visible: state.isNotEmpty,
-                      child: const Text("Tap to select a cover photo"),
-                    ),
-                    SizedBox(
-                      height: 0.01.h(context),
-                    ),
-                    Row(
-                      children: [
-                        GestureDetector(
-                          onTap: () => addPhotoOption(context),
-                          child: Container(
-                            height: 0.135.h(context),
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Colors.grey,
+                BlocBuilder<ImageHandlerCubit, List<XFile>>(
+                    builder: (contex, state) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Visibility(
+                        visible: state.isNotEmpty,
+                        child: const Text("Tap to select a cover photo"),
+                      ),
+                      SizedBox(
+                        height: 0.01.h(context),
+                      ),
+                      Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () => addPhotoOption(context),
+                            child: Container(
+                              height: 0.135.h(context),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.grey,
+                                ),
+                                color: Colors.grey.shade300,
                               ),
-                              color: Colors.grey.shade300,
-                            ),
-                            padding: EdgeInsets.symmetric(
-                              vertical: 0.015.toRes(context),
-                              horizontal: 0.005.toRes(context),
-                            ),
-                            child: Column(
-                              children: [
-                                Icon(
-                                  Icons.image,
-                                  size: 0.04.toRes(context),
-                                ),
-                                Text(
-                                  "Add photo",
-                                  style: TextStyle(
-                                    fontSize: 0.012.toRes(context),
+                              padding: EdgeInsets.symmetric(
+                                vertical: 0.015.toRes(context),
+                                horizontal: 0.005.toRes(context),
+                              ),
+                              child: Column(
+                                children: [
+                                  Icon(
+                                    Icons.image,
+                                    size: 0.04.toRes(context),
                                   ),
-                                ),
-                              ],
+                                  Text(
+                                    "Add photo",
+                                    style: TextStyle(
+                                      fontSize: 0.012.toRes(context),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          width: 0.01.w(context),
-                        ),
-                        Expanded(
-                            child: state.isEmpty
-                                ? const SizedBox()
-                                : SizedBox(
-                                    height: 0.135.h(context),
-                                    child: ListView.builder(
-                                        scrollDirection: Axis.horizontal,
-                                        itemCount: state.length,
-                                        itemBuilder: (contex, index) {
-                                          final image = File(state[index].path);
-                                          return index == 0
-                                              ? Container(
-                                                  padding:
-                                                      const EdgeInsets.all(5),
-                                                  decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                        color: Colors.blue),
-                                                  ),
-                                                  child: Column(
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
-                                                    children: [
-                                                      Expanded(
-                                                        child: SizedBox(
-                                                          width:
-                                                              0.25.w(context),
-                                                          height:
-                                                              0.05.h(context),
-                                                          child: Image.file(
-                                                            image,
-                                                            fit: BoxFit.cover,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      const Text("Cover Photo")
-                                                    ],
-                                                  ),
-                                                )
-                                              : GestureDetector(
-                                                  onTap: () {
-                                                    context
-                                                        .read<
-                                                            ImageHandlerCubit>()
-                                                        .replaceCover(
-                                                            index: index);
-                                                  },
-                                                  child: Padding(
+                          SizedBox(
+                            width: 0.01.w(context),
+                          ),
+                          Expanded(
+                              child: state.isEmpty
+                                  ? const SizedBox()
+                                  : SizedBox(
+                                      height: 0.135.h(context),
+                                      child: ListView.builder(
+                                          scrollDirection: Axis.horizontal,
+                                          itemCount: state.length,
+                                          itemBuilder: (contex, index) {
+                                            final image =
+                                                File(state[index].path);
+                                            return index == 0
+                                                ? Container(
                                                     padding:
                                                         const EdgeInsets.all(5),
-                                                    child: Stack(
+                                                    decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                          color: Colors.blue),
+                                                    ),
+                                                    child: Column(
+                                                      mainAxisSize:
+                                                          MainAxisSize.min,
                                                       children: [
-                                                        SizedBox(
-                                                          width:
-                                                              0.25.w(context),
-                                                          height:
-                                                              0.1.h(context),
-                                                          child: AspectRatio(
-                                                            aspectRatio: 16 / 9,
+                                                        Expanded(
+                                                          child: SizedBox(
+                                                            width:
+                                                                0.25.w(context),
+                                                            height:
+                                                                0.05.h(context),
                                                             child: Image.file(
                                                               image,
                                                               fit: BoxFit.cover,
                                                             ),
                                                           ),
                                                         ),
-                                                        Positioned(
-                                                          top: 3,
-                                                          right: 3,
-                                                          child:
-                                                              GestureDetector(
-                                                            onTap: () => context
-                                                                .read<
-                                                                    ImageHandlerCubit>()
-                                                                .deleteImage(
-                                                                    index:
-                                                                        index),
-                                                            child: const Center(
-                                                              child: Icon(
-                                                                size: 22,
-                                                                Icons.delete,
-                                                                color:
-                                                                    Colors.red,
+                                                        const Text(
+                                                            "Cover Photo")
+                                                      ],
+                                                    ),
+                                                  )
+                                                : GestureDetector(
+                                                    onTap: () {
+                                                      context
+                                                          .read<
+                                                              ImageHandlerCubit>()
+                                                          .replaceCover(
+                                                              index: index);
+                                                    },
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              5),
+                                                      child: Stack(
+                                                        children: [
+                                                          SizedBox(
+                                                            width:
+                                                                0.25.w(context),
+                                                            height:
+                                                                0.1.h(context),
+                                                            child: AspectRatio(
+                                                              aspectRatio:
+                                                                  16 / 9,
+                                                              child: Image.file(
+                                                                image,
+                                                                fit: BoxFit
+                                                                    .cover,
                                                               ),
                                                             ),
                                                           ),
-                                                        )
-                                                      ],
+                                                          Positioned(
+                                                            top: 3,
+                                                            right: 3,
+                                                            child:
+                                                                GestureDetector(
+                                                              onTap: () => context
+                                                                  .read<
+                                                                      ImageHandlerCubit>()
+                                                                  .deleteImage(
+                                                                      index:
+                                                                          index),
+                                                              child:
+                                                                  const Center(
+                                                                child: Icon(
+                                                                  size: 22,
+                                                                  Icons.delete,
+                                                                  color: Colors
+                                                                      .red,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          )
+                                                        ],
+                                                      ),
                                                     ),
-                                                  ),
-                                                );
-                                        }),
-                                  )),
-                      ],
-                    ),
-                  ],
-                );
-              }),
-              SizedBox(
-                height: 0.02.h(context),
-              ),
-              const Divider(),
-              Align(
-                alignment: Alignment.centerRight,
-                child: GestureDetector(
-                  onTap: () {
-                    showPopup(context);
-                  },
-                  child: const Icon(Icons.lightbulb_outlined),
+                                                  );
+                                          }),
+                                    )),
+                        ],
+                      ),
+                    ],
+                  );
+                }),
+                SizedBox(
+                  height: 0.02.h(context),
                 ),
-              ),
-              ListingTextField(
-                title: "Title",
-                controller: _titleController,
-              ),
-              ListingTextField(
-                title: "Price per day (Rs.)",
-                controller: _pricePerDayController,
-                hintText: "Price",
-                textInputType: TextInputType.number,
-              ),
-              ListingTextField(
-                title: "Description",
-                controller: _descriptionController,
-                hintText: "Type here",
-              ),
-              ListingTextField(
-                title: "Quantity availiable",
-                controller: _quantityController,
-                hintText: "How many quantity do you have?",
-                textInputType: TextInputType.number,
-              ),
-              ListingDropDown(
+                const Divider(),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: GestureDetector(
+                    onTap: () {
+                      showPopup(context);
+                    },
+                    child: const Icon(Icons.lightbulb_outlined),
+                  ),
+                ),
+                ListingTextField(
+                  title: "Title",
+                  controller: _titleController,
+                  validator: (value) {
+                    if (value == null || value == "") {
+                      return "Title is required";
+                    }
+                    return null;
+                  },
+                ),
+                ListingTextField(
+                  title: "Price per day (Rs.)",
+                  controller: _pricePerDayController,
+                  hintText: "Price",
+                  textInputType: TextInputType.number,
+                  validator: (value) {
+                    if (value == null || value == "" || int.parse(value) <= 0) {
+                      return "Price is required";
+                    }
+                    return null;
+                  },
+                ),
+                ListingTextField(
+                  title: "Description",
+                  controller: _descriptionController,
+                  hintText: "Type here",
+                  validator: (value) {
+                    if (value == null || value == "") {
+                      return "Description is required";
+                    }
+                    return null;
+                  },
+                ),
+                ListingTextField(
+                  title: "Quantity availiable",
+                  controller: _quantityController,
+                  hintText: "How many quantity do you have?",
+                  textInputType: TextInputType.number,
+                  validator: (value) {
+                    if (value == null || value == "" || int.parse(value) <= 0) {
+                      return "Quantity is required";
+                    }
+                    return null;
+                  },
+                ),
+                ListingDropDown(
                   items: const ["a", "b", "c", "d", "e"],
                   title: "Primary Category",
-                  onChanged: (value) {}),
-              ListingDropDown(
+                  onChanged: (value) {},
+                  validator: (value) {
+                    if (value == null || value == "") {
+                      return "Please select primary category";
+                    }
+                    return null;
+                  },
+                ),
+                ListingDropDown(
                   items: const ["A", "B", "C", "D", "E"],
                   title: "Secondary Category (optional)",
-                  onChanged: (value) {}),
-              SizedBox(
-                height: 0.015.h(context),
-              ),
-              const Divider(),
-              _location(context),
-              SizedBox(
-                height: 0.015.h(context),
-              ),
-              _rules(context, () {
-                context.read<RulesCubit>().copyRulesToTemp();
-                rulesBottomSheet(context);
-              }),
-              SizedBox(
-                height: 0.03.h(context),
-              ),
-            ],
+                  onChanged: (value) {},
+                ),
+                SizedBox(
+                  height: 0.015.h(context),
+                ),
+                const Divider(),
+                _location(context),
+                SizedBox(
+                  height: 0.015.h(context),
+                ),
+                _rules(context, () {
+                  context.read<RulesCubit>().copyRulesToTemp();
+                  rulesBottomSheet(context);
+                }),
+                SizedBox(
+                  height: 0.03.h(context),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -291,7 +333,9 @@ class _AddNewListingState extends State<AddNewListing> {
                 backgroundColor: Colors.blue,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10))),
-            onPressed: () {},
+            onPressed: () {
+              if (_formKey.currentState?.validate() ?? false) {}
+            },
             child: const Padding(
               padding: EdgeInsets.symmetric(vertical: 12),
               child: Text(
