@@ -52,6 +52,7 @@ class _MyAppState extends State<MyApp> {
                 CategoryListBloc(sl())..add(const FetchCategoryList()))
       ],
       child: MaterialApp.router(
+        title : "Rentpal",
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           useMaterial3: true,
