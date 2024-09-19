@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:rentpal/core/constant/image_path.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rentpal/core/extension/extension.dart';
+import 'package:rentpal/features/auth/presentation/widgets/auth_text_field.dart';
+import 'package:rentpal/features/home/presentation/cubit/navigator_cubit.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});
@@ -8,9 +10,6 @@ class RegisterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Register"),
-      ),
       body: SingleChildScrollView(
         child: Stack(
           children: [
@@ -44,8 +43,11 @@ class RegisterPage extends StatelessWidget {
 
   _registerForm(BuildContext context) {
     final key = GlobalKey<FormState>();
-    // final emailCtrl = TextEditingController();
-    // final passwordCtrl = TextEditingController();
+    final fNameCtrl = TextEditingController();
+    final lNameCtrl = TextEditingController();
+    final emailCtrl = TextEditingController();
+    final passwordCtrl = TextEditingController();
+    final confirmPasswordCtrl = TextEditingController();
 
     return Container(
       width: 0.85.w(context),
@@ -63,79 +65,82 @@ class RegisterPage extends StatelessWidget {
           children: [
             SizedBox(height: 0.02.h(context)),
             const Text(
-              "Welcome Back!",
+              "Let's create an account",
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 0.005.h(context)),
-            const Text(
-              "How would you like to create an account?",
-              style: TextStyle(
-                color: Colors.black54,
-                fontSize: 16,
-              ),
+            SizedBox(height: 0.05.h(context)),
+            AuthTextField(
+                textEditingController: fNameCtrl,
+                hintText: "First Name",
+                validator: (value) {
+                  if (value == null || value == "") {
+                    return "First name is required";
+                  }
+                  return null;
+                }),
+            SizedBox(height: 0.03.h(context)),
+            AuthTextField(
+                textEditingController: lNameCtrl,
+                hintText: "Last Name",
+                validator: (value) {
+                  if (value == null || value == "") {
+                    return "Last name is required";
+                  }
+                  return null;
+                }),
+            SizedBox(height: 0.03.h(context)),
+            AuthTextField(
+              textEditingController: emailCtrl,
+              hintText: "Email",
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Email is required";
+                } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                  return 'Please enter a valid email address';
+                }
+                return null;
+              },
             ),
-            // SizedBox(height: 0.03.h(context)),
-            // TextFormField(
-            //   cursorColor: Colors.blue,
-            //   decoration: const InputDecoration(
-            //     hintText: "Email",
-            //     hintStyle: TextStyle(
-            //       color: Colors.grey,
-            //       fontWeight: FontWeight.w400,
-            //     ),
-            //     focusedBorder: UnderlineInputBorder(
-            //       borderSide: BorderSide(
-            //         color: Colors.grey,
-            //       ),
-            //     ),
-            //     enabledBorder: UnderlineInputBorder(
-            //       borderSide: BorderSide(
-            //         color: Colors.grey,
-            //       ),
-            //     ),
-            //   ),
-            //   controller: emailCtrl,
-            // ),
-            // SizedBox(height: 0.005.h(context)),
-            // BlocBuilder<PasswordVisibilityCubit, bool>(
-            //     builder: (context, state) {
-            //   return TextFormField(
-            //     controller: passwordCtrl,
-            //     obscureText: state,
-            //     cursorColor: Colors.blue,
-            //     decoration: InputDecoration(
-            //       hintText: "Password",
-            //       suffixIcon: IconButton(
-            //         onPressed: () => context
-            //             .read<PasswordVisibilityCubit>()
-            //             .toogleObscureText(),
-            //         icon: Icon(state
-            //             ? Icons.remove_red_eye
-            //             : Icons.remove_red_eye_outlined),
-            //       ),
-            //       hintStyle: const TextStyle(
-            //         color: Colors.grey,
-            //         fontWeight: FontWeight.w400,
-            //       ),
-            //       focusedBorder: const UnderlineInputBorder(
-            //         borderSide: BorderSide(
-            //           color: Colors.grey,
-            //         ),
-            //       ),
-            //       enabledBorder: const UnderlineInputBorder(
-            //         borderSide: BorderSide(
-            //           color: Colors.grey,
-            //         ),
-            //       ),
-            //     ),
-            //   );
-            // }),
+            SizedBox(height: 0.03.h(context)),
+            AuthTextField(
+              textEditingController: passwordCtrl,
+              hintText: "Password",
+              isObscure: true,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Password is required';
+                } else if (value.length < 6) {
+                  return 'Password must be at least 6 characters long';
+                } else if (value != confirmPasswordCtrl.text) {
+                  return "Password don't match";
+                }
+                return null;
+              },
+            ),
+            SizedBox(height: 0.03.h(context)),
+            AuthTextField(
+              textEditingController: confirmPasswordCtrl,
+              hintText: "Confirm",
+              isObscure: true,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Password is required';
+                } else if (value.length < 6) {
+                  return 'Password must be at least 6 characters long';
+                } else if (value != passwordCtrl.text) {
+                  return "Password don't match";
+                }
+                return null;
+              },
+            ),
             SizedBox(height: 0.03.h(context)),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                if (key.currentState?.validate() ?? false) {}
+              },
               child: Container(
                 padding:
                     const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
@@ -146,53 +151,12 @@ class RegisterPage extends StatelessWidget {
                 ),
                 child: const Center(
                     child: Text(
-                  "Sign up with email",
+                  "Create an Account",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
-                )),
-              ),
-            ),
-            SizedBox(height: 0.02.h(context)),
-            GestureDetector(
-              onTap: () {},
-              child: const Text(
-                "Forgot Password",
-                style: TextStyle(
-                  color: Colors.blue,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            Divider(
-              indent: 50,
-              endIndent: 50,
-              color: Colors.grey.shade300,
-            ),
-            const Text(
-              "or sign up with",
-              style: TextStyle(
-                color: Colors.black54,
-                fontSize: 14,
-              ),
-            ),
-            SizedBox(height: 0.02.h(context)),
-            GestureDetector(
-              onTap: () {},
-              child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                width: MediaQuery.of(context).size.width * 0.5,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  border: Border.all(color: Colors.black38),
-                ),
-                child: Center(
-                    child: Image.asset(
-                  googleLogo,
-                  height: 0.025.h(context),
                 )),
               ),
             ),
@@ -206,7 +170,9 @@ class RegisterPage extends StatelessWidget {
             ),
             SizedBox(height: 0.005.h(context)),
             GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  context.read<NavigatorCubit>().onChanged(1);
+                },
                 child: const Text(
                   "Login",
                   style: TextStyle(

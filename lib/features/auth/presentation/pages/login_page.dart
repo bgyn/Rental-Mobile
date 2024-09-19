@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:rentpal/core/constant/image_path.dart';
 import 'package:rentpal/core/extension/extension.dart';
 import 'package:rentpal/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:rentpal/features/auth/presentation/widgets/auth_text_field.dart';
+import 'package:rentpal/features/home/presentation/cubit/navigator_cubit.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -74,7 +74,7 @@ class LoginPage extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: 0.03.h(context)),
-                        RentpalTextField(
+                        AuthTextField(
                           textEditingController: emailCtrl,
                           hintText: "Email",
                           validator: (value) {
@@ -88,7 +88,7 @@ class LoginPage extends StatelessWidget {
                           },
                         ),
                         SizedBox(height: 0.005.h(context)),
-                        RentpalTextField(
+                        AuthTextField(
                           textEditingController: passwordCtrl,
                           hintText: "Password",
                           isObscure: true,
@@ -147,30 +147,6 @@ class LoginPage extends StatelessWidget {
                           endIndent: 50,
                           color: Colors.grey.shade300,
                         ),
-                        const Text(
-                          "or sign in with",
-                          style: TextStyle(
-                            color: Colors.black54,
-                            fontSize: 14,
-                          ),
-                        ),
-                        SizedBox(height: 0.02.h(context)),
-                        GestureDetector(
-                          onTap: () {},
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(vertical: 8),
-                            width: MediaQuery.of(context).size.width * 0.5,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              border: Border.all(color: Colors.black38),
-                            ),
-                            child: Center(
-                                child: Image.asset(
-                              googleLogo,
-                              height: 0.025.h(context),
-                            )),
-                          ),
-                        ),
                         SizedBox(height: 0.02.h(context)),
                         const Text(
                           "Don't have an account",
@@ -181,7 +157,9 @@ class LoginPage extends StatelessWidget {
                         ),
                         SizedBox(height: 0.005.h(context)),
                         GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              context.read<NavigatorCubit>().onChanged(2);
+                            },
                             child: const Text(
                               "Sign Up",
                               style: TextStyle(

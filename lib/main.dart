@@ -7,7 +7,6 @@ import 'package:rentpal/features/add_listing/cubit/address_cubit.dart';
 import 'package:rentpal/features/add_listing/cubit/image_handler_cubit.dart';
 import 'package:rentpal/features/add_listing/cubit/rules_cubit.dart';
 import 'package:rentpal/features/auth/presentation/cubit/auth_cubit.dart';
-import 'package:rentpal/features/auth/presentation/cubit/password_visibility_cubit.dart';
 import 'package:rentpal/features/categories/presentation/bloc/category_list_bloc.dart';
 import 'package:rentpal/features/categories/presentation/bloc/category_list_event.dart';
 import 'package:rentpal/features/home/presentation/cubit/navigator_cubit.dart';
@@ -41,7 +40,6 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => PasswordVisibilityCubit()),
         BlocProvider(create: (_) => AddressCubit()),
         BlocProvider(create: (_) => RulesCubit()),
         BlocProvider(create: (_) => ImageHandlerCubit()),
@@ -52,7 +50,7 @@ class _MyAppState extends State<MyApp> {
                 CategoryListBloc(sl())..add(const FetchCategoryList()))
       ],
       child: MaterialApp.router(
-        title : "Rentpal",
+        title: "Rentpal",
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           useMaterial3: true,
