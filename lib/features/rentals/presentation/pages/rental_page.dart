@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rentpal/config/theme/color_palette.dart';
 import 'package:rentpal/core/extension/extension.dart';
 
 class RentalPage extends StatelessWidget {
@@ -10,9 +11,10 @@ class RentalPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: ColorPalette.primaryColor,
           title: const Text(
             "Rentals",
+            style: TextStyle(color: Colors.white),
           ),
         ),
         body: Column(children: [

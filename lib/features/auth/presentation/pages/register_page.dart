@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rentpal/config/theme/color_palette.dart';
 import 'package:rentpal/core/extension/extension.dart';
 import 'package:rentpal/features/auth/presentation/widgets/auth_text_field.dart';
 import 'package:rentpal/features/home/presentation/cubit/navigator_cubit.dart';
@@ -9,6 +11,12 @@ class RegisterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent, // Set the status bar color to white
+      statusBarIconBrightness:
+          Brightness.light, // Set icons to dark (visible on white background)
+      statusBarBrightness: Brightness.light, // For iOS status bar
+    ));
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(
@@ -16,7 +24,7 @@ class RegisterPage extends StatelessWidget {
             Container(
               width: double.infinity,
               height: MediaQuery.of(context).size.height * 0.18,
-              decoration: const BoxDecoration(color: Colors.blue),
+              decoration: const BoxDecoration(color: ColorPalette.primaryColor),
               child: const Center(
                 child: Text(
                   "Rentpal",
@@ -147,7 +155,7 @@ class RegisterPage extends StatelessWidget {
                 width: MediaQuery.of(context).size.width * 0.5,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
-                  color: Colors.blue,
+                  color: ColorPalette.primaryColor,
                 ),
                 child: const Center(
                     child: Text(
@@ -176,7 +184,7 @@ class RegisterPage extends StatelessWidget {
                 child: const Text(
                   "Login",
                   style: TextStyle(
-                    color: Colors.blue,
+                    color: ColorPalette.primaryColor,
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
                   ),

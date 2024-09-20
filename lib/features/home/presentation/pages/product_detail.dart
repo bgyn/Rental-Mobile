@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:rentpal/config/theme/color_palette.dart';
 import 'package:rentpal/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:rentpal/features/home/dummy_model.dart';
 import 'package:rentpal/features/home/presentation/widgets/rental_category.dart';
@@ -27,7 +28,7 @@ class ProductDetail extends StatelessWidget {
             SliverAppBar(
               toolbarHeight: 40,
               floating: true,
-              backgroundColor: Colors.blue,
+              backgroundColor: ColorPalette.primaryColor,
               elevation: 1,
               surfaceTintColor: Colors.transparent,
               leading: IconButton(
@@ -123,7 +124,8 @@ class ProductDetail extends StatelessWidget {
                                   height: 80,
                                   decoration: BoxDecoration(
                                       border: Border.all(
-                                          color: Colors.blue, width: 2),
+                                          color: ColorPalette.primaryColor,
+                                          width: 2),
                                       color: Colors.grey,
                                       borderRadius: BorderRadius.circular(50)),
                                 )
@@ -183,8 +185,9 @@ class ProductDetail extends StatelessWidget {
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 15),
                                 decoration: BoxDecoration(
-                                  border:
-                                      Border.all(color: Colors.blue, width: 2),
+                                  border: Border.all(
+                                      color: ColorPalette.primaryColor,
+                                      width: 2),
                                 ),
                                 child: const Center(
                                     child: Text("See all Andrews's listing")),
@@ -288,7 +291,7 @@ class ProductDetail extends StatelessWidget {
                           style: ElevatedButton.styleFrom(
                               shape: ContinuousRectangleBorder(
                                   borderRadius: BorderRadius.circular(15)),
-                              backgroundColor: Colors.blue,
+                              backgroundColor: ColorPalette.primaryColor,
                               elevation: 0,
                               shadowColor: Colors.transparent),
                           onPressed: () {

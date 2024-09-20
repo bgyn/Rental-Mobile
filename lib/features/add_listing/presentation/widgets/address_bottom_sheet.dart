@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rentpal/config/theme/color_palette.dart';
 import 'package:rentpal/core/extension/extension.dart';
 import 'package:rentpal/features/add_listing/cubit/address_cubit.dart';
 import 'package:rentpal/features/add_listing/presentation/widgets/listing_text_field.dart';
@@ -44,7 +45,8 @@ addressBottomSheet(context) {
                           children: [
                             const Text(
                               "Add a new address",
-                              style: TextStyle(color: Colors.blue),
+                              style:
+                                  TextStyle(color: ColorPalette.primaryColor),
                             ),
                             Container(
                               margin:
@@ -55,7 +57,7 @@ addressBottomSheet(context) {
                               ),
                               child: Icon(
                                 Icons.add,
-                                color: Colors.blue,
+                                color: ColorPalette.primaryColor,
                                 size: 0.015.toRes(context),
                               ),
                             ),
@@ -84,7 +86,7 @@ addressBottomSheet(context) {
                                         EdgeInsets.all(0.01.toRes(context)),
                                     decoration: BoxDecoration(
                                       border: Border.all(
-                                        color: Colors.blue,
+                                        color: ColorPalette.primaryColor,
                                       ),
                                       borderRadius: BorderRadius.circular(10),
                                     ),
@@ -92,7 +94,7 @@ addressBottomSheet(context) {
                                       child: Text(
                                         "Cancel",
                                         style: TextStyle(
-                                          color: Colors.blue,
+                                          color: ColorPalette.primaryColor,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
@@ -105,7 +107,7 @@ addressBottomSheet(context) {
                                     padding:
                                         EdgeInsets.all(0.01.toRes(context)),
                                     decoration: BoxDecoration(
-                                      color: Colors.blue,
+                                      color: ColorPalette.primaryColor,
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     child: const Center(
@@ -132,7 +134,7 @@ addressBottomSheet(context) {
                         ),
                         child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.blue,
+                                backgroundColor: ColorPalette.primaryColor,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10))),
                             onPressed: () {},

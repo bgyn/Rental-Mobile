@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rentpal/config/theme/color_palette.dart';
 import 'package:rentpal/features/auth/presentation/cubit/password_visibility_cubit.dart';
 
 class AuthTextField extends StatelessWidget {
@@ -51,6 +52,10 @@ class AuthTextField extends StatelessWidget {
                   color: Colors.grey,
                 ),
               ),
+              focusedErrorBorder: const UnderlineInputBorder(
+                  borderSide: BorderSide(color: ColorPalette.errorColor)),
+              errorBorder: const UnderlineInputBorder(
+                  borderSide: BorderSide(color: ColorPalette.errorColor)),
             ),
             validator: validator,
           );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rentpal/config/theme/color_palette.dart';
 import 'package:rentpal/core/extension/extension.dart';
 
 showPopup(context) {
@@ -20,7 +21,7 @@ showPopup(context) {
                   width: 0.8.w(context),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
+                      backgroundColor: ColorPalette.primaryColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),

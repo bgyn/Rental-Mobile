@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rentpal/config/theme/color_palette.dart';
 import 'package:rentpal/core/extension/extension.dart';
 
 class ListingTextField extends StatelessWidget {
@@ -45,12 +46,12 @@ class ListingTextField extends StatelessWidget {
             ),
             errorBorder: const OutlineInputBorder(
               borderSide: BorderSide(
-                color: Colors.red,
+                color: ColorPalette.errorColor,
               ),
             ),
             focusedErrorBorder: const OutlineInputBorder(
               borderSide: BorderSide(
-                color: Colors.red,
+                color: ColorPalette.errorColor,
               ),
             ),
             focusedBorder: const OutlineInputBorder(),

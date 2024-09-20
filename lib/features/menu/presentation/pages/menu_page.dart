@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rentpal/config/theme/color_palette.dart';
 import 'package:rentpal/core/extension/extension.dart';
 import 'package:rentpal/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:rentpal/features/menu/presentation/widgets/menu_option_tiles.dart';
@@ -17,8 +18,11 @@ class _MenuPageState extends State<MenuPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        title: const Text("Menu"),
+        backgroundColor: ColorPalette.primaryColor,
+        title: const Text(
+          "Menu",
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 0.015.toRes(context)),
@@ -66,7 +70,7 @@ class _MenuPageState extends State<MenuPage> {
           width: 50,
           decoration: BoxDecoration(
               color: Colors.grey.shade400,
-              border: Border.all(color: Colors.blue),
+              border: Border.all(color: ColorPalette.primaryColor),
               borderRadius: BorderRadius.circular(50)),
         ),
         SizedBox(

@@ -1,8 +1,8 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:rentpal/config/theme/color_palette.dart';
 import 'package:rentpal/core/extension/extension.dart';
 
 class VersionText extends StatefulWidget {
@@ -24,7 +24,6 @@ class _VersionTextState extends State<VersionText> {
 
   Future<void> _getVersionInfo() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    log(packageInfo.toString());
     setState(() {
       versionInfo =
           'Version ${packageInfo.version}.${packageInfo.buildNumber}p - $platform';
@@ -46,7 +45,7 @@ class _VersionTextState extends State<VersionText> {
         Icon(
           Icons.gps_fixed,
           size: 0.018.toRes(context),
-          color: Colors.blue,
+          color: ColorPalette.primaryColor,
         )
       ],
     );

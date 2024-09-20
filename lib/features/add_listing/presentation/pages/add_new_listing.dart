@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:rentpal/config/theme/color_palette.dart';
 import 'package:rentpal/core/extension/extension.dart';
 import 'package:rentpal/features/add_listing/cubit/image_handler_cubit.dart';
 import 'package:rentpal/features/add_listing/cubit/rules_cubit.dart';
@@ -330,7 +331,7 @@ class _AddNewListingState extends State<AddNewListing> {
         width: 0.9.w(context),
         child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,
+                backgroundColor: ColorPalette.primaryColor,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10))),
             onPressed: () {
@@ -379,12 +380,12 @@ class _AddNewListingState extends State<AddNewListing> {
             height: 0.04.toRes(context),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: Colors.blue)),
+                border: Border.all(color: ColorPalette.primaryColor)),
             child: const Center(
                 child: Text(
               "Add Address",
               style: TextStyle(
-                color: Colors.blue,
+                color: ColorPalette.primaryColor,
                 fontWeight: FontWeight.bold,
               ),
             )),
@@ -460,12 +461,12 @@ class _AddNewListingState extends State<AddNewListing> {
             height: 0.04.toRes(context),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: Colors.blue)),
+                border: Border.all(color: ColorPalette.primaryColor)),
             child: const Center(
                 child: Text(
               "Add Rules",
               style: TextStyle(
-                color: Colors.blue,
+                color: ColorPalette.primaryColor,
                 fontWeight: FontWeight.bold,
               ),
             )),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rentpal/config/theme/color_palette.dart';
 import 'package:rentpal/core/extension/extension.dart';
 
 class ListingDropDown extends StatelessWidget {
@@ -41,7 +42,7 @@ class ListingDropDown extends StatelessWidget {
               ),
               focusedBorder: OutlineInputBorder(),
               errorBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.red),
+                borderSide: BorderSide(color: ColorPalette.errorColor),
               ),
             ),
             dropdownColor: Colors.grey.shade100,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:rentpal/config/theme/color_palette.dart';
 import 'package:rentpal/core/extension/extension.dart';
 import 'package:rentpal/features/add_listing/cubit/rules_cubit.dart';
 
@@ -115,7 +116,8 @@ rulesBottomSheet(context) {
                               children: [
                                 Text(
                                   entry.value,
-                                  style: const TextStyle(color: Colors.blue),
+                                  style: const TextStyle(
+                                      color: ColorPalette.primaryColor),
                                 ),
                               ],
                             ),
@@ -177,11 +179,11 @@ rulesBottomSheet(context) {
                               borderRadius: BorderRadius.circular(5),
                               border: Border.all(
                                 width: 3,
-                                color: Colors.blue,
+                                color: ColorPalette.primaryColor,
                               )),
                           child: const Icon(
                             Icons.add,
-                            color: Colors.blue,
+                            color: ColorPalette.primaryColor,
                             weight: 3,
                           ),
                         ),
@@ -196,7 +198,7 @@ rulesBottomSheet(context) {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadiusDirectional.circular(10),
                         ),
-                        backgroundColor: Colors.blue,
+                        backgroundColor: ColorPalette.primaryColor,
                       ),
                       onPressed: () {
                         context.read<RulesCubit>().onSave();

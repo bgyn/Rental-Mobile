@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:rentpal/config/theme/color_palette.dart';
 import 'package:rentpal/features/add_listing/presentation/pages/add_listing_page.dart';
 import 'package:rentpal/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:rentpal/features/auth/presentation/pages/login_page.dart';
@@ -50,10 +51,11 @@ class _HomeState extends State<Home> {
                 ? loggedInRoute[currentIndex.state]
                 : loggedOutRoute[currentIndex.state],
             bottomNavigationBar: GNav(
+              curve: Curves.elasticIn,
               iconSize: 22,
               selectedIndex: currentIndex.state,
               onTabChange: context.read<NavigatorCubit>().onChanged,
-              activeColor: Colors.blue,
+              activeColor: ColorPalette.primaryColor,
               color: Colors.black,
               tabs: authState.isLoggedIn == true
                   ? const [

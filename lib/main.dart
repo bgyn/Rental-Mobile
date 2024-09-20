@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rentpal/config/routes/route_config.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -38,6 +39,12 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent, // Set the status bar color to white
+      statusBarIconBrightness:
+          Brightness.light, // Set icons to dark (visible on white background)
+      statusBarBrightness: Brightness.light, // For iOS status bar
+    ));
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => AddressCubit()),

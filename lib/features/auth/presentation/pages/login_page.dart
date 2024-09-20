@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:rentpal/config/theme/color_palette.dart';
 import 'package:rentpal/core/extension/extension.dart';
 import 'package:rentpal/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:rentpal/features/auth/presentation/widgets/auth_text_field.dart';
@@ -25,7 +27,8 @@ class LoginPage extends StatelessWidget {
               Container(
                 width: double.infinity,
                 height: MediaQuery.of(context).size.height * 0.18,
-                decoration: const BoxDecoration(color: Colors.blue),
+                decoration:
+                    const BoxDecoration(color: ColorPalette.primaryColor),
                 child: const Center(
                   child: Text(
                     "Rentpal",
@@ -117,7 +120,7 @@ class LoginPage extends StatelessWidget {
                             width: MediaQuery.of(context).size.width * 0.5,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
-                              color: Colors.blue,
+                              color: ColorPalette.primaryColor,
                             ),
                             child: const Center(
                                 child: Text(
@@ -136,7 +139,7 @@ class LoginPage extends StatelessWidget {
                           child: const Text(
                             "Forgot Password",
                             style: TextStyle(
-                              color: Colors.blue,
+                              color: ColorPalette.primaryColor,
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),
@@ -163,7 +166,7 @@ class LoginPage extends StatelessWidget {
                             child: const Text(
                               "Sign Up",
                               style: TextStyle(
-                                color: Colors.blue,
+                                color: ColorPalette.primaryColor,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,
                               ),
