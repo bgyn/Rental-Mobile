@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:rentpal/config/theme/color_palette.dart';
 import 'package:rentpal/core/extension/extension.dart';
 import 'package:rentpal/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:rentpal/features/home/presentation/cubit/navigator_cubit.dart';
@@ -34,23 +35,27 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: ColorPalette.primaryColor,
         body: SizedBox(
-      width: double.infinity,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            "Rentpal",
-            style: TextStyle(
-              fontSize: 0.03.toRes(context),
-            ),
+          width: double.infinity,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Rentpal",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 0.03.toRes(context),
+                ),
+              ),
+              SizedBox(
+                height: 0.2.h(context),
+              ),
+              const CircularProgressIndicator(
+                color: Colors.white,
+              ),
+            ],
           ),
-          SizedBox(
-            height: 0.2.h(context),
-          ),
-          const CircularProgressIndicator(),
-        ],
-      ),
-    ));
+        ));
   }
 }

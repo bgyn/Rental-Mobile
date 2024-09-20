@@ -16,9 +16,6 @@ class LoginPage extends StatelessWidget {
     final emailCtrl = TextEditingController();
     final passwordCtrl = TextEditingController();
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Login"),
-      ),
       body: LayoutBuilder(builder: (context, constraint) {
         return SingleChildScrollView(
           child: Stack(
