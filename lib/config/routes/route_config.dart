@@ -45,7 +45,7 @@ final routeConfig = GoRouter(
       routes: [
         GoRoute(
           path: "/",
-          builder: (context, state) => const HomePage(),
+          builder: (context, state) => const DashboardPage(),
         ),
         GoRoute(
           path: "/login",

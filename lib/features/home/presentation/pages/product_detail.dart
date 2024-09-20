@@ -61,22 +61,26 @@ class ProductDetail extends StatelessWidget {
                       SizedBox(
                         width: double.infinity,
                         height: 300,
-                        child: CachedNetworkImage(
-                          fit: BoxFit.fill,
-                          imageUrl: product.img[0],
-                          placeholder: (context, url) {
-                            return SizedBox(
-                              width: double.infinity,
-                              height: 300,
-                              child: Shimmer.fromColors(
-                                baseColor: Colors.grey.shade300,
-                                highlightColor: Colors.white,
-                                child: Container(
-                                  color: Colors.grey,
+                        child: Hero(
+                          tag: product.img[0],
+                          transitionOnUserGestures: true,
+                          child: CachedNetworkImage(
+                            fit: BoxFit.fill,
+                            imageUrl: product.img[0],
+                            placeholder: (context, url) {
+                              return SizedBox(
+                                width: double.infinity,
+                                height: 300,
+                                child: Shimmer.fromColors(
+                                  baseColor: Colors.grey.shade300,
+                                  highlightColor: Colors.white,
+                                  child: Container(
+                                    color: Colors.grey,
+                                  ),
                                 ),
-                              ),
-                            );
-                          },
+                              );
+                            },
+                          ),
                         ),
                       ),
                       Container(

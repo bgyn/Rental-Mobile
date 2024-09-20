@@ -21,7 +21,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   List loggedInRoute = [
-    const HomePage(),
+    const DashboardPage(),
     RentalPage(),
     const AddListingPage(),
     const MyListingPage(),
@@ -29,7 +29,7 @@ class _HomeState extends State<Home> {
   ];
 
   List loggedOutRoute = [
-    const HomePage(),
+    const DashboardPage(),
     const LoginPage(),
     const RegisterPage(),
   ];

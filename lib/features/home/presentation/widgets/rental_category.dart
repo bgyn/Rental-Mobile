@@ -37,19 +37,23 @@ class RentalCategory extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(5),
-                            clipBehavior: Clip.hardEdge,
-                            child: CachedNetworkImage(
-                              imageUrl: productsList[index].img[0],
-                              placeholder: (context, url) => SizedBox(
-                                width: 140,
-                                height: 95,
-                                child: Shimmer.fromColors(
-                                  baseColor: Colors.grey.shade300,
-                                  highlightColor: Colors.white,
-                                  child: Container(
-                                    color: Colors.grey,
+                          Hero(
+                            tag: productsList[index].img[0],
+                            transitionOnUserGestures: true,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(5),
+                              clipBehavior: Clip.hardEdge,
+                              child: CachedNetworkImage(
+                                imageUrl: productsList[index].img[0],
+                                placeholder: (context, url) => SizedBox(
+                                  width: 140,
+                                  height: 95,
+                                  child: Shimmer.fromColors(
+                                    baseColor: Colors.grey.shade300,
+                                    highlightColor: Colors.white,
+                                    child: Container(
+                                      color: Colors.grey,
+                                    ),
                                   ),
                                 ),
                               ),

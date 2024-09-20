@@ -3,16 +3,17 @@ import 'package:rentpal/features/home/presentation/widgets/carousel.dart';
 import 'package:rentpal/features/home/presentation/widgets/rental_category.dart';
 import 'package:rentpal/features/categories/presentation/widgets/rental_category_option.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class DashboardPage extends StatefulWidget {
+  const DashboardPage({super.key});
 
-  static route() => MaterialPageRoute(builder: (context) => const HomePage());
+  static route() =>
+      MaterialPageRoute(builder: (context) => const DashboardPage());
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<DashboardPage> createState() => _DashboardPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _DashboardPageState extends State<DashboardPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
