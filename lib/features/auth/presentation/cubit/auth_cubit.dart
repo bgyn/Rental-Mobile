@@ -5,8 +5,6 @@ class AuthState {
   bool? isloading;
   AuthState({this.isLoggedIn = false, this.isloading = false});
 
-  get state => null;
-
   AuthState copyWith({bool? isLoggedIn, bool? isloading}) {
     return AuthState(
         isLoggedIn: isLoggedIn ?? this.isLoggedIn,
