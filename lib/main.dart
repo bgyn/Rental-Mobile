@@ -5,7 +5,7 @@ import 'package:rentpal/config/routes/route_config.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:rentpal/core/permission/permission_handler.dart';
 import 'package:rentpal/features/add_listing/cubit/address_cubit.dart';
-import 'package:rentpal/features/add_listing/cubit/image_handler_cubit.dart';
+import 'package:rentpal/core/cubit/image_handler_cubit.dart';
 import 'package:rentpal/features/add_listing/cubit/rules_cubit.dart';
 import 'package:rentpal/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:rentpal/features/categories/presentation/bloc/category_list_bloc.dart';

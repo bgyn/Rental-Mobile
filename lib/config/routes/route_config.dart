@@ -10,6 +10,7 @@ import 'package:rentpal/features/home/presentation/pages/product_detail.dart';
 import 'package:rentpal/features/menu/presentation/pages/menu_page.dart';
 import 'package:rentpal/features/add_listing/presentation/pages/add_new_listing.dart';
 import 'package:rentpal/features/my_listing/presentation/pages/my_listing_page.dart';
+import 'package:rentpal/features/profile/presentation/pages/edit_profile_page.dart';
 import 'package:rentpal/features/rentals/presentation/pages/rental_page.dart';
 import 'package:rentpal/features/splash/presentation/splash_screen.dart';
 
@@ -39,6 +40,9 @@ final routeConfig = GoRouter(
         return ProductDetail(product: product);
       },
     ),
+    GoRoute(
+        path: "/edit-profile",
+        builder: (context, state) => const EditProfilePage()),
     ShellRoute(
       navigatorKey: _shellNavigatorKey,
       builder: (context, stae, child) => Home(child: child),

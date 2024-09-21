@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rentpal/config/theme/color_palette.dart';
 import 'package:rentpal/core/extension/extension.dart';
 import 'package:rentpal/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:rentpal/features/home/presentation/cubit/navigator_cubit.dart';
 import 'package:rentpal/features/menu/presentation/widgets/menu_option_tiles.dart';
 import 'package:rentpal/features/menu/presentation/widgets/version_info.dart';
 
@@ -44,13 +46,13 @@ class _MenuPageState extends State<MenuPage> {
               SizedBox(
                 height: 0.05.h(context),
               ),
-              GestureDetector(
-                onTap: () {
-                  context.read<AuthCubit>().logout();
-                },
-                child:
-                    const MenuOptionTiles(icon: Icons.logout, title: "logout"),
-              ),
+              MenuOptionTiles(
+                  icon: Icons.logout,
+                  title: "logout",
+                  onTap: () {
+                    context.read<AuthCubit>().logout();
+                    context.read<NavigatorCubit>().onChanged(1);
+                  }),
               SizedBox(
                 height: 0.05.h(context),
               ),
@@ -99,9 +101,10 @@ class _MenuPageState extends State<MenuPage> {
         SizedBox(
           height: 0.01.h(context),
         ),
-        const MenuOptionTiles(
+        MenuOptionTiles(
           icon: Icons.person_2_outlined,
           title: "Edit profile",
+          onTap: () => GoRouter.of(context).push("/edit-profile"),
         ),
         const MenuOptionTiles(
           icon: Icons.dataset,

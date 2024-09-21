@@ -30,6 +30,14 @@ class ImageHandlerCubit extends Cubit<List<XFile>> {
     emit(updatedState);
   }
 
+  void getProfileImage({required ImageSource src}) async {
+    final file = await getImage(src);
+
+    if (file == null) return;
+    final newState = [file];
+    emit(newState);
+  }
+
   void reset() {
     emit([]);
   }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:rentpal/core/extension/extension.dart';
-import 'package:rentpal/features/add_listing/cubit/image_handler_cubit.dart';
+import 'package:rentpal/core/cubit/image_handler_cubit.dart';
 
 addPhotoOption(context) {
   return showModalBottomSheet(
