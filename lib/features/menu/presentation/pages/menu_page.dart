@@ -118,9 +118,10 @@ class _MenuPageState extends State<MenuPage> {
           icon: Icons.favorite_outline,
           title: "Favorites",
         ),
-        const MenuOptionTiles(
+        MenuOptionTiles(
           icon: Icons.key,
           title: "Password",
+          onTap: () => GoRouter.of(context).push(("/forgot-password")),
         ),
         const MenuOptionTiles(
           icon: Icons.payments,

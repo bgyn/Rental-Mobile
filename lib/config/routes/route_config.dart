@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rentpal/features/add_listing/presentation/pages/add_listing_page.dart';
+import 'package:rentpal/features/auth/presentation/pages/forgot_password_page.dart';
 import 'package:rentpal/features/auth/presentation/pages/login_page.dart';
 import 'package:rentpal/features/auth/presentation/pages/register_page.dart';
 import 'package:rentpal/features/home/dummy_model.dart';
@@ -32,6 +33,10 @@ final routeConfig = GoRouter(
     GoRoute(
       path: "/signin",
       builder: (context, state) => const LoginPage(),
+    ),
+    GoRoute(
+      path: "/forgot-password",
+      builder: (context, state) => const ForgotPasswordPage(),
     ),
     GoRoute(
       path: "/product-detail",
