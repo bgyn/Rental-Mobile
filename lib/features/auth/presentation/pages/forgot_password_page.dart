@@ -92,10 +92,10 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 AuthTextField(
                   isObscure: true,
                   textEditingController: _confirmPasswordCtrl,
-                  hintText: "Congirm password",
+                  hintText: "Confirm password",
                   validator: (value) {
                     if (value == null || value == "") {
-                      return "Old password in required";
+                      return "Confirm password in required";
                     } else if (value != _newPasswordCtrl.text) {
                       return "Password don't match";
                     }
