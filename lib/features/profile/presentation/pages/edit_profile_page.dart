@@ -123,16 +123,34 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     textEditingController: _fNameCtrl,
                     title: "First Name",
                     hintText: "e.g. Ram",
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "First name is required";
+                      }
+                      return null;
+                    },
                   ),
                   ProfileTextFormField(
                     textEditingController: _lNameCtrl,
                     title: "Last Name",
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Last name is required";
+                      }
+                      return null;
+                    },
                     hintText: "e.g. Gurung",
                   ),
                   ProfileTextFormField(
                     textEditingController: _addressCtrl,
                     title: "City and State",
                     hintText: "e.g. Bharatpur, Bagmati",
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "City and State is required";
+                      }
+                      return null;
+                    },
                   ),
                   ProfileTextField(
                     textEditingController: _aboutCtrl,
@@ -151,7 +169,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
       bottomNavigationBar: Padding(
         padding: EdgeInsets.all(0.015.toRes(context)),
         child: ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            if (_key.currentState?.validate() ?? false) {}
+          },
           style: ElevatedButton.styleFrom(
               shape: ContinuousRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
