@@ -4,7 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:rentpal/core/extension/extension.dart';
 import 'package:rentpal/core/cubit/image_handler_cubit.dart';
 
-addPhotoOption(context) {
+addPhotoOption(context, String from) {
   return showModalBottomSheet(
     context: context,
     builder: (context) {
@@ -34,9 +34,13 @@ addPhotoOption(context) {
                       height: 0.015.h(context),
                     ),
                     GestureDetector(
-                      onTap: () => context
-                          .read<ImageHandlerCubit>()
-                          .getImages(src: ImageSource.camera),
+                      onTap: () => from == 'edit'
+                          ? context
+                              .read<ImageHandlerCubit>()
+                              .getProfileImage(src: ImageSource.camera)
+                          : context
+                              .read<ImageHandlerCubit>()
+                              .getImages(src: ImageSource.camera),
                       child: Padding(
                         padding: EdgeInsets.only(left: 0.03.w(context)),
                         child: const Text("Camera"),
@@ -50,9 +54,13 @@ addPhotoOption(context) {
                       height: 0.01.h(context),
                     ),
                     GestureDetector(
-                      onTap: () => context
-                          .read<ImageHandlerCubit>()
-                          .getImages(src: ImageSource.gallery),
+                      onTap: () => from == 'edit'
+                          ? context
+                              .read<ImageHandlerCubit>()
+                              .getProfileImage(src: ImageSource.gallery)
+                          : context
+                              .read<ImageHandlerCubit>()
+                              .getImages(src: ImageSource.gallery),
                       child: Padding(
                         padding: EdgeInsets.only(left: 0.03.w(context)),
                         child: const Text("Photos"),

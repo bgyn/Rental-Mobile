@@ -95,7 +95,7 @@ class _AddNewListingState extends State<AddNewListing> {
                       Row(
                         children: [
                           GestureDetector(
-                            onTap: () => addPhotoOption(context),
+                            onTap: () => addPhotoOption(context, "listing"),
                             child: Container(
                               height: 0.135.h(context),
                               decoration: BoxDecoration(

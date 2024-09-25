@@ -102,10 +102,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                     shape: BoxShape.circle,
                                   ),
                                   child: Image.file(
-                                    key: ValueKey(state[0].path +
-                                        DateTime.now()
-                                            .millisecondsSinceEpoch
-                                            .toString()),
                                     File(state[0].path),
                                     fit: BoxFit.cover,
                                   ),
@@ -116,7 +112,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         bottom: 10,
                         right: 10,
                         child: GestureDetector(
-                          onTap: () => addPhotoOption(context),
+                          onTap: () => addPhotoOption(context, "edit"),
                           child: Icon(
                             Icons.camera_alt,
                             size: 0.025.toRes(context),
