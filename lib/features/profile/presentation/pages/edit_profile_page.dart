@@ -23,7 +23,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
   final _addressCtrl = TextEditingController();
   final _aboutCtrl = TextEditingController();
   final _key = GlobalKey<FormState>();
-  bool _onChanged = false;
   late ImageHandlerCubit _imageHandlerCubit;
 
   @override
@@ -61,11 +60,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
           child: SingleChildScrollView(
             child: Form(
               key: _key,
-              onChanged: () {
-                setState(() {
-                  _onChanged = true;
-                });
-              },
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -157,14 +151,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
       bottomNavigationBar: Padding(
         padding: EdgeInsets.all(0.015.toRes(context)),
         child: ElevatedButton(
-          onPressed: _onChanged ? () {} : null,
+          onPressed: () {},
           style: ElevatedButton.styleFrom(
-            shape: ContinuousRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
-            backgroundColor:
-                _onChanged ? ColorPalette.primaryColor : Colors.grey,
-          ),
+              shape: ContinuousRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              backgroundColor: ColorPalette.primaryColor),
           child: const Text(
             "Save",
             style: TextStyle(color: Colors.white),
