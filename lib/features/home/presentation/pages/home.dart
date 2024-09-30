@@ -51,6 +51,7 @@ class _HomeState extends State<Home> {
                 ? loggedInRoute[currentIndex.state]
                 : loggedOutRoute[currentIndex.state],
             bottomNavigationBar: GNav(
+              backgroundColor: Colors.grey.shade200,
               curve: Curves.elasticIn,
               iconSize: 22,
               selectedIndex: currentIndex.state,
