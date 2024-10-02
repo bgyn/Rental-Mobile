@@ -75,7 +75,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   hintText: "New password",
                   validator: (value) {
                     if (value == null || value == "") {
-                      return "Old password in required";
+                      return "New password in required";
                     } else if (value != _confirmPasswordCtrl.text) {
                       return "Password don't match";
                     }
