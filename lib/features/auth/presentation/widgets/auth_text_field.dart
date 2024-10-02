@@ -9,6 +9,7 @@ class AuthTextField extends StatelessWidget {
     required this.textEditingController,
     required this.hintText,
     this.isObscure = false,
+    this.autovalidateMode,
     required this.validator,
   });
 
@@ -16,6 +17,7 @@ class AuthTextField extends StatelessWidget {
   final bool isObscure;
   final String hintText;
   final String? Function(String?)? validator;
+  final AutovalidateMode? autovalidateMode;
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +28,7 @@ class AuthTextField extends StatelessWidget {
           return TextFormField(
             controller: textEditingController,
             obscureText: isObscure ? state : false,
+            autovalidateMode: autovalidateMode ?? AutovalidateMode.disabled,
             decoration: InputDecoration(
               hintText: hintText,
               suffixIcon: isObscure

@@ -93,6 +93,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   isObscure: true,
                   textEditingController: _confirmPasswordCtrl,
                   hintText: "Confirm password",
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) {
                     if (value == null || value == "") {
                       return "Confirm password in required";
