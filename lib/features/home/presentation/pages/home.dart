@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:rentpal/config/theme/color_palette.dart';
+import 'package:rentpal/core/extension/extension.dart';
 import 'package:rentpal/features/add_listing/presentation/pages/add_listing_page.dart';
 import 'package:rentpal/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:rentpal/features/auth/presentation/pages/login_page.dart';
@@ -40,39 +41,56 @@ class _HomeState extends State<Home> {
     final currentIndex = context.watch<NavigatorCubit>();
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, authState) {
-        if (authState.isloading == true) {
+        if (authState.isLoggedIn == true) {
           context.read<NavigatorCubit>().reset();
         }
       },
       child: BlocBuilder<AuthCubit, AuthState>(
         builder: (context, authState) {
-          return Scaffold(
-            body: authState.isLoggedIn == true
-                ? loggedInRoute[currentIndex.state]
-                : loggedOutRoute[currentIndex.state],
-            bottomNavigationBar: GNav(
-              backgroundColor: Colors.grey.shade200,
-              curve: Curves.elasticIn,
-              iconSize: 22,
-              selectedIndex: currentIndex.state,
-              onTabChange: context.read<NavigatorCubit>().onChanged,
-              activeColor: ColorPalette.primaryColor,
-              color: Colors.black,
-              tabs: authState.isLoggedIn == true
-                  ? const [
-                      GButton(icon: Icons.home),
-                      GButton(icon: Icons.message),
-                      GButton(icon: Icons.add),
-                      GButton(icon: Icons.list_alt_outlined),
-                      GButton(icon: Icons.menu),
-                    ]
-                  : const [
-                      GButton(icon: Icons.home),
-                      GButton(icon: Icons.login),
-                      GButton(icon: Icons.app_registration_rounded),
-                    ],
+          return Stack(children: [
+            Scaffold(
+              body: authState.isLoggedIn == true
+                  ? loggedInRoute[currentIndex.state]
+                  : loggedOutRoute[currentIndex.state],
+              bottomNavigationBar: GNav(
+                backgroundColor: Colors.grey.shade200,
+                curve: Curves.elasticIn,
+                iconSize: 22,
+                selectedIndex: currentIndex.state,
+                onTabChange: context.read<NavigatorCubit>().onChanged,
+                activeColor: ColorPalette.primaryColor,
+                color: Colors.black,
+                tabs: authState.isLoggedIn == true
+                    ? const [
+                        GButton(icon: Icons.home),
+                        GButton(icon: Icons.message),
+                        GButton(icon: Icons.add),
+                        GButton(icon: Icons.list_alt_outlined),
+                        GButton(icon: Icons.menu),
+                      ]
+                    : const [
+                        GButton(icon: Icons.home),
+                        GButton(icon: Icons.login),
+                        GButton(icon: Icons.app_registration_rounded),
+                      ],
+              ),
             ),
-          );
+            if (authState.isLogginIn == true)
+              Center(
+                child: Container(
+                  width: 0.5.w(context),
+                  height: 0.2.h(context),
+                  decoration: BoxDecoration(
+                    color: ColorPalette.primaryColor,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: const Center(
+                      child: CircularProgressIndicator(
+                    color: Colors.white,
+                  )),
+                ),
+              ),
+          ]);
         },
       ),
     );
