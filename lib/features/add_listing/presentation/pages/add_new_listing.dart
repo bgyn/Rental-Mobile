@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:rentpal/config/theme/color_palette.dart';
+import 'package:rentpal/config/theme/theme.dart';
 import 'package:rentpal/core/extension/extension.dart';
 import 'package:rentpal/core/cubit/image_handler_cubit.dart';
 import 'package:rentpal/features/add_listing/cubit/rules_cubit.dart';
@@ -51,12 +52,15 @@ class _AddNewListingState extends State<AddNewListing> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: ColorPalette.primaryColor,
         leading: IconButton(
             onPressed: () {
               GoRouter.of(context).go("/");
             },
-            icon: const Icon(Icons.home)),
-        backgroundColor: Colors.white,
+            icon: const Icon(
+              Icons.home,
+              color: Colors.white,
+            )),
         title: const Text("Add a new listing"),
         centerTitle: true,
       ),
@@ -337,14 +341,14 @@ class _AddNewListingState extends State<AddNewListing> {
             onPressed: () {
               if (_formKey.currentState?.validate() ?? false) {}
             },
-            child: const Padding(
-              padding: EdgeInsets.symmetric(vertical: 12),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 12),
               child: Text(
                 "Publish",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      fontSize: 0.015.toRes(context),
+                      color: Colors.white,
+                    ),
               ),
             )),
       ),
@@ -360,8 +364,12 @@ class _AddNewListingState extends State<AddNewListing> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text("Location:",
-                style: TextStyle(fontWeight: FontWeight.bold)),
+            Text(
+              "Location:",
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontSize: 0.013.toRes(context),
+                  ),
+            ),
             GestureDetector(
               onTap: () {
                 showPopup(context);
@@ -381,13 +389,13 @@ class _AddNewListingState extends State<AddNewListing> {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(color: ColorPalette.primaryColor)),
-            child: const Center(
+            child: Center(
                 child: Text(
               "Add Address",
-              style: TextStyle(
-                color: ColorPalette.primaryColor,
-                fontWeight: FontWeight.bold,
-              ),
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    fontSize: 0.015.toRes(context),
+                    color: colors(context).primaryColor,
+                  ),
             )),
           ),
         )
@@ -404,9 +412,11 @@ class _AddNewListingState extends State<AddNewListing> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text(
+            Text(
               "Rules:",
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontSize: 0.013.toRes(context),
+                  ),
             ),
             GestureDetector(
               onTap: () {
@@ -462,13 +472,13 @@ class _AddNewListingState extends State<AddNewListing> {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(color: ColorPalette.primaryColor)),
-            child: const Center(
+            child: Center(
                 child: Text(
               "Add Rules",
-              style: TextStyle(
-                color: ColorPalette.primaryColor,
-                fontWeight: FontWeight.bold,
-              ),
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    fontSize: 0.015.toRes(context),
+                    color: colors(context).primaryColor,
+                  ),
             )),
           ),
         )

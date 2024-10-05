@@ -8,11 +8,13 @@ class AddListingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final titleStyle =
-        TextStyle(fontSize: 0.015.toRes(context), fontWeight: FontWeight.bold);
-    final descriptionStyle = TextStyle(
-      fontSize: 0.012.toRes(context),
-    );
+    final titleStyle = Theme.of(context).textTheme.titleMedium?.copyWith(
+          fontSize: 0.015.toRes(context),
+        );
+    final descriptionStyle = Theme.of(context)
+        .textTheme
+        .bodySmall
+        ?.copyWith(fontSize: 0.012.toRes(context));
     final iconSize = 0.035.toRes(context);
 
     return Scaffold(
@@ -20,7 +22,6 @@ class AddListingPage extends StatelessWidget {
         backgroundColor: ColorPalette.primaryColor,
         title: const Text(
           "Add Listing",
-          style: TextStyle(color: Colors.white),
         ),
       ),
       body: Column(
@@ -138,10 +139,12 @@ class AddListingPage extends StatelessWidget {
               onPressed: () {
                 context.go("/add_listing/add_new_listing");
               },
-              child: const Text(
+              child: Text(
                 "Get Started",
-                style:
-                    TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: Colors.white,
+                      fontSize: 0.015.toRes(context),
+                    ),
               ),
             ),
           )

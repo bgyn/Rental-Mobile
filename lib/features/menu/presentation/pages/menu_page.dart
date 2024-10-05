@@ -78,11 +78,23 @@ class _MenuPageState extends State<MenuPage> {
         SizedBox(
           width: 0.015.toRes(context),
         ),
-        const Column(
+        Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Bigyan"),
-            Text("bigyanthanait8@gmail.com"),
+            Text(
+              "Bigyan",
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 0.013.toRes(context),
+                  ),
+            ),
+            Text(
+              "bigyanthanait8@gmail.com",
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 0.013.toRes(context),
+                  ),
+            ),
           ],
         )
       ],
@@ -95,8 +107,9 @@ class _MenuPageState extends State<MenuPage> {
       children: [
         Text(
           "ACCOUNT",
-          style: TextStyle(
-              fontSize: 0.016.toRes(context), fontWeight: FontWeight.bold),
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                fontSize: 0.015.toRes(context),
+              ),
         ),
         SizedBox(
           height: 0.01.h(context),
@@ -137,8 +150,9 @@ class _MenuPageState extends State<MenuPage> {
       children: [
         Text(
           "INFORMATION",
-          style: TextStyle(
-              fontSize: 0.016.toRes(context), fontWeight: FontWeight.bold),
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                fontSize: 0.015.toRes(context),
+              ),
         ),
         SizedBox(
           height: 0.01.h(context),

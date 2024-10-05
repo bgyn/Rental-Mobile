@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rentpal/config/theme/color_palette.dart';
+import 'package:rentpal/config/theme/theme.dart';
 import 'package:rentpal/core/extension/extension.dart';
 import 'package:rentpal/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:rentpal/features/auth/presentation/widgets/auth_text_field.dart';
@@ -25,13 +26,13 @@ class LoginPage extends StatelessWidget {
                 height: MediaQuery.of(context).size.height * 0.18,
                 decoration:
                     const BoxDecoration(color: ColorPalette.primaryColor),
-                child: const Center(
+                child: Center(
                   child: Text(
                     "Rentpal",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 30,
-                    ),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium
+                        ?.copyWith(color: Colors.white, fontSize: 32),
                   ),
                 ),
               ),
@@ -57,13 +58,13 @@ class LoginPage extends StatelessWidget {
                     child: Column(
                       children: [
                         SizedBox(height: 0.02.h(context)),
-                        const Text(
-                          "Welcome Back!",
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                        Text("Welcome Back!",
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium
+                                ?.copyWith(
+                                  fontSize: 24,
+                                )),
                         SizedBox(height: 0.005.h(context)),
                         const Text(
                           "Sign in to your account",
@@ -112,33 +113,38 @@ class LoginPage extends StatelessWidget {
                           },
                           child: Container(
                             padding: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 20),
+                                vertical: 8, horizontal: 10),
                             width: MediaQuery.of(context).size.width * 0.5,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
                               color: ColorPalette.primaryColor,
                             ),
-                            child: const Center(
-                                child: Text(
-                              "Login",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
+                            child: Center(
+                              child: Text(
+                                "Login",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith(
+                                      color: Colors.white,
+                                      fontSize: 0.015.toRes(context),
+                                    ),
                               ),
-                            )),
+                            ),
                           ),
                         ),
                         SizedBox(height: 0.02.h(context)),
                         GestureDetector(
                           onTap: () {},
-                          child: const Text(
+                          child: Text(
                             "Forgot Password",
-                            style: TextStyle(
-                              color: ColorPalette.primaryColor,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(
+                                  color: colors(context).primaryColor,
+                                  fontSize: 18,
+                                ),
                           ),
                         ),
                         Divider(
@@ -147,25 +153,26 @@ class LoginPage extends StatelessWidget {
                           color: Colors.grey.shade300,
                         ),
                         SizedBox(height: 0.02.h(context)),
-                        const Text(
-                          "Don't have an account",
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.black54,
-                          ),
-                        ),
+                        Text("Don't have an account",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(
+                                  fontSize: 16,
+                                )),
                         SizedBox(height: 0.005.h(context)),
                         GestureDetector(
                             onTap: () {
                               context.read<NavigatorCubit>().onChanged(2);
                             },
-                            child: const Text(
+                            child: Text(
                               "Sign Up",
-                              style: TextStyle(
-                                color: ColorPalette.primaryColor,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.copyWith(
+                                      color: colors(context).primaryColor,
+                                      fontSize: 0.012.toRes(context)),
                             ))
                       ],
                     ),

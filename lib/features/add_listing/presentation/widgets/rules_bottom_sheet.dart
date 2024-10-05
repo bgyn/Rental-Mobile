@@ -28,10 +28,9 @@ rulesBottomSheet(context) {
                 children: [
                   Text(
                     "Rental Rules",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 0.015.toRes(context),
-                    ),
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          fontSize: 0.015.toRes(context),
+                        ),
                   ),
                   SizedBox(
                     height: 0.01.h(context),
@@ -90,10 +89,9 @@ rulesBottomSheet(context) {
                   ),
                   Text(
                     "Add a premade rules",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 0.015.toRes(context),
-                    ),
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          fontSize: 0.015.toRes(context),
+                        ),
                   ),
                   SizedBox(
                     height: 0.01.h(context),
@@ -129,10 +127,9 @@ rulesBottomSheet(context) {
                   ),
                   Text(
                     "Enter a custom rule",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 0.015.toRes(context),
-                    ),
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          fontSize: 0.015.toRes(context),
+                        ),
                   ),
                   SizedBox(
                     height: 0.01.h(context),
@@ -205,12 +202,12 @@ rulesBottomSheet(context) {
                         ruleController.dispose();
                         GoRouter.of(context).pop();
                       },
-                      child: const Text(
+                      child: Text(
                         "Save",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              fontSize: 0.015.toRes(context),
+                              color: Colors.white,
+                            ),
                       ),
                     ),
                   ),

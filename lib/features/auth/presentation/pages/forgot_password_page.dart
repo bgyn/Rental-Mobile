@@ -47,9 +47,11 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   "Old Password",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontSize: 0.013.toRes(context),
+                      ),
                 ),
                 AuthTextField(
                   isObscure: true,
@@ -65,9 +67,11 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 SizedBox(
                   height: 0.015.h(context),
                 ),
-                const Text(
+                Text(
                   "New Password",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontSize: 0.013.toRes(context),
+                      ),
                 ),
                 AuthTextField(
                   isObscure: true,
@@ -85,9 +89,11 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 SizedBox(
                   height: 0.015.h(context),
                 ),
-                const Text(
+                Text(
                   "Confirm Password",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontSize: 0.013.toRes(context),
+                      ),
                 ),
                 AuthTextField(
                   isObscure: true,
@@ -118,11 +124,12 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     onPressed: () {
                       if (_key.currentState?.validate() ?? false) {}
                     },
-                    child: const Text(
+                    child: Text(
                       "Save",
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: Colors.white,
+                            fontSize: 0.013.toRes(context),
+                          ),
                     ),
                   ),
                 )

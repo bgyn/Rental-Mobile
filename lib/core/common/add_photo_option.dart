@@ -26,9 +26,9 @@ addPhotoOption(context, String from) {
                     Text(
                       "Where would you like to get your photo?",
                       textAlign: TextAlign.start,
-                      style: TextStyle(
-                          fontSize: 0.012.toRes(context),
-                          fontWeight: FontWeight.bold),
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            fontSize: 0.012.toRes(context),
+                          ),
                     ),
                     SizedBox(
                       height: 0.015.h(context),

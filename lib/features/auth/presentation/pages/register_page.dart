@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rentpal/config/theme/color_palette.dart';
+import 'package:rentpal/config/theme/theme.dart';
 import 'package:rentpal/core/extension/extension.dart';
 import 'package:rentpal/features/auth/presentation/widgets/auth_text_field.dart';
 import 'package:rentpal/features/home/presentation/cubit/navigator_cubit.dart';
@@ -25,13 +26,13 @@ class RegisterPage extends StatelessWidget {
               width: double.infinity,
               height: MediaQuery.of(context).size.height * 0.18,
               decoration: const BoxDecoration(color: ColorPalette.primaryColor),
-              child: const Center(
+              child: Center(
                 child: Text(
                   "Rentpal",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 30,
-                  ),
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleMedium
+                      ?.copyWith(color: Colors.white, fontSize: 32),
                 ),
               ),
             ),
@@ -72,12 +73,11 @@ class RegisterPage extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(height: 0.02.h(context)),
-            const Text(
+            Text(
               "Let's create an account",
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    fontSize: 24,
+                  ),
             ),
             SizedBox(height: 0.05.h(context)),
             AuthTextField(
@@ -151,43 +151,37 @@ class RegisterPage extends StatelessWidget {
               },
               child: Container(
                 padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                 width: MediaQuery.of(context).size.width * 0.5,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   color: ColorPalette.primaryColor,
                 ),
-                child: const Center(
+                child: Center(
                     child: Text(
                   "Create an Account",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: Colors.white,
+                        fontSize: 0.015.toRes(context),
+                      ),
                 )),
               ),
             ),
             SizedBox(height: 0.02.h(context)),
-            const Text(
-              "Already have an account?",
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.black54,
-              ),
-            ),
+            Text("Already have an account?",
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      fontSize: 16,
+                    )),
             SizedBox(height: 0.005.h(context)),
             GestureDetector(
                 onTap: () {
                   context.read<NavigatorCubit>().onChanged(1);
                 },
-                child: const Text(
+                child: Text(
                   "Login",
-                  style: TextStyle(
-                    color: ColorPalette.primaryColor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: colors(context).primaryColor,
+                      fontSize: 0.012.toRes(context)),
                 ))
           ],
         ),

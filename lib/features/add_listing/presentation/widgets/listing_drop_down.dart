@@ -27,7 +27,9 @@ class ListingDropDown extends StatelessWidget {
         ),
         Text(
           title,
-          style: const TextStyle(fontWeight: FontWeight.bold),
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                fontSize: 0.013.toRes(context),
+              ),
         ),
         SizedBox(
           height: 0.01.h(context),

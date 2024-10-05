@@ -29,9 +29,9 @@ class MenuOptionTiles extends StatelessWidget {
                 ),
                 Text(
                   title,
-                  style: TextStyle(
-                    fontSize: 0.016.toRes(context),
-                  ),
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        fontSize: 0.014.toRes(context),
+                      ),
                 ),
               ],
             ),

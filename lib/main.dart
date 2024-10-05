@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rentpal/config/routes/route_config.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:rentpal/config/theme/theme.dart';
 import 'package:rentpal/core/permission/permission_handler.dart';
 import 'package:rentpal/features/add_listing/cubit/address_cubit.dart';
 import 'package:rentpal/core/cubit/image_handler_cubit.dart';
@@ -54,15 +55,12 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (_) => NavigatorCubit()),
         BlocProvider(
             create: (_) =>
-                CategoryListBloc(sl())..add(const FetchCategoryList()))
+              CategoryListBloc(sl())..add(const FetchCategoryList()))
       ],
       child: MaterialApp.router(
         title: "Rentpal",
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          useMaterial3: true,
-          scaffoldBackgroundColor: Colors.white,
-        ),
+        theme: getAppTheme(context),
         // routerConfig: routeConfig,
         routerDelegate: routeConfig.routerDelegate,
         routeInformationParser: routeConfig.routeInformationParser,

@@ -41,13 +41,11 @@ class _SplashScreenState extends State<SplashScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                "Rentpal",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 0.03.toRes(context),
-                ),
-              ),
+              Text("Rentpal",
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        fontSize: 0.03.toRes(context),
+                        color: Colors.white,
+                      )),
               SizedBox(
                 height: 0.2.h(context),
               ),

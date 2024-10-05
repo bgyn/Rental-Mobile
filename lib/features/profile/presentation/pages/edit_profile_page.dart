@@ -177,9 +177,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 borderRadius: BorderRadius.circular(20),
               ),
               backgroundColor: ColorPalette.primaryColor),
-          child: const Text(
+          child: Text(
             "Save",
-            style: TextStyle(color: Colors.white),
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: Colors.white,
+                  fontSize: 0.013.toRes(context),
+                ),
           ),
         ),
       ),
