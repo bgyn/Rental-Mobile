@@ -48,10 +48,12 @@ class RentalCategory extends StatelessWidget {
                               borderRadius: BorderRadius.circular(5),
                               clipBehavior: Clip.hardEdge,
                               child: CachedNetworkImage(
+                                height: 0.12.h(context),
                                 imageUrl: productsList[index].img[0],
+                                fit: BoxFit.cover,
                                 placeholder: (context, url) => SizedBox(
                                   width: 140,
-                                  height: 95,
+                                  height: 0.15.h(context),
                                   child: Shimmer.fromColors(
                                     baseColor: Colors.grey.shade300,
                                     highlightColor: Colors.white,
