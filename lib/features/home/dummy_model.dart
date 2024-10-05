@@ -16,8 +16,8 @@ class Product {
 List<Product> productsList = [
   Product(
     img: [
-      'https://images.unsplash.com/photo-1721367632166-0d851a5349af?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Example image URL
-      'https://images.unsplash.com/photo-1721367632166-0d851a5349af?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      'https://images.unsplash.com/photo-1453901593090-e57bfb58f39b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fERpcnQlMjBiaWtlfGVufDB8fDB8fHww', // Example image URL
+      'https://plus.unsplash.com/premium_photo-1661935844586-db21256a120d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fERpcnQlMjBiaWtlfGVufDB8fDB8fHww',
     ],
     title: 'Mountain Bike',
     location: 'Pokhara, Nepal',
@@ -27,8 +27,8 @@ List<Product> productsList = [
   ),
   Product(
     img: [
-      'https://images.unsplash.com/photo-1721367632166-0d851a5349af?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Example image URL
-      'https://images.unsplash.com/photo-1721367632166-0d851a5349af?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      'https://images.unsplash.com/photo-1569263979104-865ab7cd8d13?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fEx1eHVyeSUyMFlhdGNofGVufDB8fDB8fHww', // Example image URL
+      'https://plus.unsplash.com/premium_photo-1680831748191-d726a2f7b201?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8THV4dXJ5JTIwWWF0Y2h8ZW58MHx8MHx8fDA%3D',
     ],
     title: 'Luxury Yacht',
     location: 'Rara Lake, Mugu, Nepal',
@@ -38,8 +38,8 @@ List<Product> productsList = [
   ),
   Product(
     img: [
-      'https://images.unsplash.com/photo-1721367632166-0d851a5349af?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Example image URL
-      'https://images.unsplash.com/photo-1721367632166-0d851a5349af?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      'https://images.unsplash.com/photo-1508974239320-0a029497e820?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGNhcnxlbnwwfHwwfHx8MA%3D%3D', // Example image URL
+      'https://plus.unsplash.com/premium_photo-1664304752635-3e0d8d8185e3?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fGNhcnxlbnwwfHwwfHx8MA%3D%3D',
     ],
     title: 'Sports Car',
     location: 'Kathmandu, Nepal',
@@ -49,8 +49,8 @@ List<Product> productsList = [
   ),
   Product(
     img: [
-      'https://images.unsplash.com/photo-1721367632166-0d851a5349af?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Example image URL
-      'https://images.unsplash.com/photo-1721367632166-0d851a5349af?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      'https://plus.unsplash.com/premium_photo-1674343001705-40a1a7b80e44?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8amV0fGVufDB8fDB8fHww', // Example image URL
+      'https://images.unsplash.com/photo-1535329974905-5de1dd801423?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fGpldHxlbnwwfHwwfHx8MA%3D%3D',
     ],
     title: 'Private Jet',
     location: 'Tribhuvan International Airport, Kathmandu, Nepal',
