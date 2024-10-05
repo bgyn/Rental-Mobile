@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rentpal/config/theme/color_palette.dart';
+import 'package:rentpal/core/extension/extension.dart';
 import 'package:rentpal/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:rentpal/features/home/dummy_model.dart';
 import 'package:rentpal/features/home/presentation/widgets/rental_category.dart';
@@ -91,7 +92,10 @@ class ProductDetail extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(product.title),
+                            Text(
+                              product.title,
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
                             Text(product.location),
                             const Text('No reviews')
                           ],
@@ -112,11 +116,27 @@ class ProductDetail extends StatelessWidget {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Column(
+                                Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text("Rentals listed by Andrew"),
-                                    Text("Sell all 60 of Andrew's listing"),
+                                    Text(
+                                      "Rentals listed by Andrew",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium
+                                          ?.copyWith(
+                                            fontSize: 0.013.toRes(context),
+                                          ),
+                                    ),
+                                    Text(
+                                      "Sell all 60 of Andrew's listing",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium
+                                          ?.copyWith(
+                                            fontSize: 0.013.toRes(context),
+                                          ),
+                                    ),
                                   ],
                                 ),
                                 Container(
@@ -145,15 +165,35 @@ class ProductDetail extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text("Description"),
+                            Text(
+                              "Description",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.copyWith(fontSize: 0.015.toRes(context)),
+                            ),
                             Text(
                               overflow: TextOverflow.clip,
                               product.description,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.copyWith(
+                                    fontSize: 0.013.toRes(context),
+                                  ),
                             ),
                             const SizedBox(
                               height: 10,
                             ),
-                            const Text("Rental Rules"),
+                            Text(
+                              "Rental Rules",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.copyWith(
+                                    fontSize: 0.013.toRes(context),
+                                  ),
+                            ),
                             ...rentalRules.map((rules) => ListTile(
                                   dense: true,
                                   visualDensity: VisualDensity.compact,
@@ -161,7 +201,15 @@ class ProductDetail extends StatelessWidget {
                                     Icons.circle,
                                     size: 5,
                                   ),
-                                  title: Text(rules),
+                                  title: Text(
+                                    rules,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium
+                                        ?.copyWith(
+                                          fontSize: 0.013.toRes(context),
+                                        ),
+                                  ),
                                 ))
                           ],
                         ),
@@ -183,14 +231,22 @@ class ProductDetail extends StatelessWidget {
                               child: Container(
                                 width: double.infinity,
                                 padding:
-                                    const EdgeInsets.symmetric(vertical: 15),
+                                    const EdgeInsets.symmetric(vertical: 10),
                                 decoration: BoxDecoration(
                                   border: Border.all(
                                       color: ColorPalette.primaryColor,
                                       width: 2),
                                 ),
-                                child: const Center(
-                                    child: Text("See all Andrews's listing")),
+                                child: Center(
+                                    child: Text(
+                                  "See all Andrews's listing",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium
+                                      ?.copyWith(
+                                        fontSize: 0.015.toRes(context),
+                                      ),
+                                )),
                               ),
                             )
                           ],
@@ -215,12 +271,23 @@ class ProductDetail extends StatelessWidget {
                             vertical: 10, horizontal: 20),
                         color: Colors.white,
                         width: double.infinity,
-                        child: const Column(
+                        child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Cancellation Policy"),
+                            Text("Cancellation Policy",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium
+                                    ?.copyWith(fontSize: 0.015.toRes(context))),
                             Text(
-                                "Cancel more than [number] days before the date for a full refund. Cancellations within [number] days but more than [number] hours before receive [percentage]% back. No refunds within [number] hours.To cancel, use our website/app, call [phone number], or email [email address]. Refunds may take [number] days. Service fees are non-refundable.")
+                              "Cancel more than [number] days before the date for a full refund. Cancellations within [number] days but more than [number] hours before receive [percentage]% back. No refunds within [number] hours.To cancel, use our website/app, call [phone number], or email [email address]. Refunds may take [number] days. Service fees are non-refundable.",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.copyWith(
+                                    fontSize: 0.013.toRes(context),
+                                  ),
+                            )
                           ],
                         ),
                       ),
@@ -275,7 +342,7 @@ class ProductDetail extends StatelessWidget {
                   children: [
                     RichText(
                       text: TextSpan(
-                        text: "\$${product.price}",
+                        text: "Rs. ${product.price}",
                         style: const TextStyle(
                             color: Colors.black, fontWeight: FontWeight.bold),
                         children: const [
@@ -299,9 +366,15 @@ class ProductDetail extends StatelessWidget {
                                 ? null
                                 : GoRouter.of(context).push('/signin');
                           },
-                          child: const Text(
+                          child: Text(
                             "Choose your date",
-                            style: TextStyle(color: Colors.white),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(
+                                  fontSize: 0.015.toRes(context),
+                                  color: Colors.white,
+                                ),
                           )),
                     )
                   ],

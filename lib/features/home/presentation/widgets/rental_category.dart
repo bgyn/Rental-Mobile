@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:rentpal/core/extension/extension.dart';
 import 'package:rentpal/features/home/dummy_model.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -17,10 +18,13 @@ class RentalCategory extends StatelessWidget {
             ? const SizedBox()
             : Padding(
                 padding: const EdgeInsets.only(left: 10),
-                child: Text(title.toString()),
+                child: Text(
+                  title.toString(),
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
               ),
         SizedBox(
-          height: 180,
+          height: 0.24.h(context),
           child: ListView.builder(
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
@@ -60,13 +64,34 @@ class RentalCategory extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            "\$ ${productsList[index].price}",
+                            "Rs. ${productsList[index].price}",
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(
+                                  fontSize: 0.012.toRes(context),
+                                ),
                           ),
                           Text(
                             productsList[index].title,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(
+                                  fontSize: 0.012.toRes(context),
+                                ),
                           ),
                           Text(
                             productsList[index].location,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(
+                                  fontSize: 0.012.toRes(context),
+                                ),
                           )
                         ],
                       ),
