@@ -16,7 +16,6 @@ import 'package:rentpal/features/add_listing/presentation/widgets/listing_text_f
 import 'package:rentpal/features/add_listing/presentation/widgets/address_bottom_sheet.dart';
 import 'package:rentpal/features/add_listing/presentation/widgets/rules_bottom_sheet.dart';
 import 'package:rentpal/features/add_listing/presentation/widgets/show_popup.dart';
-import 'package:rentpal/injection_container.dart';
 
 class AddNewListing extends StatefulWidget {
   const AddNewListing({super.key});
