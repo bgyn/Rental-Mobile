@@ -6,7 +6,7 @@ import 'package:rentpal/config/theme/color_palette.dart';
 import 'package:rentpal/core/extension/extension.dart';
 import 'package:rentpal/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:rentpal/features/home/dummy_model.dart';
-import 'package:rentpal/features/home/presentation/widgets/rental_category.dart';
+import 'package:rentpal/features/rentitem/presentation/pages/rental_category.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ProductDetail extends StatelessWidget {

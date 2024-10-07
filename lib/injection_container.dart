@@ -12,6 +12,10 @@ import 'package:rentpal/features/categories/data/data_source/remote/category_api
 import 'package:rentpal/features/categories/data/repository/category_list_repository_impl.dart';
 import 'package:rentpal/features/categories/domain/repository/category_list_repository.dart';
 import 'package:rentpal/features/categories/domain/usercases/get_category_list.dart';
+import 'package:rentpal/features/rentitem/data/datasource/remote/rentitem_api_service.dart';
+import 'package:rentpal/features/rentitem/data/repository/rentitem_repository_impl.dart';
+import 'package:rentpal/features/rentitem/domain/repository/rentitem_repository.dart';
+import 'package:rentpal/features/rentitem/domain/usercase/get_rentitem.dart';
 
 final sl = GetIt.instance;
 
@@ -45,4 +49,9 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<AddListingApiService>(AddListingApiService());
   sl.registerSingleton<AddListingRepository>(AddListingRespositoryImpl(sl()));
   sl.registerSingleton(PublishListing(sl()));
+
+  //rentlist
+  sl.registerSingleton<RentitemApiService>(RentitemApiService());
+  sl.registerSingleton<RentitemRepository>(RentitemRepositoryImpl(sl()));
+  sl.registerSingleton<GetRentitem>(GetRentitem(sl()));
 }

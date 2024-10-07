@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:rentpal/config/theme/color_palette.dart';
 import 'package:rentpal/features/home/presentation/widgets/carousel.dart';
-import 'package:rentpal/features/home/presentation/widgets/rental_category.dart';
+import 'package:rentpal/features/rentitem/presentation/pages/rental_category.dart';
 import 'package:rentpal/features/categories/presentation/widgets/rental_category_option.dart';
 
 class DashboardPage extends StatefulWidget {
