@@ -1,12 +1,8 @@
-import 'dart:convert';
+import 'package:json_annotation/json_annotation.dart';
 
-List<RentitemEntity> rentitemEntityFromMap(String str) =>
-    List<RentitemEntity>.from(
-        json.decode(str).map((x) => RentitemEntity.fromMap(x)));
+part 'rentitem_entity.g.dart';
 
-String rentitemEntityToMap(List<RentitemEntity> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toMap())));
-
+@JsonSerializable()
 class RentitemEntity {
   final int? id;
   final String? title;
@@ -20,7 +16,6 @@ class RentitemEntity {
   final String? latitude;
   final String? longitude;
   final List<String>? itemRules;
-
   RentitemEntity({
     this.id,
     this.title,
@@ -36,37 +31,40 @@ class RentitemEntity {
     this.itemRules,
   });
 
-  factory RentitemEntity.fromMap(Map<String, dynamic> json) => RentitemEntity(
-        id: json["id"],
-        title: json["title"],
-        price: json["price"],
-        thumbnailImage: json["thumbnailImage"],
-        description: json["description"],
-        quantity: json["quantity"],
-        rating: json["rating"],
-        numOfReviews: json["numOfReviews"],
-        address: json["address"],
-        latitude: json["latitude"],
-        longitude: json["longitude"],
-        itemRules: json["itemRules"] == null
-            ? []
-            : List<String>.from(json["itemRules"]!.map((x) => x)),
-      );
+  factory RentitemEntity.fromJson(Map<String, dynamic> json) =>
+      _$RentitemEntityFromJson(json);
+  Map<String, dynamic> toJson() => _$RentitemEntityToJson(this);
 
-  Map<String, dynamic> toMap() => {
-        "id": id,
-        "title": title,
-        "price": price,
-        "thumbnailImage": thumbnailImage,
-        "description": description,
-        "quantity": quantity,
-        "rating": rating,
-        "numOfReviews": numOfReviews,
-        "address": address,
-        "latitude": latitude,
-        "longitude": longitude,
-        "itemRules": itemRules == null
-            ? []
-            : List<dynamic>.from(itemRules!.map((x) => x)),
-      };
+  static List<RentitemEntity> fromJsonList(List? json) {
+    return json?.map((e) => RentitemEntity.fromJson(e)).toList() ?? [];
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) {
+      return true;
+    }
+    if (other.runtimeType != runtimeType) {
+      return false;
+    }
+    if (other is RentitemEntity) {
+      return other.id == id;
+    }
+    return false;
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode ^
+        title.hashCode ^
+        price.hashCode ^
+        thumbnailImage.hashCode ^
+        quantity.hashCode ^
+        rating.hashCode ^
+        numOfReviews.hashCode ^
+        address.hashCode ^
+        latitude.hashCode ^
+        longitude.hashCode ^
+        itemRules.hashCode;
+  }
 }

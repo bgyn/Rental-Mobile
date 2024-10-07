@@ -20,8 +20,12 @@ class RentitemRepositoryImpl implements RentitemRepository {
     try {
       final response = await _rentitemApiService.getRentItem();
       final List jsonList = jsonDecode(response.body);
-      final result = jsonList.map((e) => RentitemEntity.fromMap(e)).toList();
-      return right(result);
+      final result = RentitemEntity.fromJsonList(jsonList);
+      if (response.statusCode == 200) {
+        return right(result);
+      } else {
+        return left(const ServerFailure("Error fetching rentitem"));
+      }
     } on SocketException {
       return left(const ServerFailure("No internet connection"));
     } on HttpException {

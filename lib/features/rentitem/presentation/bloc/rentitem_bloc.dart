@@ -11,7 +11,6 @@ class RentitemBloc extends Bloc<RentitemEvent, RentitemState> {
 
   _onFetchRentItem(FetchRentItem event, Emitter<RentitemState> emit) async {
     final data = await _getRentitem.call();
-    print(data);
     data.fold(
       (l) => emit(RentItemLoading()),
       (r) => emit(RentItemSuccess(data: r)),
