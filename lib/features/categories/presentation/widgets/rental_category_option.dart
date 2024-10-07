@@ -56,7 +56,7 @@ class RentalCategoryOption extends StatelessWidget {
                       margin: const EdgeInsets.only(left: 10, right: 10),
                       child: Column(
                         children: [
-                          const Icon(Icons.campaign),
+                          const Icon(Icons.category),
                           Text("${state.categoryList?[index].categoryName}"),
                         ],
                       ),
