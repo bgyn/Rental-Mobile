@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rentpal/config/theme/color_palette.dart';
 import 'package:rentpal/core/extension/extension.dart';
-import 'package:rentpal/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:rentpal/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:rentpal/features/home/presentation/cubit/navigator_cubit.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -16,15 +16,15 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    final authState = context.read<AuthCubit>().state;
+    final authState = context.read<AuthBloc>().state;
     Future.delayed(
       const Duration(seconds: 3),
       () {
         if (!mounted) return;
-        if (authState.isLoggedIn == true) {
-          context.read<NavigatorCubit>().onChanged(0);
-        } else {
+        if (authState is AuthInitial) {
           context.read<NavigatorCubit>().onChanged(1);
+        } else {
+          context.read<NavigatorCubit>().onChanged(0);
         }
         GoRouter.of(context).go("/");
       },

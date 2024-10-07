@@ -8,7 +8,8 @@ import 'package:rentpal/core/permission/permission_handler.dart';
 import 'package:rentpal/features/add_listing/cubit/address_cubit.dart';
 import 'package:rentpal/core/cubit/image_handler_cubit.dart';
 import 'package:rentpal/features/add_listing/cubit/rules_cubit.dart';
-import 'package:rentpal/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:rentpal/features/add_listing/presentation/bloc/add_listing_bloc.dart';
+import 'package:rentpal/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:rentpal/features/categories/presentation/bloc/category_list_bloc.dart';
 import 'package:rentpal/features/categories/presentation/bloc/category_list_event.dart';
 import 'package:rentpal/features/home/presentation/cubit/navigator_cubit.dart';
@@ -51,11 +52,12 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (_) => AddressCubit()),
         BlocProvider(create: (_) => RulesCubit()),
         BlocProvider(create: (_) => ImageHandlerCubit()),
-        BlocProvider(create: (_) => AuthCubit()),
+        BlocProvider(create: (_) => sl<AuthBloc>()),
         BlocProvider(create: (_) => NavigatorCubit()),
+        BlocProvider(create: (_) => AddListingBloc(sl())),
         BlocProvider(
             create: (_) =>
-              CategoryListBloc(sl())..add(const FetchCategoryList()))
+                CategoryListBloc(sl())..add(const FetchCategoryList()))
       ],
       child: MaterialApp.router(
         title: "Rentpal",

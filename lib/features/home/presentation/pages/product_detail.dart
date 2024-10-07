@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rentpal/config/theme/color_palette.dart';
 import 'package:rentpal/core/extension/extension.dart';
-import 'package:rentpal/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:rentpal/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:rentpal/features/home/dummy_model.dart';
 import 'package:rentpal/features/home/presentation/widgets/rental_category.dart';
 import 'package:shimmer/shimmer.dart';
@@ -299,7 +299,7 @@ class ProductDetail extends StatelessWidget {
           ),
         ),
         bottomNavigationBar:
-            BlocBuilder<AuthCubit, AuthState>(builder: (context, state) {
+            BlocBuilder<AuthBloc, AuthState>(builder: (context, state) {
           return Container(
             width: double.infinity,
             decoration: const BoxDecoration(
@@ -362,7 +362,7 @@ class ProductDetail extends StatelessWidget {
                               elevation: 0,
                               shadowColor: Colors.transparent),
                           onPressed: () {
-                            state.isLoggedIn == true
+                            state is AuthSuccess
                                 ? null
                                 : GoRouter.of(context).push('/signin');
                           },

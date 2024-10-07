@@ -137,7 +137,7 @@ class AddListingPage extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                context.go("/add_listing/add_new_listing");
+                context.push("/add_listing/add_new_listing");
               },
               child: Text(
                 "Get Started",

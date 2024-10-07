@@ -169,7 +169,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       bottomNavigationBar: Padding(
         padding: EdgeInsets.all(0.015.toRes(context)),
         child: ElevatedButton(
-          onPressed: () {
+          onPressed: () async {
             if (_key.currentState?.validate() ?? false) {}
           },
           style: ElevatedButton.styleFrom(

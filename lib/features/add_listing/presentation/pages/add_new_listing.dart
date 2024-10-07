@@ -10,11 +10,13 @@ import 'package:rentpal/core/extension/extension.dart';
 import 'package:rentpal/core/cubit/image_handler_cubit.dart';
 import 'package:rentpal/features/add_listing/cubit/rules_cubit.dart';
 import 'package:rentpal/core/common/add_photo_option.dart';
+import 'package:rentpal/features/add_listing/presentation/bloc/add_listing_bloc.dart';
 import 'package:rentpal/features/add_listing/presentation/widgets/listing_drop_down.dart';
 import 'package:rentpal/features/add_listing/presentation/widgets/listing_text_field.dart';
 import 'package:rentpal/features/add_listing/presentation/widgets/address_bottom_sheet.dart';
 import 'package:rentpal/features/add_listing/presentation/widgets/rules_bottom_sheet.dart';
 import 'package:rentpal/features/add_listing/presentation/widgets/show_popup.dart';
+import 'package:rentpal/injection_container.dart';
 
 class AddNewListing extends StatefulWidget {
   const AddNewListing({super.key});
@@ -51,148 +53,116 @@ class _AddNewListingState extends State<AddNewListing> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: ColorPalette.primaryColor,
-        leading: IconButton(
-            onPressed: () {
-              GoRouter.of(context).go("/");
-            },
-            icon: const Icon(
-              Icons.home,
-              color: Colors.white,
-            )),
-        title: const Text("Add a new listing"),
-        centerTitle: true,
-      ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: 0.015.toRes(context),
-          vertical: 0.015.toRes(context),
+        appBar: AppBar(
+          backgroundColor: ColorPalette.primaryColor,
+          leading: IconButton(
+              onPressed: () {
+                GoRouter.of(context).go("/");
+              },
+              icon: const Icon(
+                Icons.home,
+                color: Colors.white,
+              )),
+          title: const Text("Add a new listing"),
+          centerTitle: true,
         ),
-        child: SingleChildScrollView(
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: GestureDetector(
-                    onTap: () {
-                      showPopup(context);
-                    },
-                    child: const Icon(Icons.lightbulb_outlined),
+        body: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: 0.015.toRes(context),
+            vertical: 0.015.toRes(context),
+          ),
+          child: SingleChildScrollView(
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: GestureDetector(
+                      onTap: () {
+                        showPopup(context);
+                      },
+                      child: const Icon(Icons.lightbulb_outlined),
+                    ),
                   ),
-                ),
-                BlocBuilder<ImageHandlerCubit, List<XFile>>(
-                    builder: (contex, state) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Visibility(
-                        visible: state.isNotEmpty,
-                        child: const Text("Tap to select a cover photo"),
-                      ),
-                      SizedBox(
-                        height: 0.01.h(context),
-                      ),
-                      Row(
-                        children: [
-                          GestureDetector(
-                            onTap: () => addPhotoOption(context, "listing"),
-                            child: Container(
-                              height: 0.135.h(context),
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.grey,
+                  BlocBuilder<ImageHandlerCubit, List<XFile>>(
+                      builder: (contex, state) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Visibility(
+                          visible: state.isNotEmpty,
+                          child: const Text("Tap to select a cover photo"),
+                        ),
+                        SizedBox(
+                          height: 0.01.h(context),
+                        ),
+                        Row(
+                          children: [
+                            GestureDetector(
+                              onTap: () => addPhotoOption(context, "listing"),
+                              child: Container(
+                                height: 0.135.h(context),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.grey,
+                                  ),
+                                  color: Colors.grey.shade300,
                                 ),
-                                color: Colors.grey.shade300,
-                              ),
-                              padding: EdgeInsets.symmetric(
-                                vertical: 0.015.toRes(context),
-                                horizontal: 0.005.toRes(context),
-                              ),
-                              child: Column(
-                                children: [
-                                  Icon(
-                                    Icons.image,
-                                    size: 0.04.toRes(context),
-                                  ),
-                                  Text(
-                                    "Add photo",
-                                    style: TextStyle(
-                                      fontSize: 0.012.toRes(context),
+                                padding: EdgeInsets.symmetric(
+                                  vertical: 0.015.toRes(context),
+                                  horizontal: 0.005.toRes(context),
+                                ),
+                                child: Column(
+                                  children: [
+                                    Icon(
+                                      Icons.image,
+                                      size: 0.04.toRes(context),
                                     ),
-                                  ),
-                                ],
+                                    Text(
+                                      "Add photo",
+                                      style: TextStyle(
+                                        fontSize: 0.012.toRes(context),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            width: 0.01.w(context),
-                          ),
-                          Expanded(
-                              child: state.isEmpty
-                                  ? const SizedBox()
-                                  : SizedBox(
-                                      height: 0.135.h(context),
-                                      child: ListView.builder(
-                                          scrollDirection: Axis.horizontal,
-                                          itemCount: state.length,
-                                          itemBuilder: (contex, index) {
-                                            final image =
-                                                File(state[index].path);
-                                            return index == 0
-                                                ? Container(
-                                                    padding:
-                                                        const EdgeInsets.all(5),
-                                                    decoration: BoxDecoration(
-                                                      border: Border.all(
-                                                          color: Colors.blue),
-                                                    ),
-                                                    child: Column(
-                                                      mainAxisSize:
-                                                          MainAxisSize.min,
-                                                      children: [
-                                                        Expanded(
-                                                          child: SizedBox(
-                                                            width:
-                                                                0.25.w(context),
-                                                            height:
-                                                                0.05.h(context),
-                                                            child: Image.file(
-                                                              image,
-                                                              fit: BoxFit.cover,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        const Text(
-                                                            "Cover Photo")
-                                                      ],
-                                                    ),
-                                                  )
-                                                : GestureDetector(
-                                                    onTap: () {
-                                                      context
-                                                          .read<
-                                                              ImageHandlerCubit>()
-                                                          .replaceCover(
-                                                              index: index);
-                                                    },
-                                                    child: Padding(
+                            SizedBox(
+                              width: 0.01.w(context),
+                            ),
+                            Expanded(
+                                child: state.isEmpty
+                                    ? const SizedBox()
+                                    : SizedBox(
+                                        height: 0.135.h(context),
+                                        child: ListView.builder(
+                                            scrollDirection: Axis.horizontal,
+                                            itemCount: state.length,
+                                            itemBuilder: (contex, index) {
+                                              final image =
+                                                  File(state[index].path);
+                                              return index == 0
+                                                  ? Container(
                                                       padding:
                                                           const EdgeInsets.all(
                                                               5),
-                                                      child: Stack(
+                                                      decoration: BoxDecoration(
+                                                        border: Border.all(
+                                                            color: Colors.blue),
+                                                      ),
+                                                      child: Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
                                                         children: [
-                                                          SizedBox(
-                                                            width:
-                                                                0.25.w(context),
-                                                            height:
-                                                                0.1.h(context),
-                                                            child: AspectRatio(
-                                                              aspectRatio:
-                                                                  16 / 9,
+                                                          Expanded(
+                                                            child: SizedBox(
+                                                              width: 0.25
+                                                                  .w(context),
+                                                              height: 0.05
+                                                                  .h(context),
                                                               child: Image.file(
                                                                 image,
                                                                 fit: BoxFit
@@ -200,159 +170,231 @@ class _AddNewListingState extends State<AddNewListing> {
                                                               ),
                                                             ),
                                                           ),
-                                                          Positioned(
-                                                            top: 3,
-                                                            right: 3,
-                                                            child:
-                                                                GestureDetector(
-                                                              onTap: () => context
-                                                                  .read<
-                                                                      ImageHandlerCubit>()
-                                                                  .deleteImage(
-                                                                      index:
-                                                                          index),
+                                                          const Text(
+                                                              "Cover Photo")
+                                                        ],
+                                                      ),
+                                                    )
+                                                  : GestureDetector(
+                                                      onTap: () {
+                                                        context
+                                                            .read<
+                                                                ImageHandlerCubit>()
+                                                            .replaceCover(
+                                                                index: index);
+                                                      },
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(5),
+                                                        child: Stack(
+                                                          children: [
+                                                            SizedBox(
+                                                              width: 0.25
+                                                                  .w(context),
+                                                              height: 0.1
+                                                                  .h(context),
                                                               child:
-                                                                  const Center(
-                                                                child: Icon(
-                                                                  size: 22,
-                                                                  Icons.delete,
-                                                                  color: Colors
-                                                                      .red,
+                                                                  AspectRatio(
+                                                                aspectRatio:
+                                                                    16 / 9,
+                                                                child:
+                                                                    Image.file(
+                                                                  image,
+                                                                  fit: BoxFit
+                                                                      .cover,
                                                                 ),
                                                               ),
                                                             ),
-                                                          )
-                                                        ],
+                                                            Positioned(
+                                                              top: 3,
+                                                              right: 3,
+                                                              child:
+                                                                  GestureDetector(
+                                                                onTap: () => context
+                                                                    .read<
+                                                                        ImageHandlerCubit>()
+                                                                    .deleteImage(
+                                                                        index:
+                                                                            index),
+                                                                child:
+                                                                    const Center(
+                                                                  child: Icon(
+                                                                    size: 22,
+                                                                    Icons
+                                                                        .delete,
+                                                                    color: Colors
+                                                                        .red,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ),
                                                       ),
-                                                    ),
-                                                  );
-                                          }),
-                                    )),
-                        ],
-                      ),
-                    ],
-                  );
-                }),
-                SizedBox(
-                  height: 0.02.h(context),
-                ),
-                const Divider(),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: GestureDetector(
-                    onTap: () {
-                      showPopup(context);
-                    },
-                    child: const Icon(Icons.lightbulb_outlined),
+                                                    );
+                                            }),
+                                      )),
+                          ],
+                        ),
+                      ],
+                    );
+                  }),
+                  SizedBox(
+                    height: 0.02.h(context),
                   ),
-                ),
-                ListingTextField(
-                  title: "Title",
-                  controller: _titleController,
-                  validator: (value) {
-                    if (value == null || value == "") {
-                      return "Title is required";
-                    }
-                    return null;
-                  },
-                ),
-                ListingTextField(
-                  title: "Price per day (Rs.)",
-                  controller: _pricePerDayController,
-                  hintText: "Price",
-                  textInputType: TextInputType.number,
-                  validator: (value) {
-                    if (value == null || value == "" || int.parse(value) <= 0) {
-                      return "Price is required";
-                    }
-                    return null;
-                  },
-                ),
-                ListingTextField(
-                  title: "Description",
-                  controller: _descriptionController,
-                  hintText: "Type here",
-                  validator: (value) {
-                    if (value == null || value == "") {
-                      return "Description is required";
-                    }
-                    return null;
-                  },
-                ),
-                ListingTextField(
-                  title: "Quantity availiable",
-                  controller: _quantityController,
-                  hintText: "How many quantity do you have?",
-                  textInputType: TextInputType.number,
-                  validator: (value) {
-                    if (value == null || value == "" || int.parse(value) <= 0) {
-                      return "Quantity is required";
-                    }
-                    return null;
-                  },
-                ),
-                ListingDropDown(
-                  items: const ["a", "b", "c", "d", "e"],
-                  title: "Primary Category",
-                  onChanged: (value) {},
-                  validator: (value) {
-                    if (value == null || value == "") {
-                      return "Please select primary category";
-                    }
-                    return null;
-                  },
-                ),
-                ListingDropDown(
-                  items: const ["A", "B", "C", "D", "E"],
-                  title: "Secondary Category (optional)",
-                  onChanged: (value) {},
-                ),
-                SizedBox(
-                  height: 0.015.h(context),
-                ),
-                const Divider(),
-                _location(context),
-                SizedBox(
-                  height: 0.015.h(context),
-                ),
-                _rules(context, () {
-                  context.read<RulesCubit>().copyRulesToTemp();
-                  rulesBottomSheet(context);
-                }),
-                SizedBox(
-                  height: 0.03.h(context),
-                ),
-              ],
+                  const Divider(),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: GestureDetector(
+                      onTap: () {
+                        showPopup(context);
+                      },
+                      child: const Icon(Icons.lightbulb_outlined),
+                    ),
+                  ),
+                  ListingTextField(
+                    title: "Title",
+                    controller: _titleController,
+                    validator: (value) {
+                      if (value == null || value == "") {
+                        return "Title is required";
+                      }
+                      return null;
+                    },
+                  ),
+                  ListingTextField(
+                    title: "Price per day (Rs.)",
+                    controller: _pricePerDayController,
+                    hintText: "Price",
+                    textInputType: TextInputType.number,
+                    validator: (value) {
+                      if (value == null ||
+                          value == "" ||
+                          int.parse(value) <= 0) {
+                        return "Price is required";
+                      }
+                      return null;
+                    },
+                  ),
+                  ListingTextField(
+                    title: "Description",
+                    controller: _descriptionController,
+                    hintText: "Type here",
+                    validator: (value) {
+                      if (value == null || value == "") {
+                        return "Description is required";
+                      }
+                      return null;
+                    },
+                  ),
+                  ListingTextField(
+                    title: "Quantity availiable",
+                    controller: _quantityController,
+                    hintText: "How many quantity do you have?",
+                    textInputType: TextInputType.number,
+                    validator: (value) {
+                      if (value == null ||
+                          value == "" ||
+                          int.parse(value) <= 0) {
+                        return "Quantity is required";
+                      }
+                      return null;
+                    },
+                  ),
+                  ListingDropDown(
+                    items: const ["a", "b", "c", "d", "e"],
+                    title: "Primary Category",
+                    onChanged: (value) {},
+                    validator: (value) {
+                      if (value == null || value == "") {
+                        return "Please select primary category";
+                      }
+                      return null;
+                    },
+                  ),
+                  ListingDropDown(
+                    items: const ["A", "B", "C", "D", "E"],
+                    title: "Secondary Category (optional)",
+                    onChanged: (value) {},
+                  ),
+                  SizedBox(
+                    height: 0.015.h(context),
+                  ),
+                  const Divider(),
+                  _location(context),
+                  SizedBox(
+                    height: 0.015.h(context),
+                  ),
+                  _rules(context, () {
+                    context.read<RulesCubit>().copyRulesToTemp();
+                    rulesBottomSheet(context);
+                  }),
+                  SizedBox(
+                    height: 0.03.h(context),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
-      ),
-      bottomNavigationBar: Container(
-        padding: EdgeInsets.only(
-            left: 0.015.toRes(context),
-            right: 0.015.toRes(context),
-            bottom: 0.01.toRes(context)),
-        width: 0.9.w(context),
-        child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-                backgroundColor: ColorPalette.primaryColor,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10))),
-            onPressed: () {
-              if (_formKey.currentState?.validate() ?? false) {}
-            },
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12),
-              child: Text(
-                "Publish",
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      fontSize: 0.015.toRes(context),
-                      color: Colors.white,
-                    ),
-              ),
-            )),
-      ),
-    );
+        bottomNavigationBar: BlocListener<AddListingBloc, AddListingState>(
+          listener: (context, state) {
+            if (state is AddListingSuccess) {
+              GoRouter.of(context).pop();
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text("Published")),
+              );
+            } else if (state is AddListingFailure) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text("Error Publishing")),
+              );
+            }
+          },
+          child: BlocBuilder<AddListingBloc, AddListingState>(
+              builder: (contex, state) {
+            return Container(
+              padding: EdgeInsets.only(
+                  left: 0.015.toRes(context),
+                  right: 0.015.toRes(context),
+                  bottom: 0.01.toRes(context)),
+              width: 0.9.w(context),
+              child: state is AddListingLoading
+                  ? const Center(child: CircularProgressIndicator())
+                  : ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: ColorPalette.primaryColor,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10))),
+                      onPressed: () {
+                        context.read<AddListingBloc>().add(
+                            PublishProductListing(
+                                title: _titleController.text,
+                                price:
+                                    double.parse(_pricePerDayController.text),
+                                description: _descriptionController.text,
+                                quantity: int.parse(_quantityController.text),
+                                rating: 0.0,
+                                noOfReviews: 0,
+                                address: "Bharatpur",
+                                latitude: "234.23",
+                                longitude: "234.34"));
+                        // if (_formKey.currentState?.validate() ?? false) {}
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        child: Text(
+                          "Publish",
+                          style:
+                              Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                    fontSize: 0.015.toRes(context),
+                                    color: Colors.white,
+                                  ),
+                        ),
+                      )),
+            );
+          }),
+        ));
   }
 
   _location(context) {

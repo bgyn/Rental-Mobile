@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rentpal/core/common/cubit/app_user_cubit.dart';
+// import 'package:rentpal/core/common/cubit/app_user_cubit.dart';
 import 'package:rentpal/core/common/entities/user.dart';
 import 'package:rentpal/features/auth/domain/usecase/current_user.dart';
 import 'package:rentpal/features/auth/domain/usecase/user_login.dart';
@@ -13,17 +13,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final UserSignUp _userSignUp;
   final UserLogin _userLogin;
   final CurrentUser _currentUser;
-  final AppUserCubit _appUserCubit;
+  // final AppUserCubit _appUserCubit;
 
   AuthBloc({
     required UserSignUp userSignUp,
     required UserLogin userLogin,
     required CurrentUser currentUser,
-    required AppUserCubit appUserCubit,
+    // required AppUserCubit appUserCubit,
   })  : _userLogin = userLogin,
         _userSignUp = userSignUp,
         _currentUser = currentUser,
-        _appUserCubit = appUserCubit,
+        // _appUserCubit = appUserCubit,
         super(AuthInitial()) {
     on<AuthEvent>((_, emit) => emit(AuthLoading()));
     on<AuthSignUp>(_onAuthSignUp);
@@ -55,13 +55,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   void _onAuthLogin(AuthLogin event, Emitter<AuthState> emit) async {
+    emit(AuthLoading());
     final res = await _userLogin(
       params: UserLoginParams(
         email: event.email,
         password: event.password,
       ),
     );
-
     res.fold(
       (l) => AuthFaliure(l.errorMessage),
       (r) => _emitAuthSuccess(r, emit),
@@ -72,7 +72,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     User user,
     Emitter<AuthState> emit,
   ) {
-    _appUserCubit.updateUser(user);
+    // _appUserCubit.updateUser(user);
     emit(AuthSuccess(user));
   }
 }

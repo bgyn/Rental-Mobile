@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:rentpal/config/theme/color_palette.dart';
 import 'package:rentpal/config/theme/theme.dart';
 import 'package:rentpal/core/extension/extension.dart';
-import 'package:rentpal/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:rentpal/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:rentpal/features/auth/presentation/widgets/auth_text_field.dart';
 import 'package:rentpal/features/home/presentation/cubit/navigator_cubit.dart';
 
@@ -105,7 +105,12 @@ class LoginPage extends StatelessWidget {
                         GestureDetector(
                           onTap: () {
                             if (key.currentState?.validate() ?? false) {
-                              context.read<AuthCubit>().login();
+                              context.read<AuthBloc>().add(
+                                    AuthLogin(
+                                      email: emailCtrl.text,
+                                      password: passwordCtrl.text,
+                                    ),
+                                  );
                               if (context.canPop()) {
                                 context.pop();
                               }
