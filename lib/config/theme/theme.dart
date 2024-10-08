@@ -7,7 +7,7 @@ AppColors colors(context) => Theme.of(context).extension<AppColors>()!;
 ThemeData getAppTheme(BuildContext context) {
   return ThemeData(
       useMaterial3: true,
-      fontFamily: "Fredoka",
+      fontFamily: "Geologica",
       scaffoldBackgroundColor: Colors.white,
       extensions: const <ThemeExtension<AppColors>>[
         AppColors(

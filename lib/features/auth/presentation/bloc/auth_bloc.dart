@@ -56,16 +56,22 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   void _onAuthLogin(AuthLogin event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
-    final res = await _userLogin(
-      params: UserLoginParams(
-        email: event.email,
-        password: event.password,
-      ),
+    // final res = await _userLogin(
+    //   params: UserLoginParams(
+    //     email: event.email,
+    //     password: event.password,
+    //   ),
+    // );
+    await Future.delayed(
+      const Duration(seconds: 2),
+      () {
+        emit(AuthSuccess(User(id: "1", email: event.email, name: "Bigyan")));
+      },
     );
-    res.fold(
-      (l) => AuthFaliure(l.errorMessage),
-      (r) => _emitAuthSuccess(r, emit),
-    );
+    // res.fold(
+    //   (l) => AuthFaliure(l.errorMessage),
+    //   (r) => _emitAuthSuccess(r, emit),
+    // );
   }
 
   void _emitAuthSuccess(

@@ -41,7 +41,7 @@ class _HomeState extends State<Home> {
     final currentIndex = context.watch<NavigatorCubit>();
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, authState) {
-        if (authState is AuthSuccess == true) {
+        if (authState is AuthSuccess) {
           context.read<NavigatorCubit>().reset();
         }
       },
@@ -50,8 +50,8 @@ class _HomeState extends State<Home> {
           return Stack(children: [
             Scaffold(
               body: authState is AuthSuccess
-                  ? loggedOutRoute[currentIndex.state]
-                  : loggedInRoute[currentIndex.state],
+                  ? loggedInRoute[currentIndex.state]
+                  : loggedOutRoute[currentIndex.state],
               bottomNavigationBar: GNav(
                 backgroundColor: Colors.grey.shade200,
                 curve: Curves.elasticIn,
@@ -63,15 +63,15 @@ class _HomeState extends State<Home> {
                 tabs: authState is AuthSuccess
                     ? const [
                         GButton(icon: Icons.home),
-                        GButton(icon: Icons.login),
-                        GButton(icon: Icons.app_registration_rounded),
-                      ]
-                    : const [
-                        GButton(icon: Icons.home),
                         GButton(icon: Icons.message),
                         GButton(icon: Icons.add),
                         GButton(icon: Icons.list_alt_outlined),
                         GButton(icon: Icons.menu),
+                      ]
+                    : const [
+                        GButton(icon: Icons.home),
+                        GButton(icon: Icons.login),
+                        GButton(icon: Icons.app_registration_rounded),
                       ],
               ),
             ),

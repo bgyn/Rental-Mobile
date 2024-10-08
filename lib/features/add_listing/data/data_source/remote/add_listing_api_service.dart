@@ -13,4 +13,9 @@ class AddListingApiService {
     );
     return response;
   }
+
+  Future<void> post()async{
+    final url = ApiRoutes.publishListing();
+    final response = http.MultipartRequest("POST", Uri.parse(url));
+  }
 }

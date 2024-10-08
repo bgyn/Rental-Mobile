@@ -103,6 +103,18 @@ flutter:
           weight: 400
         - asset: assets/fonts/Fredoka-SemiBold.ttf
           weight: 600
+    - family: Geologica
+      fonts:
+        - asset: assets/fonts/Geologica-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Geologica-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Geologica-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Geologica-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Geologica-SemiBold.ttf
+          weight: 600
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

@@ -84,7 +84,7 @@ class RentalCategory extends StatelessWidget {
                                 ),
                                 Text(
                                   "${state.rentitem![index].title}",
-                                  maxLines: 2,
+                                  maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: Theme.of(context)
                                       .textTheme
