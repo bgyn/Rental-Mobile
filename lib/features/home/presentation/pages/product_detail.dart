@@ -5,13 +5,13 @@ import 'package:go_router/go_router.dart';
 import 'package:rentpal/config/theme/color_palette.dart';
 import 'package:rentpal/core/extension/extension.dart';
 import 'package:rentpal/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:rentpal/features/home/dummy_model.dart';
+import 'package:rentpal/features/rentitem/domain/entity/rentitem_entity.dart';
 import 'package:rentpal/features/rentitem/presentation/pages/rental_category.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ProductDetail extends StatelessWidget {
-  final Product product;
-  const ProductDetail({super.key, required this.product});
+  final RentitemEntity rentitemEntity;
+  const ProductDetail({super.key, required this.rentitemEntity});
 
   static final List<String> rentalRules = <String>[
     'No late returns',
@@ -64,11 +64,11 @@ class ProductDetail extends StatelessWidget {
                         width: double.infinity,
                         height: 300,
                         child: Hero(
-                          tag: product.img[0],
+                          tag: rentitemEntity.thumbnailImage ?? "",
                           transitionOnUserGestures: true,
                           child: CachedNetworkImage(
                             fit: BoxFit.fill,
-                            imageUrl: product.img[0],
+                            imageUrl: rentitemEntity.thumbnailImage ?? "",
                             placeholder: (context, url) {
                               return SizedBox(
                                 width: double.infinity,
@@ -93,10 +93,10 @@ class ProductDetail extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              product.title,
+                              rentitemEntity.title ?? "",
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
-                            Text(product.location),
+                            Text(rentitemEntity.address ?? ""),
                             const Text('No reviews')
                           ],
                         ),
@@ -174,7 +174,7 @@ class ProductDetail extends StatelessWidget {
                             ),
                             Text(
                               overflow: TextOverflow.clip,
-                              product.description,
+                              rentitemEntity.description ?? "",
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyMedium
@@ -342,7 +342,7 @@ class ProductDetail extends StatelessWidget {
                   children: [
                     RichText(
                       text: TextSpan(
-                        text: "Rs. ${product.price}",
+                        text: "Rs. ${rentitemEntity.price}",
                         style: const TextStyle(
                             color: Colors.black, fontWeight: FontWeight.bold),
                         children: const [

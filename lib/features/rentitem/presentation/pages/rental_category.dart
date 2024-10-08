@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rentpal/core/extension/extension.dart';
-import 'package:rentpal/features/home/dummy_model.dart';
 import 'package:rentpal/features/rentitem/presentation/bloc/rentitem_bloc.dart';
 import 'package:rentpal/features/rentitem/presentation/bloc/rentitem_state.dart';
 import 'package:shimmer/shimmer.dart';
@@ -38,7 +37,7 @@ class RentalCategory extends StatelessWidget {
                       return InkWell(
                         onTap: () {
                           context.push("/product-detail",
-                              extra: productsList[index]);
+                              extra: state.rentitem![index]);
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(10),
@@ -48,14 +47,17 @@ class RentalCategory extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Hero(
-                                  tag: productsList[index].img[0],
+                                  tag: state.rentitem![index].thumbnailImage ??
+                                      "",
                                   transitionOnUserGestures: true,
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(5),
                                     clipBehavior: Clip.hardEdge,
                                     child: CachedNetworkImage(
                                       height: 0.12.h(context),
-                                      imageUrl: productsList[index].img[0],
+                                      imageUrl: state.rentitem![index]
+                                              .thumbnailImage ??
+                                          "",
                                       fit: BoxFit.cover,
                                       placeholder: (context, url) => SizedBox(
                                         width: 140,
