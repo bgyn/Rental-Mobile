@@ -9,6 +9,7 @@ import 'package:rentpal/features/add_listing/cubit/address_cubit.dart';
 import 'package:rentpal/core/cubit/image_handler_cubit.dart';
 import 'package:rentpal/features/add_listing/cubit/rules_cubit.dart';
 import 'package:rentpal/features/add_listing/presentation/bloc/add_listing_bloc.dart';
+import 'package:rentpal/features/address/bloc/address_bloc.dart';
 import 'package:rentpal/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:rentpal/features/categories/presentation/bloc/category_list_bloc.dart';
 import 'package:rentpal/features/categories/presentation/bloc/category_list_event.dart';
@@ -58,6 +59,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (_) => NavigatorCubit()),
         BlocProvider(create: (_) => AddListingBloc(sl())),
         BlocProvider(create: (_) => RentitemBloc(sl())..add(FetchRentItem())),
+        BlocProvider(create: (_) => AddressBloc(sl())),
         BlocProvider(
             create: (_) =>
                 CategoryListBloc(sl())..add(const FetchCategoryList()))

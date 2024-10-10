@@ -4,8 +4,12 @@ import 'package:rentpal/config/theme/color_palette.dart';
 import 'package:rentpal/core/extension/extension.dart';
 import 'package:rentpal/features/add_listing/cubit/address_cubit.dart';
 import 'package:rentpal/features/add_listing/presentation/widgets/listing_text_field.dart';
+import 'package:rentpal/features/address/bloc/address_bloc.dart';
+import 'package:rentpal/features/address/bloc/address_event.dart';
+import 'package:rentpal/features/address/bloc/address_state.dart';
 
 addressBottomSheet(context) {
+  final addressController = TextEditingController();
   return showModalBottomSheet(
       showDragHandle: true,
       backgroundColor: Colors.white,
@@ -70,12 +74,42 @@ addressBottomSheet(context) {
                           children: [
                             ListingTextField(
                               title: "Find your address",
-                              controller: TextEditingController(),
+                              controller: addressController,
                               hintText: "enter an address",
                             ),
                             SizedBox(
                               height: 0.015.h(context),
                             ),
+                            BlocBuilder<AddressBloc, AddressState>(
+                                builder: (context, state) {
+                              if (state is AddressSuccess) {
+                                return SizedBox(
+                                  height: 0.4.h(context),
+                                  child: ListView.builder(
+                                      itemCount: state.address?.length ?? 0,
+                                      itemBuilder: (context, index) {
+                                        return GestureDetector(
+                                          onTap: () {
+                                            addressController.text = state
+                                                    .address?[index]
+                                                    .displayName ??
+                                                "";
+                                          },
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                                border: Border(
+                                                    bottom: BorderSide(
+                                                        width: 1,
+                                                        color: Colors.red))),
+                                            child: Text(
+                                                "${state.address?[index].displayName}"),
+                                          ),
+                                        );
+                                      }),
+                                );
+                              }
+                              return SizedBox();
+                            }),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -102,7 +136,15 @@ addressBottomSheet(context) {
                                   ),
                                 ),
                                 InkWell(
-                                  onTap: () {},
+                                  onTap: () {
+                                    if (addressController.text.isEmpty ||
+                                        addressController.text == null) {
+                                    } else {
+                                      context.read<AddressBloc>().add(
+                                          SearchAddress(
+                                              query: addressController.text));
+                                    }
+                                  },
                                   child: Container(
                                     padding:
                                         EdgeInsets.all(0.01.toRes(context)),

@@ -10,7 +10,11 @@ class ApiRoutes {
     return "${UrlConstant.baseUrl}rentlist/";
   }
 
-  static String getRentItem(){
+  static String getRentItem() {
     return "${UrlConstant.baseUrl}rentlist/";
+  }
+
+  static String getAddress({required String key, required String query}) {
+    return "${UrlConstant.locationUrl}key=$key&countrycodes=np&q=$query&format=json";
   }
 }
