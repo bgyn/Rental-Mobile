@@ -15,7 +15,8 @@ import 'package:rentpal/features/add_listing/presentation/widgets/listing_drop_d
 import 'package:rentpal/features/add_listing/presentation/widgets/listing_text_field.dart';
 import 'package:rentpal/features/add_listing/presentation/widgets/address_bottom_sheet.dart';
 import 'package:rentpal/features/add_listing/presentation/widgets/rules_bottom_sheet.dart';
-import 'package:rentpal/features/add_listing/presentation/widgets/show_popup.dart';
+import 'package:rentpal/features/categories/presentation/bloc/category_list_bloc.dart';
+import 'package:rentpal/features/categories/presentation/bloc/category_list_state.dart';
 
 class AddNewListing extends StatefulWidget {
   const AddNewListing({super.key});
@@ -76,15 +77,6 @@ class _AddNewListingState extends State<AddNewListing> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: GestureDetector(
-                      onTap: () {
-                        showPopup(context);
-                      },
-                      child: const Icon(Icons.lightbulb_outlined),
-                    ),
-                  ),
                   BlocBuilder<ImageHandlerCubit, List<XFile>>(
                       builder: (contex, state) {
                     return Column(
@@ -243,15 +235,6 @@ class _AddNewListingState extends State<AddNewListing> {
                     height: 0.02.h(context),
                   ),
                   const Divider(),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: GestureDetector(
-                      onTap: () {
-                        showPopup(context);
-                      },
-                      child: const Icon(Icons.lightbulb_outlined),
-                    ),
-                  ),
                   ListingTextField(
                     title: "Title",
                     controller: _titleController,
@@ -301,22 +284,27 @@ class _AddNewListingState extends State<AddNewListing> {
                       return null;
                     },
                   ),
-                  ListingDropDown(
-                    items: const ["a", "b", "c", "d", "e"],
-                    title: "Primary Category",
-                    onChanged: (value) {},
-                    validator: (value) {
-                      if (value == null || value == "") {
-                        return "Please select primary category";
-                      }
-                      return null;
-                    },
-                  ),
-                  ListingDropDown(
-                    items: const ["A", "B", "C", "D", "E"],
-                    title: "Secondary Category (optional)",
-                    onChanged: (value) {},
-                  ),
+                  BlocBuilder<CategoryListBloc, CategoryListState>(
+                      builder: (context, state) {
+                    return ListingDropDown(
+                      items: CategoryListState is CategoryListLoading
+                          ? []
+                          : state.categoryList
+                                  ?.map((category) => category.categoryName)
+                                  .where((name) => name != null)
+                                  .cast<String>()
+                                  .toList() ??
+                              [],
+                      title: "Primary Category",
+                      onChanged: (value) {},
+                      validator: (value) {
+                        if (value == null || value == "") {
+                          return "Please select primary category";
+                        }
+                        return null;
+                      },
+                    );
+                  }),
                   SizedBox(
                     height: 0.015.h(context),
                   ),
@@ -398,26 +386,16 @@ class _AddNewListingState extends State<AddNewListing> {
 
   _location(context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
           height: 0.02.h(context),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "Location:",
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontSize: 0.013.toRes(context),
-                  ),
-            ),
-            GestureDetector(
-              onTap: () {
-                showPopup(context);
-              },
-              child: const Icon(Icons.lightbulb_outlined),
-            ),
-          ],
+        Text(
+          "Location:",
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                fontSize: 0.013.toRes(context),
+              ),
         ),
         SizedBox(
           height: 0.02.h(context),
@@ -446,26 +424,16 @@ class _AddNewListingState extends State<AddNewListing> {
 
   _rules(context, onTap) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
           height: 0.02.h(context),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "Rules:",
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontSize: 0.013.toRes(context),
-                  ),
-            ),
-            GestureDetector(
-              onTap: () {
-                showPopup(context);
-              },
-              child: const Icon(Icons.lightbulb_outlined),
-            ),
-          ],
+        Text(
+          "Rules:",
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                fontSize: 0.013.toRes(context),
+              ),
         ),
         SizedBox(
           height: 0.02.h(context),
