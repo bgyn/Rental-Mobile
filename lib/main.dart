@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rentpal/config/routes/route_config.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:rentpal/config/theme/theme.dart';
+import 'package:rentpal/core/local_storage/local_storage.dart';
 import 'package:rentpal/core/permission/permission_handler.dart';
 import 'package:rentpal/core/cubit/image_handler_cubit.dart';
 import 'package:rentpal/features/add_listing/cubit/rules_cubit.dart';
@@ -21,6 +22,7 @@ import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  LocalStorage();
   await initializeDependencies();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
