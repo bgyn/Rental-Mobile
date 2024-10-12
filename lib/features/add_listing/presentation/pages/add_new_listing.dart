@@ -15,6 +15,8 @@ import 'package:rentpal/features/add_listing/presentation/widgets/listing_drop_d
 import 'package:rentpal/features/add_listing/presentation/widgets/listing_text_field.dart';
 import 'package:rentpal/features/add_listing/presentation/widgets/address_bottom_sheet.dart';
 import 'package:rentpal/features/add_listing/presentation/widgets/rules_bottom_sheet.dart';
+import 'package:rentpal/features/address/cubit/address_cubit.dart';
+import 'package:rentpal/features/address/domain/entity/address_entity.dart';
 import 'package:rentpal/features/categories/presentation/bloc/category_list_bloc.dart';
 import 'package:rentpal/features/categories/presentation/bloc/category_list_state.dart';
 
@@ -33,11 +35,15 @@ class _AddNewListingState extends State<AddNewListing> {
   final _formKey = GlobalKey<FormState>();
 
   late ImageHandlerCubit _imageHandlerCubit;
+  late AddressCubit _addressCubit;
 
   @override
   void initState() {
     super.initState();
     _imageHandlerCubit = context.read<ImageHandlerCubit>();
+    _imageHandlerCubit.reset();
+    _addressCubit = context.read<AddressCubit>();
+    _addressCubit.reset();
   }
 
   @override
@@ -354,19 +360,29 @@ class _AddNewListingState extends State<AddNewListing> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10))),
                       onPressed: () {
-                        context.read<AddListingBloc>().add(
-                            PublishProductListing(
-                                title: _titleController.text,
-                                price:
-                                    double.parse(_pricePerDayController.text),
-                                description: _descriptionController.text,
-                                quantity: int.parse(_quantityController.text),
-                                rating: 0.0,
-                                noOfReviews: 0,
-                                address: "Bharatpur",
-                                latitude: "234.23",
-                                longitude: "234.34"));
-                        // if (_formKey.currentState?.validate() ?? false) {}
+                        if (_formKey.currentState?.validate() ?? false) {
+                          final latitude =
+                              context.read<AddressCubit>().state.first.lat;
+                          final longitude =
+                              context.read<AddressCubit>().state.first.lon;
+                          context.read<AddListingBloc>().add(
+                                PublishProductListing(
+                                  title: _titleController.text,
+                                  price:
+                                      double.parse(_pricePerDayController.text),
+                                  description: _descriptionController.text,
+                                  quantity: int.parse(_quantityController.text),
+                                  rating: 0.0,
+                                  noOfReviews: 0,
+                                  address:
+                                      "${context.read<AddressCubit>().state.first.displayName}",
+                                  latitude: double.parse(latitude!)
+                                      .toStringAsFixed(2),
+                                  longitude: double.parse(longitude!)
+                                      .toStringAsFixed(2),
+                                ),
+                              );
+                        }
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 12),
@@ -400,8 +416,51 @@ class _AddNewListingState extends State<AddNewListing> {
         SizedBox(
           height: 0.02.h(context),
         ),
+        BlocBuilder<AddressCubit, List<AddressEntity>>(
+            builder: (context, state) {
+          if (state.isEmpty) {
+            return const SizedBox();
+          } else {
+            return Column(
+              children: state
+                  .map((address) => Padding(
+                        padding: EdgeInsets.only(
+                          bottom: 0.01.toRes(context),
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              height: 5,
+                              width: 5,
+                              decoration: BoxDecoration(
+                                color: Colors.black,
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 0.02.w(context),
+                            ),
+                            SizedBox(
+                              width: 0.8.w(context),
+                              child: Text(
+                                address.displayName ?? '',
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ))
+                  .toList(),
+            );
+          }
+        }),
+        SizedBox(
+          height: 0.015.h(context),
+        ),
         GestureDetector(
-          onTap: () => addressBottomSheet(context),
+          onTap: () => showAddressBottomSheet(context),
           child: Container(
             width: double.infinity,
             height: 0.04.toRes(context),
