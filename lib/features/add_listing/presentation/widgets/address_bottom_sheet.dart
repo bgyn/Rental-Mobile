@@ -89,7 +89,6 @@ class AddressBottomSheetState extends State<AddressBottomSheet> {
                   visible: showAddressTextField,
                   child: Column(
                     children: [
-                      
                       SizedBox(
                         height: 0.16.h(context),
                         child: Row(
@@ -110,10 +109,10 @@ class AddressBottomSheetState extends State<AddressBottomSheet> {
                                 iconSize: 0.03.toRes(context),
                                 onPressed: () {
                                   if (addressController.text.isEmpty) {
-                                    
                                   } else {
-                                    context.read<AddressBloc>().add(SearchAddress(
-                                        query: addressController.text));
+                                    context.read<AddressBloc>().add(
+                                        SearchAddress(
+                                            query: addressController.text));
                                   }
                                 },
                                 icon: const Icon(Icons.search),
@@ -143,7 +142,21 @@ class AddressBottomSheetState extends State<AddressBottomSheet> {
                                       });
                                     },
                                     child: Container(
-                                      decoration: const BoxDecoration(),
+                                      margin: const EdgeInsets.symmetric(
+                                          vertical: 8),
+                                          padding: const EdgeInsets.all(5),
+                                      decoration:
+                                          const BoxDecoration(boxShadow: [
+                                        BoxShadow(
+                                          color: Color.fromARGB(255, 241, 241, 241), 
+                                          blurRadius:
+                                              2, 
+
+                                          offset: Offset(0,
+                                              4), 
+                                        ),
+                                        
+                                      ]),
                                       child: Text(
                                           "${state.address?[index].displayName}"),
                                     ),
