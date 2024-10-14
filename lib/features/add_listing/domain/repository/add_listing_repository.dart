@@ -16,5 +16,7 @@ abstract class AddListingRepository {
     required String address,
     required String latitude,
     required String longitude,
+    required List<String> itemRules,
+    required String category,
   });
 }

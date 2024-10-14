@@ -32,10 +32,12 @@ class _AddNewListingState extends State<AddNewListing> {
   final _pricePerDayController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _quantityController = TextEditingController();
+  String _categoryController  = "";
   final _formKey = GlobalKey<FormState>();
 
   late ImageHandlerCubit _imageHandlerCubit;
   late AddressCubit _addressCubit;
+  late RulesCubit _rulesCubit;
 
   @override
   void initState() {
@@ -44,6 +46,8 @@ class _AddNewListingState extends State<AddNewListing> {
     _imageHandlerCubit.reset();
     _addressCubit = context.read<AddressCubit>();
     _addressCubit.reset();
+    _rulesCubit=context.read<RulesCubit>();
+    _rulesCubit.reset();
   }
 
   @override
@@ -302,7 +306,11 @@ class _AddNewListingState extends State<AddNewListing> {
                                   .toList() ??
                               [],
                       title: "Primary Category",
-                      onChanged: (value) {},
+                      onChanged: (value) {
+                        setState(() {
+                          _categoryController=value!;
+                        });
+                      },
                       validator: (value) {
                         if (value == null || value == "") {
                           return "Please select primary category";
@@ -367,7 +375,9 @@ class _AddNewListingState extends State<AddNewListing> {
                               context.read<AddressCubit>().state.first.lon;
                           context.read<AddListingBloc>().add(
                                 PublishProductListing(
+                                  file: File(context.read<ImageHandlerCubit>().state.first.path),
                                   title: _titleController.text,
+                                  category: _categoryController,
                                   price:
                                       double.parse(_pricePerDayController.text),
                                   description: _descriptionController.text,
@@ -380,6 +390,7 @@ class _AddNewListingState extends State<AddNewListing> {
                                       .toStringAsFixed(2),
                                   longitude: double.parse(longitude!)
                                       .toStringAsFixed(2),
+                                  itemRules: context.read<RulesCubit>().state.rules,
                                 ),
                               );
                         }

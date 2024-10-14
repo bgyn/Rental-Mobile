@@ -16,7 +16,8 @@ class PublishListing
   Future<Either<Failure, ApiResponse>> call(
       {PublishListingParams? params}) async {
     return await _addListingRepository.publishListing(
-        title: params!.title,
+        file: params!.file,
+        title: params.title,
         price: params.price,
         description: params.description,
         quantity: params.quantity,
@@ -24,7 +25,10 @@ class PublishListing
         noOfReviews: params.noOfReviews,
         address: params.address,
         latitude: params.latitude,
-        longitude: params.longitude);
+        longitude: params.longitude,
+        itemRules: params.itemRules,
+        category: params.category,
+        );
   }
 }
 
@@ -39,6 +43,8 @@ class PublishListingParams {
   final String address;
   final String latitude;
   final String longitude;
+  final List<String> itemRules;
+  final String category;
   PublishListingParams({
     required this.title,
     required this.price,
@@ -50,5 +56,7 @@ class PublishListingParams {
     required this.address,
     required this.latitude,
     required this.longitude,
+    required this.itemRules,
+    required this.category,
   });
 }

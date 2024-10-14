@@ -22,6 +22,8 @@ class AddListingRespositoryImpl implements AddListingRepository {
     required String address,
     required String latitude,
     required String longitude,
+    required List<String> itemRules,
+    required String category,
   }) async {
     try {
       final body = {
@@ -34,8 +36,13 @@ class AddListingRespositoryImpl implements AddListingRepository {
         'address': address,
         'latitude': latitude,
         'longitude': longitude,
+        'itemRules' : itemRules,
+        "category" : category,
       };
-      final response = await _addListingApiService.publishListing(body);
+
+
+      final response = await _addListingApiService.publishListing(body,file!);
+
       if (response.statusCode == 200 || response.statusCode == 201) {
         return right(ApiSuccess(
           statusCode: response.statusCode,

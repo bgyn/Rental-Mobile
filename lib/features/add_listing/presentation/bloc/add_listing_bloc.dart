@@ -27,7 +27,9 @@ class AddListingBloc extends Bloc<AddListingEvent, AddListingState> {
       address: event.address,
       latitude: event.latitude,
       longitude: event.longitude,
-      // file: event.file, // Optional file
+      file: event.file,
+      itemRules: event.itemRules,
+      category: event.category,
     );
 
     final result = await _publishListing.call(params: params);

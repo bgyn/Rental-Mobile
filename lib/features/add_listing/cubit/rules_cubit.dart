@@ -73,4 +73,12 @@ class RulesCubit extends Cubit<RulesState> {
       tempRules: List.from(state.rules),
     ));
   }
+
+  void reset(){
+    emit(RulesState(
+          rules: [],
+          premadeRules: PremadeRule.premadeRules,
+          tempRules: [],
+        ));
+  }
 }
