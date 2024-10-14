@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rentpal/config/theme/color_palette.dart';
 import 'package:rentpal/core/extension/extension.dart';
 import 'package:rentpal/features/add_listing/presentation/widgets/listing_text_field.dart';
@@ -20,6 +21,12 @@ class AddressBottomSheetState extends State<AddressBottomSheet> {
   final TextEditingController addressController = TextEditingController();
   AddressEntity? selectedAddress;
   bool showAddressTextField = false;
+
+  @override
+  void initState() {
+    context.read<AddressBloc>().add(ResetAddress());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +73,7 @@ class AddressBottomSheetState extends State<AddressBottomSheet> {
                       Container(
                         margin: EdgeInsets.only(left: 0.015.toRes(context)),
                         decoration: BoxDecoration(
-                          border: Border.all(color: Colors.blue),
+                          border: Border.all(color: ColorPalette.primaryColor),
                           borderRadius: BorderRadius.circular(100),
                         ),
                         child: Icon(
@@ -82,29 +89,38 @@ class AddressBottomSheetState extends State<AddressBottomSheet> {
                   visible: showAddressTextField,
                   child: Column(
                     children: [
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: 0.7.w(context),
-                            child: ListingTextField(
-                              title: "Find your address",
-                              controller: addressController,
-                              hintText: "enter an address",
+                      
+                      SizedBox(
+                        height: 0.16.h(context),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(
+                              width: 0.7.w(context),
+                              child: ListingTextField(
+                                title: "Find your address",
+                                controller: addressController,
+                                hintText: "enter an address",
+                              ),
                             ),
-                          ),
-                          IconButton(
-                            color: ColorPalette.primaryColor,
-                            onPressed: () {
-                              if (addressController.text.isEmpty) {
-                                // Handle empty case
-                              } else {
-                                context.read<AddressBloc>().add(SearchAddress(
-                                    query: addressController.text));
-                              }
-                            },
-                            icon: const Icon(Icons.search),
-                          ),
-                        ],
+                            Container(
+                              alignment: Alignment.center,
+                              child: IconButton(
+                                color: Colors.red,
+                                iconSize: 0.03.toRes(context),
+                                onPressed: () {
+                                  if (addressController.text.isEmpty) {
+                                    
+                                  } else {
+                                    context.read<AddressBloc>().add(SearchAddress(
+                                        query: addressController.text));
+                                  }
+                                },
+                                icon: const Icon(Icons.search),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                       SizedBox(
                         height: 0.015.h(context),
@@ -137,57 +153,6 @@ class AddressBottomSheetState extends State<AddressBottomSheet> {
                         }
                         return const SizedBox();
                       }),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          InkWell(
-                            onTap: () {},
-                            child: Container(
-                              padding: EdgeInsets.all(0.01.toRes(context)),
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: ColorPalette.primaryColor,
-                                ),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: const Center(
-                                child: Text(
-                                  "Cancel",
-                                  style: TextStyle(
-                                    color: ColorPalette.primaryColor,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              if (selectedAddress != null) {
-                                context
-                                    .read<AddressCubit>()
-                                    .addAddress(selectedAddress!);
-                              }
-                            },
-                            child: Container(
-                              padding: EdgeInsets.all(0.01.toRes(context)),
-                              decoration: BoxDecoration(
-                                color: ColorPalette.primaryColor,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: const Center(
-                                child: Text(
-                                  "Save",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          )
-                        ],
-                      )
                     ],
                   ),
                 ),
@@ -202,7 +167,14 @@ class AddressBottomSheetState extends State<AddressBottomSheet> {
                         backgroundColor: ColorPalette.primaryColor,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10))),
-                    onPressed: () {},
+                    onPressed: () {
+                      if (selectedAddress != null) {
+                        context
+                            .read<AddressCubit>()
+                            .addAddress(selectedAddress!);
+                      }
+                      GoRouter.of(context).pop();
+                    },
                     child: const Text(
                       "Save",
                       style: TextStyle(

@@ -5,8 +5,8 @@ class AddressCubit extends Cubit<List<AddressEntity>> {
   AddressCubit() : super([]);
 
   void addAddress(AddressEntity address) {
-    final updatedAddresses = List<AddressEntity>.from(state)..add(address);
-    emit(updatedAddresses); // Emit the new list of addresses
+    final updatedAddresses = [address];
+    emit(updatedAddresses); 
   }
 
   void reset() {
