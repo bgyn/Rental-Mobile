@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rentpal/config/theme/color_palette.dart';
+import 'package:rentpal/features/categories/presentation/bloc/category_list_bloc.dart';
+import 'package:rentpal/features/categories/presentation/bloc/category_list_state.dart';
 import 'package:rentpal/features/home/presentation/widgets/carousel.dart';
-import 'package:rentpal/features/rentitem/presentation/pages/rental_category.dart';
 import 'package:rentpal/features/categories/presentation/widgets/rental_category_option.dart';
+import 'package:rentpal/features/rentitem/presentation/bloc/rentitem_bloc.dart';
+import 'package:rentpal/features/rentitem/presentation/bloc/rentitem_event.dart';
+import 'package:rentpal/features/rentitem/presentation/pages/rental_category.dart';
+import 'package:rentpal/injection_container.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
@@ -59,26 +65,42 @@ class _DashboardPageState extends State<DashboardPage> {
           const SliverToBoxAdapter(
             child: Carousel(),
           ),
-          const SliverToBoxAdapter(
-            child: RentalCategory(
-              title: "Newest",
-            ),
-          ),
-          const SliverToBoxAdapter(
-            child: RentalCategory(
-              title: "Outdoor Gear",
-            ),
-          ),
-          const SliverToBoxAdapter(
-            child: RentalCategory(
-              title: "Sports",
-            ),
-          ),
-          const SliverToBoxAdapter(
-            child: RentalCategory(
-              title: "Party & Events",
-            ),
-          ),
+          BlocBuilder<CategoryListBloc, CategoryListState>(
+            builder: (context, state) {
+              if (state is CategoryListLoading) {
+                return const SliverToBoxAdapter(
+                  child: Center(child: CircularProgressIndicator()),
+                );
+              } else if (state is CategoryListSuccessful) {
+                final categoryList = state.categoryList;
+
+                return SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (BuildContext context, int index) {
+                      if (index >= categoryList.length) return null;
+
+                      final category = categoryList[index];
+
+                      return BlocProvider(
+                        create: (context) =>
+                            RentitemBloc(sl())..add(FetchRentItem()),
+                        child: RentalCategory(
+                          title: category.categoryName,
+                        ),
+                      );
+                    },
+                    childCount: categoryList!
+                        .length, // Set the child count to the list length
+                  ),
+                );
+              } else {
+                return const SliverToBoxAdapter(
+                  child: Center(child: Text('Unknown state')),
+                );
+              }
+            },
+          )
+          
         ],
       ),
     );
