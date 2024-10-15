@@ -41,11 +41,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   void _onAuthSignUp(AuthSignUp event, Emitter<AuthState> emit) async {
+    emit(AuthLoading());
     final res = await _userSignUp(
       params: UserSignUpParams(
+        firstName: event.firstName,
+        lastName: event.lastName,
         email: event.email,
         password: event.password,
-        name: event.name,
+        confirmPassword: event.confirmPassword,
       ),
     );
     res.fold(
@@ -56,22 +59,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   void _onAuthLogin(AuthLogin event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
-    // final res = await _userLogin(
-    //   params: UserLoginParams(
-    //     email: event.email,
-    //     password: event.password,
-    //   ),
-    // );
-    await Future.delayed(
-      const Duration(seconds: 2),
-      () {
-        emit(AuthSuccess(User(id: "1", email: event.email, name: "Bigyan")));
-      },
+    final res = await _userLogin(
+      params: UserLoginParams(
+        email: event.email,
+        password: event.password,
+      ),
     );
-    // res.fold(
-    //   (l) => AuthFaliure(l.errorMessage),
-    //   (r) => _emitAuthSuccess(r, emit),
-    // );
+    res.fold(
+      (l) => emit(AuthFaliure(l.errorMessage)),
+      (r) => _emitAuthSuccess(r, emit),
+    );
   }
 
   void _emitAuthSuccess(

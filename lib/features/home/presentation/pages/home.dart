@@ -43,9 +43,14 @@ class _HomeState extends State<Home> {
       listener: (context, authState) {
         if (authState is AuthSuccess) {
           context.read<NavigatorCubit>().reset();
+        }else if(authState is AuthFaliure){
+           ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(authState.message)),
+              );
         }
       },
       child: BlocBuilder<AuthBloc, AuthState>(
+        
         builder: (context, authState) {
           return Stack(children: [
             Scaffold(
@@ -89,7 +94,9 @@ class _HomeState extends State<Home> {
                     color: Colors.white,
                   )),
                 ),
-              ),
+              )
+             
+            
           ]);
         },
       ),

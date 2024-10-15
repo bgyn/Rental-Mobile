@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rentpal/config/theme/color_palette.dart';
 import 'package:rentpal/config/theme/theme.dart';
 import 'package:rentpal/core/extension/extension.dart';
+import 'package:rentpal/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:rentpal/features/auth/presentation/widgets/auth_text_field.dart';
 import 'package:rentpal/features/home/presentation/cubit/navigator_cubit.dart';
 
@@ -147,7 +148,15 @@ class RegisterPage extends StatelessWidget {
             SizedBox(height: 0.03.h(context)),
             GestureDetector(
               onTap: () {
-                if (key.currentState?.validate() ?? false) {}
+                if (key.currentState?.validate() ?? false) {
+                  context.read<AuthBloc>().add(AuthSignUp(
+                        email: emailCtrl.text,
+                        firstName: fNameCtrl.text,
+                        lastName: lNameCtrl.text,
+                        confirmPassword: confirmPasswordCtrl.text,
+                        password: passwordCtrl.text,
+                      ));
+                }
               },
               child: Container(
                 padding:

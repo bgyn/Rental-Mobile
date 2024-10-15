@@ -5,5 +5,7 @@ class UrlConstant {
   // static const baseUrl = "https://rentpal.bigyanthanait.com.np/api/";
   static const baseUrl = "http://192.168.1.200:8000/api/";
 
+  static const authUrl = "http://192.168.1.200:8000/account/";
+
   static const locationUrl = "https://us1.locationiq.com/v1/search?";
 }

@@ -7,6 +7,8 @@ import 'package:rentpal/features/address/data/datasource/remote/address_api_serv
 import 'package:rentpal/features/address/data/repository/address_respository_impl.dart';
 import 'package:rentpal/features/address/domain/repository/address_repository.dart';
 import 'package:rentpal/features/address/domain/usecases/get_address_list.dart';
+import 'package:rentpal/features/auth/data/data_source/remote/auth_api_service.dart';
+import 'package:rentpal/features/auth/data/repository/auth_repository_impl.dart';
 import 'package:rentpal/features/auth/domain/repository/auth_repository.dart';
 import 'package:rentpal/features/auth/domain/usecase/current_user.dart';
 import 'package:rentpal/features/auth/domain/usecase/user_login.dart';
@@ -35,7 +37,8 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<GetCategoryList>(GetCategoryList(sl()));
 
   //auth
-  sl.registerSingleton<AuthRepository>(AuthRepositoryImpl());
+  sl.registerSingleton<AuthApiService>(AuthApiService());
+  sl.registerSingleton<AuthRepository>(AuthRepositoryImpl(sl()));
 
   sl.registerSingleton<UserLogin>(UserLogin(authRepository: sl()));
   sl.registerSingleton<UserSignUp>(UserSignUp(authRepository: sl()));
