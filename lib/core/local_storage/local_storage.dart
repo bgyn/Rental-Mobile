@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class LocalStorage {
@@ -9,11 +11,18 @@ class LocalStorage {
   static const _secureStorage = FlutterSecureStorage();
   static const String _tokenKey = "token";
 
-  static void setToken(String token) async {
-    await _secureStorage.write(key: _tokenKey, value: token);
+  static void setToken(Map<String,dynamic> jsonData) async {
+    print(jsonData);
+    final String jsonString = jsonEncode(jsonData);
+    await _secureStorage.write(key: _tokenKey, value: jsonString);
   }
 
-  static Future<String?> getToken() async {
-    return await _secureStorage.read(key: _tokenKey);
+  static Future<Map<String,dynamic>?> getToken() async {
+    final String? jsonString = await _secureStorage.read(key: _tokenKey);
+    if(jsonString!=null){
+      return jsonDecode(jsonString);
+    }
+    return null;
+
   }
 }

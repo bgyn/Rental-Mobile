@@ -37,6 +37,13 @@ class _HomeState extends State<Home> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+
+
+  @override
   Widget build(BuildContext context) {
     final currentIndex = context.watch<NavigatorCubit>();
     return BlocListener<AuthBloc, AuthState>(
@@ -50,7 +57,6 @@ class _HomeState extends State<Home> {
         }
       },
       child: BlocBuilder<AuthBloc, AuthState>(
-        
         builder: (context, authState) {
           return Stack(children: [
             Scaffold(

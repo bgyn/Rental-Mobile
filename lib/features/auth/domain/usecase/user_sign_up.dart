@@ -1,16 +1,16 @@
 import 'package:fpdart/fpdart.dart';
-import 'package:rentpal/core/common/entities/user.dart';
 import 'package:rentpal/core/error/faliure.dart';
 import 'package:rentpal/core/usecases/usecases.dart';
+import 'package:rentpal/features/auth/domain/entities/user_session_entity.dart';
 import 'package:rentpal/features/auth/domain/repository/auth_repository.dart';
 
-class UserSignUp implements UseCase<Either<Failure, User>, UserSignUpParams> {
+class UserSignUp implements UseCase<Either<Failure, UserSessionEntity>, UserSignUpParams> {
   final AuthRepository authRepository;
 
   UserSignUp({required this.authRepository});
 
   @override
-  Future<Either<Failure, User>> call({UserSignUpParams? params}) async {
+  Future<Either<Failure, UserSessionEntity>> call({UserSignUpParams? params}) async {
     return await authRepository.signUpWithEmailPassword(
       firstName: params!.firstName,
       lastName: params.lastName,

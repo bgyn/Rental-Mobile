@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:rentpal/core/common/cubit/app_user_cubit.dart';
-import 'package:rentpal/core/common/entities/user.dart';
-import 'package:rentpal/features/auth/domain/usecase/current_user.dart';
+import 'package:rentpal/core/local_storage/local_storage.dart';
+import 'package:rentpal/features/auth/domain/entities/user_session_entity.dart';
+import 'package:rentpal/features/auth/domain/usecase/is_loggedin.dart';
 import 'package:rentpal/features/auth/domain/usecase/user_login.dart';
 import 'package:rentpal/features/auth/domain/usecase/user_sign_up.dart';
 
@@ -12,18 +12,15 @@ part 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final UserSignUp _userSignUp;
   final UserLogin _userLogin;
-  final CurrentUser _currentUser;
-  // final AppUserCubit _appUserCubit;
+  final IsLoggedIn _currentUser;
 
   AuthBloc({
     required UserSignUp userSignUp,
     required UserLogin userLogin,
-    required CurrentUser currentUser,
-    // required AppUserCubit appUserCubit,
+    required IsLoggedIn currentUser,
   })  : _userLogin = userLogin,
         _userSignUp = userSignUp,
         _currentUser = currentUser,
-        // _appUserCubit = appUserCubit,
         super(AuthInitial()) {
     on<AuthEvent>((_, emit) => emit(AuthLoading()));
     on<AuthSignUp>(_onAuthSignUp);
@@ -72,10 +69,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   void _emitAuthSuccess(
-    User user,
+    UserSessionEntity session,
     Emitter<AuthState> emit,
   ) {
-    // _appUserCubit.updateUser(user);
-    emit(AuthSuccess(user));
+    LocalStorage.setToken(session.toJson());
+    emit(AuthSuccess(session));
   }
 }

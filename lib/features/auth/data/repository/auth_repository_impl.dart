@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:fpdart/fpdart.dart';
 
-import 'package:rentpal/core/common/entities/user.dart';
 import 'package:rentpal/core/error/faliure.dart';
 import 'package:rentpal/features/auth/data/data_source/remote/auth_api_service.dart';
+import 'package:rentpal/features/auth/domain/entities/user_session_entity.dart';
 import 'package:rentpal/features/auth/domain/repository/auth_repository.dart';
 
 class AuthRepositoryImpl extends AuthRepository {
@@ -13,17 +13,18 @@ class AuthRepositoryImpl extends AuthRepository {
     this._authApiService,
   );
   @override
-  Future<Either<Failure, User>> currentUser() {
+  Future<Either<Failure, UserSessionEntity>> isLoggedIn() {
     throw UnimplementedError();
   }
 
   @override
-  Future<Either<Failure, User>> logInWithEmailPassword(
+  Future<Either<Failure, UserSessionEntity>> logInWithEmailPassword(
       {required String email, required String password}) async{
     try{
       final response = await _authApiService.login(email, password);
+      final data = UserSessionEntity.fromJson(jsonDecode(response.body));
       if(response.statusCode == 200){
-        return right(User(id: "2343", email: email, name: "demo"));
+        return right(data);
       }else if(response.statusCode == 400){
         return left(const ServerFailure("Username or password is incorrect"));
       }
@@ -36,7 +37,7 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<Either<Failure, User>> signUpWithEmailPassword(
+  Future<Either<Failure, UserSessionEntity>> signUpWithEmailPassword(
       {required String firstName,
       required String lastName,
       required String confirmPassword,
@@ -52,12 +53,8 @@ class AuthRepositoryImpl extends AuthRepository {
       );
 
       if (response.statusCode == 200) {
-        return right(User(
-          id: "234253",
-          email: jsonDecode(response.body)["email"],
-          name:
-              "${jsonDecode(response.body)["firstName"]} ${jsonDecode(response.body)["lastname"]}}",
-        ));
+        final data = UserSessionEntity.fromJson(jsonDecode(response.body));
+        return right(data);
       } else if(response.statusCode == 400) {
         return left(const ServerFailure("Email is already taken"));
       }else{

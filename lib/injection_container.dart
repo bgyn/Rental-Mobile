@@ -10,7 +10,7 @@ import 'package:rentpal/features/address/domain/usecases/get_address_list.dart';
 import 'package:rentpal/features/auth/data/data_source/remote/auth_api_service.dart';
 import 'package:rentpal/features/auth/data/repository/auth_repository_impl.dart';
 import 'package:rentpal/features/auth/domain/repository/auth_repository.dart';
-import 'package:rentpal/features/auth/domain/usecase/current_user.dart';
+import 'package:rentpal/features/auth/domain/usecase/is_loggedin.dart';
 import 'package:rentpal/features/auth/domain/usecase/user_login.dart';
 import 'package:rentpal/features/auth/domain/usecase/user_sign_up.dart';
 import 'package:rentpal/features/auth/presentation/bloc/auth_bloc.dart';
@@ -42,7 +42,7 @@ Future<void> initializeDependencies() async {
 
   sl.registerSingleton<UserLogin>(UserLogin(authRepository: sl()));
   sl.registerSingleton<UserSignUp>(UserSignUp(authRepository: sl()));
-  sl.registerSingleton<CurrentUser>(CurrentUser(sl()));
+  sl.registerSingleton<IsLoggedIn>(IsLoggedIn(sl()));
 
   sl.registerLazySingleton(
     () => AuthBloc(
