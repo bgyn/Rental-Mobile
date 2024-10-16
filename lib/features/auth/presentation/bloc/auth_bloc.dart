@@ -12,25 +12,27 @@ part 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final UserSignUp _userSignUp;
   final UserLogin _userLogin;
-  final IsLoggedIn _currentUser;
+  final IsLoggedIn _isLoggedIn;
 
   AuthBloc({
     required UserSignUp userSignUp,
     required UserLogin userLogin,
-    required IsLoggedIn currentUser,
+    required IsLoggedIn isLoggedIn,
   })  : _userLogin = userLogin,
         _userSignUp = userSignUp,
-        _currentUser = currentUser,
+        _isLoggedIn = isLoggedIn,
         super(AuthInitial()) {
     on<AuthEvent>((_, emit) => emit(AuthLoading()));
     on<AuthSignUp>(_onAuthSignUp);
     on<AuthLogin>(_onAuthLogin);
     on<AuthIsUserLoggedIn>(_isUserLoggedIn);
+    on<AuthLogout>(_onAuthLogout);
   }
 
   void _isUserLoggedIn(
       AuthIsUserLoggedIn event, Emitter<AuthState> emit) async {
-    final res = await _currentUser();
+    emit(AuthLoading());
+    final res = await _isLoggedIn();
     res.fold(
       (l) => emit(AuthFaliure(l.errorMessage)),
       (r) => _emitAuthSuccess(r, emit),
@@ -68,6 +70,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     );
   }
 
+  void _onAuthLogout(AuthLogout event, Emitter<AuthState> emit)async {
+    LocalStorage.deleteToken();
+    emit(AuthLoggedOut());
+  }
+
   void _emitAuthSuccess(
     UserSessionEntity session,
     Emitter<AuthState> emit,
@@ -75,4 +82,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     LocalStorage.setToken(session.toJson());
     emit(AuthSuccess(session));
   }
+
+  
 }

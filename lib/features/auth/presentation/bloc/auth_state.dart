@@ -18,3 +18,5 @@ final class AuthFaliure extends AuthState {
   final String message;
   const AuthFaliure(this.message);
 }
+
+final class AuthLoggedOut extends AuthState{}

@@ -18,8 +18,8 @@ class ServerFailure extends Failure {
 
 
 /// Cancel token failure
-class CancelTokenFailure extends Failure {
+class TokenFailure extends Failure {
   final int? statusCode;
 
-  const CancelTokenFailure(super.errorMessage,{ this.statusCode});
+  const TokenFailure(super.errorMessage,{ this.statusCode});
 }

@@ -22,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
       () {
         if (!mounted) return;
         if (authState is AuthInitial) {
-          context.read<NavigatorCubit>().onChanged(1);
+          context.read<NavigatorCubit>().onChanged(0);
         } else {
           context.read<NavigatorCubit>().onChanged(0);
         }

@@ -3,18 +3,33 @@ import 'dart:convert';
 import 'package:fpdart/fpdart.dart';
 
 import 'package:rentpal/core/error/faliure.dart';
+import 'package:rentpal/features/auth/data/data_source/local/local_auth_api_service.dart';
 import 'package:rentpal/features/auth/data/data_source/remote/auth_api_service.dart';
 import 'package:rentpal/features/auth/domain/entities/user_session_entity.dart';
 import 'package:rentpal/features/auth/domain/repository/auth_repository.dart';
 
 class AuthRepositoryImpl extends AuthRepository {
   final AuthApiService _authApiService;
+  final LocalAuthApiService _localAuthApiService;
   AuthRepositoryImpl(
     this._authApiService,
+    this._localAuthApiService,
   );
   @override
-  Future<Either<Failure, UserSessionEntity>> isLoggedIn() {
-    throw UnimplementedError();
+  Future<Either<Failure, UserSessionEntity>> isLoggedIn() async{
+    final response = await _localAuthApiService.isUserLoggedIn();
+    if(response!=null){
+      final data = UserSessionEntity.fromJson(response);
+      if(data.token?.isEmpty ?? true){
+        return left(const TokenFailure("Token Expired"));
+      }else{
+        return right(
+         data
+        );
+      }
+    }else{
+      return left(const TokenFailure("Token Expired"));
+    }
   }
 
   @override

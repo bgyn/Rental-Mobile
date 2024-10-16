@@ -12,7 +12,6 @@ class LocalStorage {
   static const String _tokenKey = "token";
 
   static void setToken(Map<String,dynamic> jsonData) async {
-    print(jsonData);
     final String jsonString = jsonEncode(jsonData);
     await _secureStorage.write(key: _tokenKey, value: jsonString);
   }
@@ -23,6 +22,9 @@ class LocalStorage {
       return jsonDecode(jsonString);
     }
     return null;
+  }
 
+  static void deleteToken()async{
+    await _secureStorage.delete(key: _tokenKey);
   }
 }

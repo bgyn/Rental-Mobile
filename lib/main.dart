@@ -57,7 +57,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (_) => AddressCubit()),
         BlocProvider(create: (_) => RulesCubit()),
         BlocProvider(create: (_) => ImageHandlerCubit()),
-        BlocProvider(create: (_) => sl<AuthBloc>()),
+        BlocProvider(create: (_) => sl<AuthBloc>()..add(AuthIsUserLoggedIn())),
         BlocProvider(create: (_) => NavigatorCubit()),
         BlocProvider(create: (_) => AddListingBloc(sl())),
         BlocProvider(create: (_) => AddressBloc(sl())),
