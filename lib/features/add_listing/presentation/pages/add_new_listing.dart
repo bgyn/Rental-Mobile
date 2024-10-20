@@ -32,7 +32,7 @@ class _AddNewListingState extends State<AddNewListing> {
   final _pricePerDayController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _quantityController = TextEditingController();
-  String _categoryController  = "";
+  String _categoryController  = "17";
   final _formKey = GlobalKey<FormState>();
 
   late ImageHandlerCubit _imageHandlerCubit;
@@ -368,7 +368,7 @@ class _AddNewListingState extends State<AddNewListing> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10))),
                       onPressed: () {
-                        if (_formKey.currentState?.validate() ?? false) {
+                        // if (_formKey.currentState?.validate() ?? false) {
                           final latitude =
                               context.read<AddressCubit>().state.first.lat;
                           final longitude =
@@ -377,7 +377,7 @@ class _AddNewListingState extends State<AddNewListing> {
                                 PublishProductListing(
                                   file: File(context.read<ImageHandlerCubit>().state.first.path),
                                   title: _titleController.text,
-                                  category: _categoryController,
+                                  category: "17",
                                   price:
                                       double.parse(_pricePerDayController.text),
                                   description: _descriptionController.text,
@@ -386,14 +386,12 @@ class _AddNewListingState extends State<AddNewListing> {
                                   noOfReviews: 0,
                                   address:
                                       "${context.read<AddressCubit>().state.first.displayName}",
-                                  latitude: double.parse(latitude!)
-                                      .toStringAsFixed(2),
-                                  longitude: double.parse(longitude!)
-                                      .toStringAsFixed(2),
+                                  latitude: "$latitude",
+                                  longitude:"$longitude",
                                   itemRules: context.read<RulesCubit>().state.rules,
                                 ),
                               );
-                        }
+                        // }
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 12),

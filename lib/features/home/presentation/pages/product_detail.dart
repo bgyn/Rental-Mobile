@@ -1,9 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rentpal/config/theme/color_palette.dart';
 import 'package:rentpal/core/extension/extension.dart';
 import 'package:rentpal/features/rentitem/domain/entity/rentitem_entity.dart';
+import 'package:rentpal/features/rentitem/presentation/bloc/rentitem_bloc.dart';
+import 'package:rentpal/features/rentitem/presentation/bloc/rentitem_event.dart';
 import 'package:rentpal/features/rentitem/presentation/pages/rental_category.dart';
+import 'package:rentpal/injection_container.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ProductDetail extends StatelessWidget {
@@ -222,7 +226,11 @@ class ProductDetail extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Text("Other listing by Andrew"),
-                          const RentalCategory(),
+                          BlocProvider(
+                            create: (context) =>
+                                RentitemBloc(sl())..add(FetchRentItem()),
+                            child: const RentalCategory(),
+                          ),
                           GestureDetector(
                             onTap: () {},
                             child: Container(
@@ -254,12 +262,14 @@ class ProductDetail extends StatelessWidget {
                       decoration: const BoxDecoration(color: Colors.white),
                       padding: const EdgeInsets.symmetric(
                           vertical: 10, horizontal: 20),
-                      child: const RentalCategory(
-                        title: "Similiar Listing",
+                      child: BlocProvider(
+                        create: (context) =>
+                            RentitemBloc(sl())..add(FetchRentItem()),
+                        child: const RentalCategory(),
                       ),
                     ),
                     const SizedBox(
-                      height: 5,
+                      height: 25,
                     ),
                   ],
                 ),
@@ -268,12 +278,34 @@ class ProductDetail extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: ColorPalette.primaryColor,
-        onPressed: () {},
-        child: const Icon(
-          Icons.add_shopping_cart_outlined,
-          color: Colors.white,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: Container(
+        padding: EdgeInsets.symmetric(
+            vertical: 0.005.toRes(context), horizontal: 0.015.toRes(context)),
+        color: Colors.grey.shade100,
+        child: Row(
+          children: [
+            Text(
+              "Rs. ${rentitemEntity.price}/day",
+              style: const TextStyle(color: Colors.black),
+            ),
+            SizedBox(
+              width: 0.03.w(context),
+            ),
+            Expanded(
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: ColorPalette.primaryColor),
+                onPressed: () {},
+                child: const Text(
+                  "Choose your date",
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            )
+          ],
         ),
       ),
     );

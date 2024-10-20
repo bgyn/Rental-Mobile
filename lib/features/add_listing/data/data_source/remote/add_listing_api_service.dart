@@ -27,6 +27,7 @@ class AddListingApiService {
       "file", 
       file.path,
     );
+
     request.files.add(multipartFile);
     final response = await request.send();
     final res = await http.Response.fromStream(response);

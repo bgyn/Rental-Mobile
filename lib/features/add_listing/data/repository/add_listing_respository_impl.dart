@@ -40,7 +40,6 @@ class AddListingRespositoryImpl implements AddListingRepository {
         "category" : category,
       };
 
-
       final response = await _addListingApiService.publishListing(body,file!);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
