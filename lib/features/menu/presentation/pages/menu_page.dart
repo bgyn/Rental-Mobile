@@ -42,10 +42,10 @@ class _MenuPageState extends State<MenuPage> {
               SizedBox(
                 height: 0.03.h(context),
               ),
-              _information(context),
-              SizedBox(
-                height: 0.05.h(context),
-              ),
+              // _information(context),
+              // SizedBox(
+              //   height: 0.05.h(context),
+              // ),
               MenuOptionTiles(
                   icon: Icons.logout,
                   title: "logout",
@@ -105,15 +105,7 @@ class _MenuPageState extends State<MenuPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          "ACCOUNT",
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                fontSize: 0.015.toRes(context),
-              ),
-        ),
-        SizedBox(
-          height: 0.01.h(context),
-        ),
+       
         MenuOptionTiles(
           icon: Icons.person_2_outlined,
           title: "Edit profile",
@@ -137,8 +129,8 @@ class _MenuPageState extends State<MenuPage> {
           onTap: () => GoRouter.of(context).push(("/forgot-password")),
         ),
         const MenuOptionTiles(
-          icon: Icons.payments,
-          title: "Payment method",
+          icon: Icons.shopping_bag_outlined,
+          title: "My Orders",
         ),
       ],
     );
