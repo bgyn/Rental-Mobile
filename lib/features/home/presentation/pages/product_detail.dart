@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rentpal/config/theme/color_palette.dart';
@@ -296,7 +297,14 @@ class ProductDetail extends StatelessWidget {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     backgroundColor: ColorPalette.primaryColor),
-                onPressed: () {},
+                onPressed: () async{
+                  final values =await showCalendarDatePicker2Dialog(
+                    context: context,
+                    config: CalendarDatePicker2WithActionButtonsConfig(
+                        calendarType: CalendarDatePicker2Type.range),
+                        dialogSize: const Size(1.0, 1.0)
+                  );
+                },
                 child: const Text(
                   "Choose your date",
                   style: TextStyle(
