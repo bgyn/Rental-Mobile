@@ -23,6 +23,10 @@ import 'package:rentpal/features/rentitem/data/datasource/remote/rentitem_api_se
 import 'package:rentpal/features/rentitem/data/repository/rentitem_repository_impl.dart';
 import 'package:rentpal/features/rentitem/domain/repository/rentitem_repository.dart';
 import 'package:rentpal/features/rentitem/domain/usercase/get_rentitem.dart';
+import 'package:rentpal/features/user/data/datasource/user_api_service.dart';
+import 'package:rentpal/features/user/data/repository/user_repository_impl.dart';
+import 'package:rentpal/features/user/domain/repository/user_repository.dart';
+import 'package:rentpal/features/user/domain/usecase/get_user_usecase.dart';
 
 final sl = GetIt.instance;
 
@@ -68,4 +72,10 @@ Future<void> initializeDependencies() async {
    sl.registerSingleton<AddressApiService>(AddressApiService());
    sl.registerSingleton<AddressRepository>(AddressRespositoryImpl(sl()));
    sl.registerSingleton<GetAddressList>(GetAddressList(sl()));
+
+  //user
+  sl.registerSingleton<UserApiService>(UserApiService());
+  sl.registerSingleton<UserRepository>(UserRepositoryImpl(sl()));
+  sl.registerSingleton<GetUser>(GetUser(sl()));
+
 }

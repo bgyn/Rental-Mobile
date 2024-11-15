@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rentpal/features/categories/presentation/bloc/category_list_bloc.dart';
 import 'package:rentpal/features/categories/presentation/bloc/category_list_state.dart';
 import 'package:shimmer/shimmer.dart';
@@ -51,7 +52,9 @@ class RentalCategoryOption extends StatelessWidget {
                 itemCount: state.categoryList?.length,
                 itemBuilder: (context, index) {
                   return GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      GoRouter.of(context).push("/category-product");
+                    },
                     child: Container(
                       margin: const EdgeInsets.only(left: 10, right: 10),
                       child: Column(

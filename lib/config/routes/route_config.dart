@@ -13,6 +13,7 @@ import 'package:rentpal/features/my_listing/presentation/pages/my_listing_page.d
 import 'package:rentpal/features/profile/presentation/pages/edit_profile_page.dart';
 import 'package:rentpal/features/rentals/presentation/pages/rental_page.dart';
 import 'package:rentpal/features/rentitem/domain/entity/rentitem_entity.dart';
+import 'package:rentpal/features/rentitem/presentation/pages/rentpal_category_grid.dart';
 import 'package:rentpal/features/splash/presentation/splash_screen.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -44,6 +45,10 @@ final routeConfig = GoRouter(
         final product = state.extra as RentitemEntity;
         return ProductDetail(rentitemEntity: product);
       },
+    ),
+    GoRoute(
+      path: "/category-product",
+      builder: (context, state) => const RentpalCategoryGrid(),
     ),
     GoRoute(
         path: "/edit-profile",

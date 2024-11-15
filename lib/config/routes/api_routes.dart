@@ -24,4 +24,8 @@ class ApiRoutes {
   static String loginUser(){
     return "${UrlConstant.authUrl}login/";
   }
+
+  static String getUser(){
+    return "${UrlConstant.authUrl}user/";
+  }
 }

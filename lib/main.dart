@@ -16,6 +16,7 @@ import 'package:rentpal/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:rentpal/features/categories/presentation/bloc/category_list_bloc.dart';
 import 'package:rentpal/features/categories/presentation/bloc/category_list_event.dart';
 import 'package:rentpal/features/home/presentation/cubit/navigator_cubit.dart';
+import 'package:rentpal/features/user/presentation/bloc/user_bloc.dart';
 import 'package:rentpal/injection_container.dart';
 import 'firebase_options.dart';
 
@@ -61,6 +62,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (_) => NavigatorCubit()),
         BlocProvider(create: (_) => AddListingBloc(sl())),
         BlocProvider(create: (_) => AddressBloc(sl())),
+        BlocProvider(create: (_) => UserBloc(sl())),
         BlocProvider(
             create: (_) =>
                 CategoryListBloc(sl())..add(const FetchCategoryList()))
