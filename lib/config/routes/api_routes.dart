@@ -26,6 +26,10 @@ class ApiRoutes {
   }
 
   static String getUser(){
-    return "${UrlConstant.authUrl}user/";
+    return "${UrlConstant.baseUrl}user/";
+  }
+
+  static String getProfile(){
+    return "${UrlConstant.baseUrl}profile/";
   }
 }

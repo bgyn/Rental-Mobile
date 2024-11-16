@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:fpdart/fpdart.dart';
+import 'package:rentpal/core/error/faliure.dart';
 import 'package:rentpal/core/usecases/usecases.dart';
 import 'package:rentpal/features/profile/domain/repository/profile_repository.dart';
 
@@ -8,8 +10,8 @@ class UpdateProfile extends UseCase<void, UpdateProfileParams> {
   UpdateProfile(this.profileRepository);
 
   @override
-  Future<void> call({UpdateProfileParams? params}) async {
-    await profileRepository.updateProfile(
+  Future<Either<Failure,void>> call({UpdateProfileParams? params}) async {
+   return await profileRepository.updateProfile(
       file: params?.file,
       fname: params?.fname,
       lname: params?.lname,

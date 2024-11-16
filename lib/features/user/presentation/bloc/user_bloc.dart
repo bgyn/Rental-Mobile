@@ -15,7 +15,11 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
   void _onFetchUser(FetchUser event, Emitter<UserState> emit) async {
     final data = await _getUser.call();
-    data.fold((l) => UserError(err: l.errorMessage),
-        (r) => emit(UserSuccess(data: r)));
+    data.fold(
+      (l) => UserError(err: l.errorMessage),
+      (r) => emit(
+        UserSuccess(data: r),
+      ),
+    );
   }
 }
