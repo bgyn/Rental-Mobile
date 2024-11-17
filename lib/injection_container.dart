@@ -19,6 +19,12 @@ import 'package:rentpal/features/categories/data/data_source/remote/category_api
 import 'package:rentpal/features/categories/data/repository/category_list_repository_impl.dart';
 import 'package:rentpal/features/categories/domain/repository/category_list_repository.dart';
 import 'package:rentpal/features/categories/domain/usercases/get_category_list.dart';
+import 'package:rentpal/features/profile/data/source/remotesource/profile_api_service.dart';
+import 'package:rentpal/features/profile/data/source/repository/profile_repository_impl.dart';
+import 'package:rentpal/features/profile/domain/repository/profile_repository.dart';
+import 'package:rentpal/features/profile/domain/usecase/get_profile.dart';
+import 'package:rentpal/features/profile/domain/usecase/update_profile.dart';
+import 'package:rentpal/features/profile/presentation/bloc/profile_event.dart';
 import 'package:rentpal/features/rentitem/data/datasource/remote/rentitem_api_service.dart';
 import 'package:rentpal/features/rentitem/data/repository/rentitem_repository_impl.dart';
 import 'package:rentpal/features/rentitem/domain/repository/rentitem_repository.dart';
@@ -44,7 +50,7 @@ Future<void> initializeDependencies() async {
   //auth
   sl.registerSingleton<AuthApiService>(AuthApiService());
   sl.registerSingleton<LocalAuthApiService>(LocalAuthApiService());
-  sl.registerSingleton<AuthRepository>(AuthRepositoryImpl(sl(),sl()));
+  sl.registerSingleton<AuthRepository>(AuthRepositoryImpl(sl(), sl()));
 
   sl.registerSingleton<UserLogin>(UserLogin(authRepository: sl()));
   sl.registerSingleton<UserSignUp>(UserSignUp(authRepository: sl()));
@@ -69,13 +75,18 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<GetRentitem>(GetRentitem(sl()));
 
   //address
-   sl.registerSingleton<AddressApiService>(AddressApiService());
-   sl.registerSingleton<AddressRepository>(AddressRespositoryImpl(sl()));
-   sl.registerSingleton<GetAddressList>(GetAddressList(sl()));
+  sl.registerSingleton<AddressApiService>(AddressApiService());
+  sl.registerSingleton<AddressRepository>(AddressRespositoryImpl(sl()));
+  sl.registerSingleton<GetAddressList>(GetAddressList(sl()));
 
   //user
   sl.registerSingleton<UserApiService>(UserApiService());
   sl.registerSingleton<UserRepository>(UserRepositoryImpl(sl()));
   sl.registerSingleton<GetUser>(GetUser(sl()));
 
+  //profile
+  sl.registerSingleton<ProfileApiService>(ProfileApiService());
+  sl.registerSingleton<ProfileRepository>(ProfileRepositoryImpl(sl()));
+  sl.registerSingleton<UpdateProfile>(UpdateProfile(sl()));
+  sl.registerSingleton<GetProfile>(GetProfile(sl()));
 }
