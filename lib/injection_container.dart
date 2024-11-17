@@ -24,7 +24,6 @@ import 'package:rentpal/features/profile/data/source/repository/profile_reposito
 import 'package:rentpal/features/profile/domain/repository/profile_repository.dart';
 import 'package:rentpal/features/profile/domain/usecase/get_profile.dart';
 import 'package:rentpal/features/profile/domain/usecase/update_profile.dart';
-import 'package:rentpal/features/profile/presentation/bloc/profile_event.dart';
 import 'package:rentpal/features/rentitem/data/datasource/remote/rentitem_api_service.dart';
 import 'package:rentpal/features/rentitem/data/repository/rentitem_repository_impl.dart';
 import 'package:rentpal/features/rentitem/domain/repository/rentitem_repository.dart';
