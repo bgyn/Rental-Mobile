@@ -1,0 +1,74 @@
+name: "Build"
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs: # Telling what jobs we need to happen
+  build: # Specify the building name and machine
+    name: Build & Release # you can name the build what ever
+    runs-on: macos-latest # here we selected macos-latest to be at to get ios build
+    # if you don't want ios build then you can use `ubuntu-latest`
+
+    steps:
+      # checkout repository
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # setup java
+      - name: Set Up Java
+        uses: actions/setup-java@v3.12.0
+        with:
+          distribution: "oracle"
+          java-version: "21"
+
+      # setup flutter
+      - name: Set Up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.24.5"
+          channel: "stable"
+
+      # building apk i.e, .apk
+      - name: Build Apk
+        run: flutter build apk --release
+
+      # building app bundle i.e, .aab
+      - name: Build appBundle
+        run: flutter build appbundle
+
+      # building IPA (iOS Build)
+      - name: Build IPA
+        run: flutter build ipa --no-codesign
+
+      # compress archives and IPs
+      - name: Compress Archives and IPAs
+        run: |
+          cd build
+          tar -czf ios_build.tar.gz ios
+
+      # upload artifacts
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: Releases
+          path: |
+            build/app/outputs/flutter-apk/app-release.apk
+            build/app/outputs/bundle/release/app-release.aab
+            build/ios_build.tar.g
+
+      # extract version
+      - name: Extract version from pubspec.yaml
+        id: extract_version
+        run: |
+          version=$(grep '^version: ' pubspec.yaml | cut -d ' ' -f 2 | tr -d '\r')
+          echo "VERSION=$version"
+
+      # create releases
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ github.ref_name }}
+          artifacts: "build/app/outputs/flutter-apk/app-release.apk,build/app/outputs/bundle/release/app-release.aab,build/ios_build.tar.gz"
+          token: ${{ secrets.RENTPAL_TOKEN }}
