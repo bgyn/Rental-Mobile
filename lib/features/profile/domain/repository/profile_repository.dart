@@ -10,6 +10,7 @@ abstract class ProfileRepository {
     required String? fname,
     required String? lname,
     required String? address,
+    required String? phone,
     String? aboutYou,
   });
   Future<Either<Failure, ProfileEntity>> getProfile(int id);

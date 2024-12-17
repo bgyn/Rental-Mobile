@@ -34,13 +34,21 @@ class ProfileRepositoryImpl extends ProfileRepository {
       required String? fname,
       required String? lname,
       required String? address,
+      required String? phone,
       String? aboutYou}) async {
     try {
-      final response = await profileApiService.updateProfile();
+      final response = await profileApiService.updateProfile(
+        file: file,
+        fName: fname!,
+        lName: lname!,
+        phone: phone!,
+        aboutYou: aboutYou,
+        address: address!,
+      );
       if (response.statusCode == 200) {
         return right(null);
       }
-      return left(const ConnectionFailure("Failed to fetch profile"));
+      return left(const ConnectionFailure("Failed to update profile"));
     } on SocketException {
       return left(const ServerFailure("No internet connection"));
     } on HttpException {

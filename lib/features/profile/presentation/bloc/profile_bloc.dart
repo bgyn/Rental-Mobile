@@ -23,9 +23,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       file: event.file,
       fname: event.fname,
       lname: event.lname,
-    phone: event.phone,
+      phone: event.phone,
       address: event.address,
-      
       aboutYou: event.aboutYou,
     ));
     data.fold((l) => ProfileError(err: l.errorMessage),

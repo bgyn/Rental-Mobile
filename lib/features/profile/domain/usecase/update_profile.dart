@@ -17,6 +17,7 @@ class UpdateProfile extends UseCase<void, UpdateProfileParams> {
       lname: params?.lname,
       address: params?.lname,
       aboutYou: params?.aboutYou,
+      phone: params?.phone,
     );
   }
 }
