@@ -33,8 +33,7 @@ jobs: # Telling what jobs we need to happen
       # create .evn file
       - name: Create .env file
         run: |
-          echo "LOCATIONIQAPIKEY=${{secrets.LOCATIONIQ_API_KEY}}" >> .env
-          echo "API
+          echo 'LOCATIONIQAPIKEY=" ${{secrets.LOCATIONIQ_API_KEY }}"' >> .env
 
       # building apk i.e, .apk
       - name: Build Apk
