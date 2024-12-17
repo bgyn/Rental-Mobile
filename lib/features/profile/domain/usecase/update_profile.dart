@@ -26,11 +26,13 @@ class UpdateProfileParams {
   final String fname;
   final String lname;
   final String address;
+  final String phone;
   String? aboutYou;
 
   UpdateProfileParams({
     this.file,
     required this.fname,
+    required this.phone,
     required this.lname,
     required this.address,
     required this.aboutYou,

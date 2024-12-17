@@ -10,6 +10,7 @@ class ProfileUpdate extends ProfileEvent {
   final File? file;
   final String fname;
   final String lname;
+  final String phone;
   final String address;
   final String? aboutYou;
   ProfileUpdate({
@@ -17,6 +18,7 @@ class ProfileUpdate extends ProfileEvent {
     required this.fname,
     required this.lname,
     required this.address,
+    required this.phone,
     this.aboutYou,
   });
 }
