@@ -8,6 +8,7 @@ import 'package:rentpal/features/categories/presentation/bloc/category_list_even
 import 'package:rentpal/features/categories/presentation/bloc/category_list_state.dart';
 import 'package:rentpal/features/home/presentation/widgets/carousel.dart';
 import 'package:rentpal/features/categories/presentation/widgets/rental_category_option.dart';
+import 'package:rentpal/features/home/presentation/widgets/custom_search_delegate.dart';
 import 'package:rentpal/features/rentitem/presentation/bloc/rentitem_bloc.dart';
 import 'package:rentpal/features/rentitem/presentation/bloc/rentitem_event.dart';
 import 'package:rentpal/features/rentitem/presentation/pages/rental_category.dart';
@@ -51,6 +52,14 @@ class _DashboardPageState extends State<DashboardPage> {
                   child: SizedBox(
                     width: double.infinity,
                     child: TextField(
+                      enabled: true,
+                      readOnly: true,
+                      onTap: () async {
+                        await showSearch(
+                          context: context,
+                          delegate: CustomSearchDelegate(),
+                        );
+                      },
                       decoration: InputDecoration(
                           hintText: "Search",
                           border: OutlineInputBorder(
