@@ -23,8 +23,8 @@ import 'package:rentpal/features/my_listing/data/datasource/remote/my_listing_ap
 import 'package:rentpal/features/my_listing/data/repository/my_listing_repository_impl.dart';
 import 'package:rentpal/features/my_listing/domain/repository/my_listing_repository.dart';
 import 'package:rentpal/features/my_listing/domain/usercase/get_listing.dart';
+import 'package:rentpal/features/profile/data/repository/profile_repository_impl.dart';
 import 'package:rentpal/features/profile/data/source/remotesource/profile_api_service.dart';
-import 'package:rentpal/features/profile/data/source/repository/profile_repository_impl.dart';
 import 'package:rentpal/features/profile/domain/repository/profile_repository.dart';
 import 'package:rentpal/features/profile/domain/usecase/get_profile.dart';
 import 'package:rentpal/features/profile/domain/usecase/update_profile.dart';
