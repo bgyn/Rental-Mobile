@@ -21,6 +21,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   final _fNameCtrl = TextEditingController();
   final _lNameCtrl = TextEditingController();
   final _addressCtrl = TextEditingController();
+  final _phoneCtrl = TextEditingController();
   final _aboutCtrl = TextEditingController();
   final _key = GlobalKey<FormState>();
   late ImageHandlerCubit _imageHandlerCubit;
@@ -148,6 +149,17 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return "City and State is required";
+                      }
+                      return null;
+                    },
+                  ),
+                  ProfileTextFormField(
+                    textEditingController: _phoneCtrl,
+                    title: "Phone Number",
+                    hintText: "9841",
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "The phone number is required";
                       }
                       return null;
                     },
