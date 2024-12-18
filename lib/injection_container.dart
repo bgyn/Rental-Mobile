@@ -19,6 +19,10 @@ import 'package:rentpal/features/categories/data/data_source/remote/category_api
 import 'package:rentpal/features/categories/data/repository/category_list_repository_impl.dart';
 import 'package:rentpal/features/categories/domain/repository/category_list_repository.dart';
 import 'package:rentpal/features/categories/domain/usercases/get_category_list.dart';
+import 'package:rentpal/features/my_listing/data/datasource/remote/my_listing_api_service.dart';
+import 'package:rentpal/features/my_listing/data/repository/my_listing_repository_impl.dart';
+import 'package:rentpal/features/my_listing/domain/repository/my_listing_repository.dart';
+import 'package:rentpal/features/my_listing/domain/usercase/get_listing.dart';
 import 'package:rentpal/features/profile/data/source/remotesource/profile_api_service.dart';
 import 'package:rentpal/features/profile/data/source/repository/profile_repository_impl.dart';
 import 'package:rentpal/features/profile/domain/repository/profile_repository.dart';
@@ -88,4 +92,9 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<ProfileRepository>(ProfileRepositoryImpl(sl()));
   sl.registerSingleton<UpdateProfile>(UpdateProfile(sl()));
   sl.registerSingleton<GetProfile>(GetProfile(sl()));
+
+  //mylisting
+  sl.registerSingleton<MyListingApiService>(MyListingApiService());
+  sl.registerSingleton<MyListingRepository>(MyListingRepositoryImpl(sl()));
+  sl.registerSingleton<GetListing>(GetListing(sl()));
 }

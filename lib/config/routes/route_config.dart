@@ -47,9 +47,13 @@ final routeConfig = GoRouter(
       },
     ),
     GoRoute(
-      path: "/category-product",
-      builder: (context, state) => const RentpalCategoryGrid(),
-    ),
+        path: "/category-product",
+        builder: (context, state) {
+          final category = state.extra as String;
+          return RentpalCategoryGrid(
+            category: category,
+          );
+        }),
     GoRoute(
         path: "/edit-profile",
         builder: (context, state) => const EditProfilePage()),

@@ -53,7 +53,8 @@ class RentalCategoryOption extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () {
-                      GoRouter.of(context).push("/category-product");
+                      GoRouter.of(context).push("/category-product",
+                          extra: state.categoryList?[index].categoryName ?? "");
                     },
                     child: Container(
                       margin: const EdgeInsets.only(left: 10, right: 10),
