@@ -17,19 +17,23 @@ class ApiRoutes {
     return "${UrlConstant.locationUrl}key=$key&countrycodes=np&q=$query&format=json";
   }
 
-  static String signUpUser(){
+  static String signUpUser() {
     return "${UrlConstant.authUrl}register/";
   }
-  
-  static String loginUser(){
+
+  static String loginUser() {
     return "${UrlConstant.authUrl}login/";
   }
 
-  static String getUser(){
+  static String getUser() {
     return "${UrlConstant.baseUrl}user/";
   }
 
-  static String getProfile(){
+  static String getProfile() {
     return "${UrlConstant.baseUrl}profile/";
+  }
+
+  static String getListing() {
+    return "${UrlConstant.baseUrl}my_listing/";
   }
 }

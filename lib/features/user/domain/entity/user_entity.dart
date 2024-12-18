@@ -15,9 +15,9 @@ class UserEntity {
   UserEntity(this.id, this.firstName,this.lastName, this.email,this.address,this.profilePic,this.dob);
 
   factory UserEntity.fromJson(Map<String, dynamic> json) =>
-      _$userEntityFromJson(json);
+      _$UserEntityFromJson(json);
    
-   Map<String,dynamic> toJson() => _$userEntityToJson(this);
+   Map<String,dynamic> toJson() => _$UserEntityToJson(this);
 
    @override
    bool operator ==(Object other){

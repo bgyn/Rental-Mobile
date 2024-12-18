@@ -6,7 +6,7 @@ part of 'user_entity.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-UserEntity _$userEntityFromJson(Map<String, dynamic> json) => UserEntity(
+UserEntity _$UserEntityFromJson(Map<String, dynamic> json) => UserEntity(
       (json['id'] as num?)?.toInt(),
       json['firstName'] as String?,
       json['lastName'] as String?,
@@ -16,7 +16,7 @@ UserEntity _$userEntityFromJson(Map<String, dynamic> json) => UserEntity(
       json['dob'] as String?,
     );
 
-Map<String, dynamic> _$userEntityToJson(UserEntity instance) =>
+Map<String, dynamic> _$UserEntityToJson(UserEntity instance) =>
     <String, dynamic>{
       'id': instance.id,
       'firstName': instance.firstName,
