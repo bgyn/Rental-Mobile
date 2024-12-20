@@ -32,7 +32,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   }
 
   void _onProfileFetch(ProfileFetch event, Emitter<ProfileState> emit) async {
-    final data = await _getProfile.call(params: event.id);
+    final data = await _getProfile.call();
     data.fold((l) => ProfileError(err: l.errorMessage),
         (r) => ProfileSuccess(data: r));
   }

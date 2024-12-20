@@ -26,6 +26,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   final _aboutCtrl = TextEditingController();
   final _dobCtrl = TextEditingController();
   final _key = GlobalKey<FormState>();
+  XFile? _profile;
   String? _gender;
   late ImageHandlerCubit _imageHandlerCubit;
 
@@ -72,40 +73,50 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   ),
                   Stack(
                     children: [
-                      BlocBuilder<ImageHandlerCubit, List<XFile>>(
+                      BlocListener<ImageHandlerCubit, List<XFile>>(
+                        listener: (context, state) {
+                          if (state.isNotEmpty) {
+                            setState(() {
+                              _profile = state[0];
+                            });
+                          }
+                        },
+                        child: BlocBuilder<ImageHandlerCubit, List<XFile>>(
                           builder: (context, state) {
-                        return state.isEmpty
-                            ? Container(
-                                width: 0.4.w(context),
-                                height: 0.18.h(context),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.grey.shade200,
-                                ),
-                                child: Center(
-                                  child: Icon(
-                                    Icons.person,
-                                    size: 0.1.toRes(context),
-                                    color: Colors.grey.shade600,
-                                  ),
-                                ),
-                              )
-                            : ClipRRect(
-                                borderRadius: BorderRadius.circular(100),
-                                clipBehavior: Clip.hardEdge,
-                                child: Container(
-                                  width: 0.4.w(context),
-                                  height: 0.18.h(context),
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: Image.file(
-                                    File(state[0].path),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              );
-                      }),
+                            return state.isEmpty
+                                ? Container(
+                                    width: 0.4.w(context),
+                                    height: 0.18.h(context),
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.grey.shade200,
+                                    ),
+                                    child: Center(
+                                      child: Icon(
+                                        Icons.person,
+                                        size: 0.1.toRes(context),
+                                        color: Colors.grey.shade600,
+                                      ),
+                                    ),
+                                  )
+                                : ClipRRect(
+                                    borderRadius: BorderRadius.circular(100),
+                                    clipBehavior: Clip.hardEdge,
+                                    child: Container(
+                                      width: 0.4.w(context),
+                                      height: 0.18.h(context),
+                                      decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: Image.file(
+                                        File(state[0].path),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  );
+                          },
+                        ),
+                      ),
                       Positioned(
                         bottom: 10,
                         right: 10,
@@ -200,8 +211,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           onPressed: () async {
             if (_key.currentState?.validate() ?? false) {
               context.read<ProfileBloc>().add(ProfileUpdate(
-                    file: File(
-                        context.read<ImageHandlerCubit>().state.first.path),
+                    file: _profile == null ? null : File(_profile!.path),
                     gender: _gender!,
                     dob: _dobCtrl.text,
                     address: _addressCtrl.text,

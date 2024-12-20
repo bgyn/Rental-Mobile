@@ -8,9 +8,8 @@ class ProfileApiService {
   Future<http.Response> getProfile() async {
     final token = LocalStorage.getToken();
     final url = ApiRoutes.getProfile();
-    final response = await http.get(Uri.parse(url),headers: {
-      "Authorization" : "$token"
-    });
+    final response =
+        await http.get(Uri.parse(url), headers: {"Authorization": "$token"});
     return response;
   }
 
@@ -21,9 +20,13 @@ class ProfileApiService {
       required String gender,
       required String address,
       String? aboutYou}) async {
+    final token = LocalStorage.getToken();
     final url = ApiRoutes.getProfile();
     final request = http.MultipartRequest("POST", Uri.parse(url));
-    final headers = <String, String>{"Content-Type": "application/json"};
+    final headers = <String, String>{
+      "Content-Type": "application/json",
+      "Authorization": "$token",
+    };
     request.headers.addAll(headers);
     if (file != null) {
       final multiPartFile = await http.MultipartFile.fromPath(
@@ -34,6 +37,8 @@ class ProfileApiService {
     }
     request.fields['phone'] = phone;
     request.fields['address'] = address;
+    request.fields['dob'] = dob;
+    request.fields['gender'] = gender;
     if (aboutYou != null) {
       request.fields['aboutYou'] = aboutYou;
     }
