@@ -1,12 +1,17 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rentpal/config/theme/color_palette.dart';
+import 'package:rentpal/core/constant/url_constant.dart';
 import 'package:rentpal/core/extension/extension.dart';
 import 'package:rentpal/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:rentpal/features/home/presentation/cubit/navigator_cubit.dart';
 import 'package:rentpal/features/menu/presentation/widgets/menu_option_tiles.dart';
 import 'package:rentpal/features/menu/presentation/widgets/version_info.dart';
+import 'package:rentpal/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:rentpal/features/profile/presentation/bloc/profile_event.dart';
+import 'package:rentpal/features/profile/presentation/bloc/profile_state.dart';
 
 class MenuPage extends StatefulWidget {
   const MenuPage({super.key});
@@ -16,6 +21,12 @@ class MenuPage extends StatefulWidget {
 }
 
 class _MenuPageState extends State<MenuPage> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<ProfileBloc>().add(ProfileFetch());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,47 +76,80 @@ class _MenuPageState extends State<MenuPage> {
   }
 
   _profile(context) {
-    return Row(
-      children: [
-        Container(
-          height: 50,
-          width: 50,
-          decoration: BoxDecoration(
-              color: Colors.grey.shade400,
-              border: Border.all(color: ColorPalette.primaryColor),
-              borderRadius: BorderRadius.circular(50)),
-        ),
-        SizedBox(
-          width: 0.015.toRes(context),
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+    return BlocBuilder<ProfileBloc, ProfileState>(builder: (context, state) {
+      if (state is ProfileLoading) {
+        return const Center(
+          child: CircularProgressIndicator(
+            color: ColorPalette.primaryColor,
+          ),
+        );
+      }
+      if (state is ProfileError) {
+        return Text(state.err);
+      }
+      if (state is ProfileSuccess) {
+        return Row(
           children: [
-            Text(
-              "Bigyan",
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 0.013.toRes(context),
+            CachedNetworkImage(
+              imageUrl: UrlConstant.mediaUrl + state.data.profilePic.toString(),
+              imageBuilder: (context, imageProvider) => Container(
+                height: 50,
+                width: 50,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                    image: imageProvider,
+                    fit: BoxFit.cover,
                   ),
+                  border: Border.all(color: ColorPalette.primaryColor),
+                ),
+              ),
+              placeholder: (context, url) => const Center(
+                child: CircularProgressIndicator(),
+              ),
+              errorWidget: (context, url, error) => Container(
+                height: 50,
+                width: 50,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.grey.shade400,
+                ),
+                child: const Icon(Icons.person, color: Colors.grey),
+              ),
             ),
-            Text(
-              "bigyanthanait8@gmail.com",
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 0.013.toRes(context),
-                  ),
+            SizedBox(
+              width: 0.015.toRes(context),
             ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "${state.data.firstname} ${state.data.lastname}",
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 0.013.toRes(context),
+                      ),
+                ),
+                Text(
+                  "${state.data.email}",
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 0.013.toRes(context),
+                      ),
+                ),
+              ],
+            )
           ],
-        )
-      ],
-    );
+        );
+      }
+      return const SizedBox();
+    });
   }
 
   _account(context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-       
         MenuOptionTiles(
           icon: Icons.person_2_outlined,
           title: "Edit profile",

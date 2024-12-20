@@ -2,30 +2,29 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'profile_entity.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(fieldRename: FieldRename.snake)
 class ProfileEntity {
   final int? id;
   final String? email;
-  final String? firstName;
-  final String? lastName;
+  final String? firstname;
+  final String? lastname;
   final String? address;
   final String? phone;
-  final String? profiePic;
+  final String? profilePic;
   final String? aboutYou;
   final String? gender;
-  final String? dob;
-  ProfileEntity({
-    this.id,
-    this.email,
-    this.firstName,
-    this.lastName,
-    this.address,
-    this.phone,
-    this.profiePic,
-    this.aboutYou,
-    this.dob,
-    this.gender
-  });
+  final String? dateOfBirth;
+  ProfileEntity(
+      {this.id,
+      this.email,
+      this.firstname,
+      this.lastname,
+      this.address,
+      this.phone,
+      this.profilePic,
+      this.aboutYou,
+      this.dateOfBirth,
+      this.gender});
 
   factory ProfileEntity.fromJson(Map<String, dynamic> json) =>
       _$ProfileEntityFromJson(json);
@@ -49,8 +48,9 @@ class ProfileEntity {
   int get hashCode {
     return id.hashCode ^
         email.hashCode ^
-        firstName.hashCode ^
-        lastName.hashCode ^
+        profilePic.hashCode ^
+        firstname.hashCode ^
+        lastname.hashCode ^
         phone.hashCode ^
         address.hashCode ^
         aboutYou.hashCode;

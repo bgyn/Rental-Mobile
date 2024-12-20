@@ -6,7 +6,7 @@ sealed class ProfileState {
   ProfileState({this.profile, this.error});
 }
 
-class ProfieLoading extends ProfileState {}
+class ProfileLoading extends ProfileState {}
 
 class ProfileError extends ProfileState {
   final String err;
