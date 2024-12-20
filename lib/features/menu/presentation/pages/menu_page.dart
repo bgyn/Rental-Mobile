@@ -6,7 +6,6 @@ import 'package:rentpal/config/theme/color_palette.dart';
 import 'package:rentpal/core/constant/url_constant.dart';
 import 'package:rentpal/core/extension/extension.dart';
 import 'package:rentpal/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:rentpal/features/favourite/domain/usecase/clear_favourite.dart';
 import 'package:rentpal/features/favourite/presentation/bloc/favourite_bloc.dart';
 import 'package:rentpal/features/favourite/presentation/bloc/favourite_event.dart';
 import 'package:rentpal/features/home/presentation/cubit/navigator_cubit.dart';
