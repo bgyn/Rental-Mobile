@@ -30,7 +30,7 @@ class ApiRoutes {
   }
 
   static String getProfile() {
-    return "${UrlConstant.baseUrl}profile/";
+    return "${UrlConstant.authUrl}profile/";
   }
 
   static String getListing() {

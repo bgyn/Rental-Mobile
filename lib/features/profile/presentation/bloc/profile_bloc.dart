@@ -21,10 +21,10 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     final data = await _updateProfile.call(
         params: UpdateProfileParams(
       file: event.file,
-      fname: event.fname,
-      lname: event.lname,
       phone: event.phone,
       address: event.address,
+      gender: event.gender,
+      dob: event.dob,
       aboutYou: event.aboutYou,
     ));
     data.fold((l) => ProfileError(err: l.errorMessage),

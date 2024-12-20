@@ -10,32 +10,32 @@ class UpdateProfile extends UseCase<void, UpdateProfileParams> {
   UpdateProfile(this.profileRepository);
 
   @override
-  Future<Either<Failure,void>> call({UpdateProfileParams? params}) async {
-   return await profileRepository.updateProfile(
+  Future<Either<Failure, void>> call({UpdateProfileParams? params}) async {
+    return await profileRepository.updateProfile(
       file: params?.file,
-      fname: params?.fname,
-      lname: params?.lname,
-      address: params?.lname,
+      address: params?.address,
       aboutYou: params?.aboutYou,
       phone: params?.phone,
+      dob: params?.dob,
+      gender: params?.gender,
     );
   }
 }
 
 class UpdateProfileParams {
   File? file;
-  final String fname;
-  final String lname;
   final String address;
   final String phone;
+  final String gender;
+  final String dob;
   String? aboutYou;
 
   UpdateProfileParams({
     this.file,
-    required this.fname,
     required this.phone,
-    required this.lname,
     required this.address,
     required this.aboutYou,
+    required this.dob,
+    required this.gender,
   });
 }

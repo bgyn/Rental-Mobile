@@ -2,22 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:rentpal/config/theme/color_palette.dart';
 import 'package:rentpal/core/extension/extension.dart';
 
-class ProfileTextFormField extends StatelessWidget {
-  const ProfileTextFormField(
-      {super.key,
-      required this.textEditingController,
-      required this.title,
-      required this.hintText,
-      this.readOnly,
-      this.onTap,
-      this.validator});
+class ProfileDropdownFormField<T> extends StatelessWidget {
+  const ProfileDropdownFormField({
+    super.key,
+    required this.title,
+    required this.items,
+    required this.value,
+    required this.onChanged,
+    this.validator,
+    this.hintText,
+  });
 
-  final TextEditingController textEditingController;
   final String title;
-  final String hintText;
-  final FormFieldValidator<String?>? validator;
-  final bool? readOnly;
-  final Function()? onTap;
+  final List<DropdownMenuItem<T>> items;
+  final T? value;
+  final ValueChanged<T?> onChanged;
+  final FormFieldValidator<T?>? validator;
+  final String? hintText;
 
   @override
   Widget build(BuildContext context) {
@@ -33,15 +34,17 @@ class ProfileTextFormField extends StatelessWidget {
                 fontSize: 0.013.toRes(context),
               ),
         ),
-        TextFormField(
-          onTap: onTap,
-          controller: textEditingController,
-          readOnly: readOnly ?? false,
+        DropdownButtonFormField<T>(
+          value: value,
+          items: items,
+          onChanged: onChanged,
           decoration: InputDecoration(
             hintText: hintText,
             alignLabelWithHint: true,
             hintStyle: TextStyle(
-                color: Colors.grey.shade400, fontWeight: FontWeight.normal),
+              color: Colors.grey.shade400,
+              fontWeight: FontWeight.normal,
+            ),
             enabledBorder: const UnderlineInputBorder(
               borderSide: BorderSide(
                 color: Colors.grey,

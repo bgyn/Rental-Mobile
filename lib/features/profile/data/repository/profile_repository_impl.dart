@@ -8,13 +8,13 @@ import 'package:rentpal/features/profile/domain/entity/profile_entity.dart';
 import 'package:rentpal/features/profile/domain/repository/profile_repository.dart';
 
 class ProfileRepositoryImpl extends ProfileRepository {
-  final ProfileApiService profileApiService;
+  final ProfileApiService _profileApiService;
 
-  ProfileRepositoryImpl(this.profileApiService);
+  ProfileRepositoryImpl(this._profileApiService);
   @override
-  Future<Either<Failure, ProfileEntity>> getProfile(int id) async {
+  Future<Either<Failure, ProfileEntity>> getProfile() async {
     try {
-      final response = await profileApiService.getProfile(id);
+      final response = await _profileApiService.getProfile();
       final profile = ProfileEntity.fromJson(jsonDecode(response.body));
       return right(profile);
     } on SocketException {
@@ -31,16 +31,16 @@ class ProfileRepositoryImpl extends ProfileRepository {
   @override
   Future<Either<Failure, void>> updateProfile(
       {File? file,
-      required String? fname,
-      required String? lname,
+      required String? gender,
+      required String? dob,
       required String? address,
       required String? phone,
       String? aboutYou}) async {
     try {
-      final response = await profileApiService.updateProfile(
+      final response = await _profileApiService.updateProfile(
         file: file,
-        fName: fname!,
-        lName: lname!,
+        dob: dob!,
+        gender: gender!,
         phone: phone!,
         aboutYou: aboutYou,
         address: address!,

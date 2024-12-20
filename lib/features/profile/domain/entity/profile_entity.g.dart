@@ -16,6 +16,8 @@ ProfileEntity _$ProfileEntityFromJson(Map<String, dynamic> json) =>
       phone: json['phone'] as String?,
       profiePic: json['profiePic'] as String?,
       aboutYou: json['aboutYou'] as String?,
+      dob: json['dob'] as String?,
+      gender: json['gender'] as String?,
     );
 
 Map<String, dynamic> _$ProfileEntityToJson(ProfileEntity instance) =>
@@ -28,4 +30,6 @@ Map<String, dynamic> _$ProfileEntityToJson(ProfileEntity instance) =>
       'phone': instance.phone,
       'profiePic': instance.profiePic,
       'aboutYou': instance.aboutYou,
+      'gender': instance.gender,
+      'dob': instance.dob,
     };

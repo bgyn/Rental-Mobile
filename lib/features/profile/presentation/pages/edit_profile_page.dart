@@ -7,6 +7,9 @@ import 'package:rentpal/config/theme/color_palette.dart';
 import 'package:rentpal/core/common/add_photo_option.dart';
 import 'package:rentpal/core/cubit/image_handler_cubit.dart';
 import 'package:rentpal/core/extension/extension.dart';
+import 'package:rentpal/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:rentpal/features/profile/presentation/bloc/profile_event.dart';
+import 'package:rentpal/features/profile/presentation/widgets/profile_dropdown.dart';
 import 'package:rentpal/features/profile/presentation/widgets/profile_text_field.dart';
 import 'package:rentpal/features/profile/presentation/widgets/profile_text_form_field.dart';
 
@@ -18,12 +21,12 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
-  final _fNameCtrl = TextEditingController();
-  final _lNameCtrl = TextEditingController();
   final _addressCtrl = TextEditingController();
   final _phoneCtrl = TextEditingController();
   final _aboutCtrl = TextEditingController();
+  final _dobCtrl = TextEditingController();
   final _key = GlobalKey<FormState>();
+  String? _gender;
   late ImageHandlerCubit _imageHandlerCubit;
 
   @override
@@ -34,11 +37,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   @override
   void dispose() {
-    _fNameCtrl.dispose();
-    _lNameCtrl.dispose();
     _addressCtrl.dispose();
     _aboutCtrl.dispose();
     _imageHandlerCubit.reset();
+    _phoneCtrl.dispose();
+    _dobCtrl.dispose();
     super.dispose();
   }
 
@@ -121,26 +124,39 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     height: 0.02.h(context),
                   ),
                   ProfileTextFormField(
-                    textEditingController: _fNameCtrl,
-                    title: "First Name",
-                    hintText: "e.g. Ram",
+                    textEditingController: _dobCtrl,
+                    title: "DOB",
+                    hintText: "yyyy-mm-dd",
+                    readOnly: true,
+                    onTap: () => selectDate(),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return "First name is required";
+                        return "Date of birth is required";
                       }
                       return null;
                     },
                   ),
-                  ProfileTextFormField(
-                    textEditingController: _lNameCtrl,
-                    title: "Last Name",
+                  ProfileDropdownFormField(
+                    title: "Gender",
+                    hintText: "Gender",
+                    items: const [
+                      DropdownMenuItem(value: 'Option 1', child: Text('Male')),
+                      DropdownMenuItem(
+                          value: 'Option 2', child: Text('Female')),
+                      DropdownMenuItem(value: 'Option 3', child: Text('Other')),
+                    ],
+                    value: _gender,
+                    onChanged: (value) {
+                      setState(() {
+                        _gender = value;
+                      });
+                    },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return "Last name is required";
+                        return 'Please select an option';
                       }
                       return null;
                     },
-                    hintText: "e.g. Gurung",
                   ),
                   ProfileTextFormField(
                     textEditingController: _addressCtrl,
@@ -182,7 +198,17 @@ class _EditProfilePageState extends State<EditProfilePage> {
         padding: EdgeInsets.all(0.015.toRes(context)),
         child: ElevatedButton(
           onPressed: () async {
-            if (_key.currentState?.validate() ?? false) {}
+            if (_key.currentState?.validate() ?? false) {
+              context.read<ProfileBloc>().add(ProfileUpdate(
+                    file: File(
+                        context.read<ImageHandlerCubit>().state.first.path),
+                    gender: _gender!,
+                    dob: _dobCtrl.text,
+                    address: _addressCtrl.text,
+                    phone: _phoneCtrl.text,
+                    aboutYou: _aboutCtrl.text,
+                  ));
+            }
           },
           style: ElevatedButton.styleFrom(
               shape: ContinuousRectangleBorder(
@@ -199,5 +225,19 @@ class _EditProfilePageState extends State<EditProfilePage> {
         ),
       ),
     );
+  }
+
+  Future<void> selectDate() async {
+    DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime(2100),
+    );
+    if (picked != null) {
+      setState(() {
+        _dobCtrl.text = picked.toString().split(" ")[0];
+      });
+    }
   }
 }
