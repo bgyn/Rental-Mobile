@@ -5,6 +5,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:rentpal/config/routes/route_config.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:rentpal/config/theme/theme.dart';
+import 'package:rentpal/core/common/show_snackbar.dart';
 import 'package:rentpal/core/local_storage/local_storage.dart';
 import 'package:rentpal/core/permission/permission_handler.dart';
 import 'package:rentpal/core/cubit/image_handler_cubit.dart';
@@ -15,6 +16,7 @@ import 'package:rentpal/features/address/cubit/address_cubit.dart';
 import 'package:rentpal/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:rentpal/features/categories/presentation/bloc/category_list_bloc.dart';
 import 'package:rentpal/features/categories/presentation/bloc/category_list_event.dart';
+import 'package:rentpal/features/favourite/presentation/bloc/favourite_bloc.dart';
 import 'package:rentpal/features/home/presentation/cubit/navigator_cubit.dart';
 import 'package:rentpal/features/my_listing/presentation/bloc/listing_bloc.dart';
 import 'package:rentpal/features/profile/presentation/bloc/profile_bloc.dart';
@@ -66,6 +68,13 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (_) => AddressBloc(sl())),
         BlocProvider(create: (_) => UserBloc(sl())),
         BlocProvider(
+            create: (_) => FavouriteBloc(
+                addFavourite: sl(),
+                getFavourite: sl(),
+                isFavourite: sl(),
+                favouriteClear: sl(),
+                removeFavourite: sl())),
+        BlocProvider(
             create: (_) => ProfileBloc(getProfile: sl(), updateProfile: sl())),
         BlocProvider(create: (_) => ListingBloc(getListing: sl())),
         BlocProvider(
@@ -73,6 +82,7 @@ class _MyAppState extends State<MyApp> {
                 CategoryListBloc(sl())..add(const FetchCategoryList()))
       ],
       child: MaterialApp.router(
+        scaffoldMessengerKey: scaffoldMessengerKey,
         title: "Rentpal",
         debugShowCheckedModeBanner: false,
         theme: getAppTheme(context),

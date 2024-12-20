@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rentpal/config/theme/color_palette.dart';
 import 'package:rentpal/core/extension/extension.dart';
+import 'package:rentpal/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:rentpal/features/favourite/presentation/bloc/favourite_bloc.dart';
+import 'package:rentpal/features/favourite/presentation/bloc/favourite_event.dart';
+import 'package:rentpal/features/favourite/presentation/bloc/favourite_state.dart';
 import 'package:rentpal/features/rentitem/domain/entity/rentitem_entity.dart';
 import 'package:rentpal/features/rentitem/presentation/bloc/rentitem_bloc.dart';
 import 'package:rentpal/features/rentitem/presentation/bloc/rentitem_event.dart';
@@ -11,7 +15,7 @@ import 'package:rentpal/features/rentitem/presentation/pages/rental_category.dar
 import 'package:rentpal/injection_container.dart';
 import 'package:shimmer/shimmer.dart';
 
-class ProductDetail extends StatelessWidget {
+class ProductDetail extends StatefulWidget {
   final RentitemEntity rentitemEntity;
   const ProductDetail({super.key, required this.rentitemEntity});
 
@@ -22,7 +26,19 @@ class ProductDetail extends StatelessWidget {
   ];
 
   @override
+  State<ProductDetail> createState() => _ProductDetailState();
+}
+
+class _ProductDetailState extends State<ProductDetail> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<FavouriteBloc>().add(const FavouriteLoad());
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final authState = context.read<AuthBloc>().state;
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
       body: NestedScrollView(
@@ -43,13 +59,45 @@ class ProductDetail extends StatelessWidget {
                   color: Colors.white,
                 )),
             actions: [
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.share,
-                  color: Colors.white,
-                ),
-              )
+              authState is AuthSuccess
+                  ? BlocListener<FavouriteBloc, FavouriteState>(
+                      listener: (context, state) {
+                      if (state is FavouriteError) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text(state.message)),
+                        );
+                      }
+                    }, child: BlocBuilder<FavouriteBloc, FavouriteState>(
+                      builder: (context, state) {
+                        return IconButton(
+                          onPressed: () {
+                            state is FavouriteLoaded
+                                ? state.rentitems
+                                        .contains(widget.rentitemEntity)
+                                    ? {
+                                        context.read<FavouriteBloc>().add(
+                                            FavouriteRemove(
+                                                widget.rentitemEntity.id!))
+                                      }
+                                    : {
+                                        context.read<FavouriteBloc>().add(
+                                            FavouriteAdd(widget.rentitemEntity))
+                                      }
+                                : null;
+                          },
+                          icon: Icon(
+                            state is FavouriteLoaded
+                                ? state.rentitems
+                                        .contains(widget.rentitemEntity)
+                                    ? Icons.favorite
+                                    : Icons.favorite_outline
+                                : Icons.favorite_outline,
+                            color: Colors.white,
+                          ),
+                        );
+                      },
+                    ))
+                  : const SizedBox.shrink(),
             ],
             expandedHeight: 0,
           )
@@ -66,11 +114,11 @@ class ProductDetail extends StatelessWidget {
                       width: double.infinity,
                       height: 300,
                       child: Hero(
-                        tag: rentitemEntity.thumbnailImage ?? "",
+                        tag: widget.rentitemEntity.thumbnailImage ?? "",
                         transitionOnUserGestures: true,
                         child: CachedNetworkImage(
                           fit: BoxFit.fill,
-                          imageUrl: rentitemEntity.thumbnailImage ?? "",
+                          imageUrl: widget.rentitemEntity.thumbnailImage ?? "",
                           placeholder: (context, url) {
                             return SizedBox(
                               width: double.infinity,
@@ -95,11 +143,11 @@ class ProductDetail extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            rentitemEntity.title ?? "",
+                            widget.rentitemEntity.title ?? "",
                             style: Theme.of(context).textTheme.titleMedium,
                           ),
-                          Text(rentitemEntity.address ?? ""),
-                          Text("Rating : ${rentitemEntity.rating}"),
+                          Text(widget.rentitemEntity.address ?? ""),
+                          Text("Rating : ${widget.rentitemEntity.rating}"),
                         ],
                       ),
                     ),
@@ -176,7 +224,7 @@ class ProductDetail extends StatelessWidget {
                           ),
                           Text(
                             overflow: TextOverflow.clip,
-                            rentitemEntity.description ?? "",
+                            widget.rentitemEntity.description ?? "",
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyMedium
@@ -196,7 +244,7 @@ class ProductDetail extends StatelessWidget {
                                   fontSize: 0.013.toRes(context),
                                 ),
                           ),
-                          ...rentalRules.map((rules) => ListTile(
+                          ...ProductDetail.rentalRules.map((rules) => ListTile(
                                 dense: true,
                                 visualDensity: VisualDensity.compact,
                                 leading: const Icon(
@@ -287,7 +335,7 @@ class ProductDetail extends StatelessWidget {
         child: Row(
           children: [
             Text(
-              "Rs. ${rentitemEntity.price}/day",
+              "Rs. ${widget.rentitemEntity.price}/day",
               style: const TextStyle(color: Colors.black),
             ),
             SizedBox(
@@ -297,13 +345,12 @@ class ProductDetail extends StatelessWidget {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     backgroundColor: ColorPalette.primaryColor),
-                onPressed: () async{
-                  final values =await showCalendarDatePicker2Dialog(
-                    context: context,
-                    config: CalendarDatePicker2WithActionButtonsConfig(
-                        calendarType: CalendarDatePicker2Type.range),
-                        dialogSize: const Size(1.0, 1.0)
-                  );
+                onPressed: () async {
+                  final values = await showCalendarDatePicker2Dialog(
+                      context: context,
+                      config: CalendarDatePicker2WithActionButtonsConfig(
+                          calendarType: CalendarDatePicker2Type.range),
+                      dialogSize: const Size(1.0, 1.0));
                 },
                 child: const Text(
                   "Choose your date",
