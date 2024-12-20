@@ -17,3 +17,12 @@ extension GetSize on double {
     return (getSize(context).height * this) + (getSize(context).width * this);
   }
 }
+
+extension Capitalize on String {
+  String? capitalize() {
+    if (isEmpty) {
+      return null;
+    }
+    return this[0].toUpperCase() + (length > 1 ? substring(1) : '');
+  }
+}

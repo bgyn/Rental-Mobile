@@ -8,4 +8,6 @@ class UrlConstant {
   static const authUrl = "http://192.168.1.200:8000/account/";
 
   static const locationUrl = "https://us1.locationiq.com/v1/search?";
+
+  static const mediaUrl = "http://192.168.1.200:8000";
 }

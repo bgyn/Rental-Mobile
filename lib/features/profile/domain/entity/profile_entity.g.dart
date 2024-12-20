@@ -10,13 +10,13 @@ ProfileEntity _$ProfileEntityFromJson(Map<String, dynamic> json) =>
     ProfileEntity(
       id: (json['id'] as num?)?.toInt(),
       email: json['email'] as String?,
-      firstName: json['firstName'] as String?,
-      lastName: json['lastName'] as String?,
+      firstname: json['firstname'] as String?,
+      lastname: json['lastname'] as String?,
       address: json['address'] as String?,
       phone: json['phone'] as String?,
-      profiePic: json['profiePic'] as String?,
-      aboutYou: json['aboutYou'] as String?,
-      dob: json['dob'] as String?,
+      profilePic: json['profile_pic'] as String?,
+      aboutYou: json['about_you'] as String?,
+      dateOfBirth: json['date_of_birth'] as String?,
       gender: json['gender'] as String?,
     );
 
@@ -24,12 +24,12 @@ Map<String, dynamic> _$ProfileEntityToJson(ProfileEntity instance) =>
     <String, dynamic>{
       'id': instance.id,
       'email': instance.email,
-      'firstName': instance.firstName,
-      'lastName': instance.lastName,
+      'firstname': instance.firstname,
+      'lastname': instance.lastname,
       'address': instance.address,
       'phone': instance.phone,
-      'profiePic': instance.profiePic,
-      'aboutYou': instance.aboutYou,
+      'profile_pic': instance.profilePic,
+      'about_you': instance.aboutYou,
       'gender': instance.gender,
-      'dob': instance.dob,
+      'date_of_birth': instance.dateOfBirth,
     };

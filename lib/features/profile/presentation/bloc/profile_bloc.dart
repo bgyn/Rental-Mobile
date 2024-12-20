@@ -12,7 +12,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     required UpdateProfile updateProfile,
   })  : _getProfile = getProfile,
         _updateProfile = updateProfile,
-        super(ProfieLoading()) {
+        super(ProfileLoading()) {
     on<ProfileFetch>(_onProfileFetch);
     on<ProfileUpdate>(_onProfileUpdate);
   }
