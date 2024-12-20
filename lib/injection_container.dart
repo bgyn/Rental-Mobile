@@ -19,6 +19,14 @@ import 'package:rentpal/features/categories/data/data_source/remote/category_api
 import 'package:rentpal/features/categories/data/repository/category_list_repository_impl.dart';
 import 'package:rentpal/features/categories/domain/repository/category_list_repository.dart';
 import 'package:rentpal/features/categories/domain/usercases/get_category_list.dart';
+import 'package:rentpal/features/favourite/data/datasource/localsource/favourite_local_api_service.dart';
+import 'package:rentpal/features/favourite/data/repository/favourite_repository_impl.dart';
+import 'package:rentpal/features/favourite/domain/repository/favourite_repository.dart';
+import 'package:rentpal/features/favourite/domain/usecase/add_favourite.dart';
+import 'package:rentpal/features/favourite/domain/usecase/clear_favourite.dart';
+import 'package:rentpal/features/favourite/domain/usecase/get_favourite.dart';
+import 'package:rentpal/features/favourite/domain/usecase/is_favourite.dart';
+import 'package:rentpal/features/favourite/domain/usecase/remove_favourite.dart';
 import 'package:rentpal/features/my_listing/data/datasource/remote/my_listing_api_service.dart';
 import 'package:rentpal/features/my_listing/data/repository/my_listing_repository_impl.dart';
 import 'package:rentpal/features/my_listing/domain/repository/my_listing_repository.dart';
@@ -97,4 +105,14 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<MyListingApiService>(MyListingApiService());
   sl.registerSingleton<MyListingRepository>(MyListingRepositoryImpl(sl()));
   sl.registerSingleton<GetListing>(GetListing(sl()));
+
+  //favourite
+  sl.registerSingleton<FavouirteLocalApiService>(FavouirteLocalApiService());
+  sl.registerSingleton<FavouriteRepository>(
+      FavouriteRepositoryImpl(favouriteLocalDataSource: sl()));
+  sl.registerSingleton<AddFavourite>(AddFavourite(sl()));
+  sl.registerSingleton<RemoveFavourite>(RemoveFavourite(sl()));
+  sl.registerSingleton<IsFavourite>(IsFavourite(sl()));
+  sl.registerSingleton<ClearFavourite>(ClearFavourite(sl()));
+  sl.registerSingleton<GetFavourite>(GetFavourite(sl()));
 }

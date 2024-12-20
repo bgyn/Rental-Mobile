@@ -17,6 +17,7 @@ ThemeData getAppTheme(BuildContext context) {
       ],
       appBarTheme: AppBarTheme(
         backgroundColor: ColorPalette.primaryColor,
+        iconTheme: const IconThemeData(color: Colors.white),
         titleTextStyle: TextStyle(
           fontWeight: FontWeight.w500,
           fontSize: 0.018.toRes(context),

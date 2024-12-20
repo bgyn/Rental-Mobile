@@ -6,6 +6,9 @@ import 'package:rentpal/config/theme/color_palette.dart';
 import 'package:rentpal/core/constant/url_constant.dart';
 import 'package:rentpal/core/extension/extension.dart';
 import 'package:rentpal/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:rentpal/features/favourite/domain/usecase/clear_favourite.dart';
+import 'package:rentpal/features/favourite/presentation/bloc/favourite_bloc.dart';
+import 'package:rentpal/features/favourite/presentation/bloc/favourite_event.dart';
 import 'package:rentpal/features/home/presentation/cubit/navigator_cubit.dart';
 import 'package:rentpal/features/menu/presentation/widgets/menu_option_tiles.dart';
 import 'package:rentpal/features/menu/presentation/widgets/version_info.dart';
@@ -62,6 +65,7 @@ class _MenuPageState extends State<MenuPage> {
                   title: "logout",
                   onTap: () {
                     context.read<AuthBloc>().add(AuthLogout());
+                    context.read<FavouriteBloc>().add(const FavouriteClear());
                     context.read<NavigatorCubit>().onChanged(1);
                   }),
               SizedBox(
@@ -163,9 +167,10 @@ class _MenuPageState extends State<MenuPage> {
           icon: Icons.shield_outlined,
           title: "Verification",
         ),
-        const MenuOptionTiles(
+        MenuOptionTiles(
           icon: Icons.favorite_outline,
           title: "Favorites",
+          onTap: () => GoRouter.of(context).push("/favourite"),
         ),
         MenuOptionTiles(
           icon: Icons.key,

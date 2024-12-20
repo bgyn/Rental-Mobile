@@ -4,6 +4,7 @@ import 'package:rentpal/features/add_listing/presentation/pages/add_listing_page
 import 'package:rentpal/features/auth/presentation/pages/forgot_password_page.dart';
 import 'package:rentpal/features/auth/presentation/pages/login_page.dart';
 import 'package:rentpal/features/auth/presentation/pages/register_page.dart';
+import 'package:rentpal/features/favourite/presentation/pages/favourite_pages.dart';
 import 'package:rentpal/features/home/presentation/pages/dashboard_page.dart';
 import 'package:rentpal/features/home/presentation/pages/home.dart';
 import 'package:rentpal/features/home/presentation/pages/product_detail.dart';
@@ -44,6 +45,12 @@ final routeConfig = GoRouter(
       builder: (context, state) {
         final product = state.extra as RentitemEntity;
         return ProductDetail(rentitemEntity: product);
+      },
+    ),
+    GoRoute(
+      path: "/favourite",
+      builder: (context, state) {
+        return const FavouritePages();
       },
     ),
     GoRoute(

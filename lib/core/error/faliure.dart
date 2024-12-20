@@ -26,3 +26,8 @@ class TokenFailure extends Failure {
 class ConnectionFailure extends Failure{
   const ConnectionFailure(super.errorMessage);
 }
+
+///storage faliure
+class StorageFailure extends Failure {
+  const StorageFailure(super.errorMessage);
+}
