@@ -233,11 +233,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       ),
                       ProfileTextFormField(
                         textEditingController: _phoneCtrl,
+                        keyboardType: TextInputType.phone,
                         title: "Phone Number",
-                        hintText: "9841",
+                        hintText: "980000000",
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return "The phone number is required";
+                            return "Phone number is required";
                           }
                           return null;
                         },
@@ -313,10 +314,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   Future<void> selectDate() async {
     DateTime? picked = await showDatePicker(
+      keyboardType: TextInputType.datetime,
+      barrierColor: Colors.black.withOpacity(0.5),
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(1900),
-      lastDate: DateTime(2100),
+      lastDate: DateTime.now(),
     );
     if (picked != null) {
       setState(() {

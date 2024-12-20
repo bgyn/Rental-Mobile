@@ -8,11 +8,13 @@ class ProfileTextFormField extends StatelessWidget {
       required this.textEditingController,
       required this.title,
       required this.hintText,
+      this.keyboardType,
       this.readOnly,
       this.onTap,
       this.validator});
 
   final TextEditingController textEditingController;
+  final TextInputType? keyboardType;
   final String title;
   final String hintText;
   final FormFieldValidator<String?>? validator;
@@ -36,6 +38,7 @@ class ProfileTextFormField extends StatelessWidget {
         TextFormField(
           onTap: onTap,
           controller: textEditingController,
+          keyboardType: keyboardType,
           readOnly: readOnly ?? false,
           decoration: InputDecoration(
             hintText: hintText,
