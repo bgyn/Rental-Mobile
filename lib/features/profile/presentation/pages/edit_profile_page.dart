@@ -7,6 +7,10 @@ import 'package:rentpal/config/theme/color_palette.dart';
 import 'package:rentpal/core/common/add_photo_option.dart';
 import 'package:rentpal/core/cubit/image_handler_cubit.dart';
 import 'package:rentpal/core/extension/extension.dart';
+import 'package:rentpal/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:rentpal/features/profile/presentation/bloc/profile_event.dart';
+import 'package:rentpal/features/profile/presentation/bloc/profile_state.dart';
+import 'package:rentpal/features/profile/presentation/widgets/profile_dropdown.dart';
 import 'package:rentpal/features/profile/presentation/widgets/profile_text_field.dart';
 import 'package:rentpal/features/profile/presentation/widgets/profile_text_form_field.dart';
 
@@ -18,12 +22,13 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
-  final _fNameCtrl = TextEditingController();
-  final _lNameCtrl = TextEditingController();
   final _addressCtrl = TextEditingController();
   final _phoneCtrl = TextEditingController();
   final _aboutCtrl = TextEditingController();
+  final _dobCtrl = TextEditingController();
   final _key = GlobalKey<FormState>();
+  XFile? _profile;
+  String? _gender;
   late ImageHandlerCubit _imageHandlerCubit;
 
   @override
@@ -34,11 +39,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   @override
   void dispose() {
-    _fNameCtrl.dispose();
-    _lNameCtrl.dispose();
     _addressCtrl.dispose();
     _aboutCtrl.dispose();
     _imageHandlerCubit.reset();
+    _phoneCtrl.dispose();
+    _dobCtrl.dispose();
     super.dispose();
   }
 
@@ -69,40 +74,50 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   ),
                   Stack(
                     children: [
-                      BlocBuilder<ImageHandlerCubit, List<XFile>>(
+                      BlocListener<ImageHandlerCubit, List<XFile>>(
+                        listener: (context, state) {
+                          if (state.isNotEmpty) {
+                            setState(() {
+                              _profile = state[0];
+                            });
+                          }
+                        },
+                        child: BlocBuilder<ImageHandlerCubit, List<XFile>>(
                           builder: (context, state) {
-                        return state.isEmpty
-                            ? Container(
-                                width: 0.4.w(context),
-                                height: 0.18.h(context),
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.grey.shade200,
-                                ),
-                                child: Center(
-                                  child: Icon(
-                                    Icons.person,
-                                    size: 0.1.toRes(context),
-                                    color: Colors.grey.shade600,
-                                  ),
-                                ),
-                              )
-                            : ClipRRect(
-                                borderRadius: BorderRadius.circular(100),
-                                clipBehavior: Clip.hardEdge,
-                                child: Container(
-                                  width: 0.4.w(context),
-                                  height: 0.18.h(context),
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: Image.file(
-                                    File(state[0].path),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              );
-                      }),
+                            return state.isEmpty
+                                ? Container(
+                                    width: 0.4.w(context),
+                                    height: 0.18.h(context),
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.grey.shade200,
+                                    ),
+                                    child: Center(
+                                      child: Icon(
+                                        Icons.person,
+                                        size: 0.1.toRes(context),
+                                        color: Colors.grey.shade600,
+                                      ),
+                                    ),
+                                  )
+                                : ClipRRect(
+                                    borderRadius: BorderRadius.circular(100),
+                                    clipBehavior: Clip.hardEdge,
+                                    child: Container(
+                                      width: 0.4.w(context),
+                                      height: 0.18.h(context),
+                                      decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: Image.file(
+                                        File(state[0].path),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  );
+                          },
+                        ),
+                      ),
                       Positioned(
                         bottom: 10,
                         right: 10,
@@ -121,26 +136,39 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     height: 0.02.h(context),
                   ),
                   ProfileTextFormField(
-                    textEditingController: _fNameCtrl,
-                    title: "First Name",
-                    hintText: "e.g. Ram",
+                    textEditingController: _dobCtrl,
+                    title: "DOB",
+                    hintText: "yyyy-mm-dd",
+                    readOnly: true,
+                    onTap: () => selectDate(),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return "First name is required";
+                        return "Date of birth is required";
                       }
                       return null;
                     },
                   ),
-                  ProfileTextFormField(
-                    textEditingController: _lNameCtrl,
-                    title: "Last Name",
+                  ProfileDropdownFormField(
+                    title: "Gender",
+                    hintText: "Gender",
+                    items: const [
+                      DropdownMenuItem(value: 'Option 1', child: Text('Male')),
+                      DropdownMenuItem(
+                          value: 'Option 2', child: Text('Female')),
+                      DropdownMenuItem(value: 'Option 3', child: Text('Other')),
+                    ],
+                    value: _gender,
+                    onChanged: (value) {
+                      setState(() {
+                        _gender = value;
+                      });
+                    },
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return "Last name is required";
+                        return 'Please select an option';
                       }
                       return null;
                     },
-                    hintText: "e.g. Gurung",
                   ),
                   ProfileTextFormField(
                     textEditingController: _addressCtrl,
@@ -178,26 +206,66 @@ class _EditProfilePageState extends State<EditProfilePage> {
           ),
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding: EdgeInsets.all(0.015.toRes(context)),
-        child: ElevatedButton(
-          onPressed: () async {
-            if (_key.currentState?.validate() ?? false) {}
-          },
-          style: ElevatedButton.styleFrom(
-              shape: ContinuousRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
+      bottomNavigationBar: BlocListener<ProfileBloc, ProfileState>(
+        listener: (context, state) {
+          if (state is ProfileUpdateSuccess) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Profile updated successfully!')),
+            );
+          }
+          if (state is ProfileError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Error: ${state.err}')),
+            );
+          }
+        },
+        child:
+            BlocBuilder<ProfileBloc, ProfileState>(builder: (context, state) {
+          return Padding(
+            padding: EdgeInsets.all(0.015.toRes(context)),
+            child: ElevatedButton(
+              onPressed: () async {
+                if (_key.currentState?.validate() ?? false) {
+                  context.read<ProfileBloc>().add(ProfileUpdate(
+                        file: _profile == null ? null : File(_profile!.path),
+                        gender: _gender!,
+                        dob: _dobCtrl.text,
+                        address: _addressCtrl.text,
+                        phone: _phoneCtrl.text,
+                        aboutYou: _aboutCtrl.text,
+                      ));
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                  shape: ContinuousRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  backgroundColor: ColorPalette.primaryColor),
+              child: Text(
+                "Save",
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: Colors.white,
+                      fontSize: 0.013.toRes(context),
+                    ),
               ),
-              backgroundColor: ColorPalette.primaryColor),
-          child: Text(
-            "Save",
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Colors.white,
-                  fontSize: 0.013.toRes(context),
-                ),
-          ),
-        ),
+            ),
+          );
+        }),
       ),
     );
+  }
+
+  Future<void> selectDate() async {
+    DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime(2100),
+    );
+    if (picked != null) {
+      setState(() {
+        _dobCtrl.text = picked.toString().split(" ")[0];
+      });
+    }
   }
 }

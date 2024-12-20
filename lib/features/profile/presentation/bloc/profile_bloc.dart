@@ -21,19 +21,19 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     final data = await _updateProfile.call(
         params: UpdateProfileParams(
       file: event.file,
-      fname: event.fname,
-      lname: event.lname,
       phone: event.phone,
       address: event.address,
+      gender: event.gender,
+      dob: event.dob,
       aboutYou: event.aboutYou,
     ));
-    data.fold((l) => ProfileError(err: l.errorMessage),
-        (r) => ProfileUpdateSuccess());
+    data.fold((l) => emit(ProfileError(err: l.errorMessage)),
+        (r) => emit(ProfileUpdateSuccess()));
   }
 
   void _onProfileFetch(ProfileFetch event, Emitter<ProfileState> emit) async {
-    final data = await _getProfile.call(params: event.id);
-    data.fold((l) => ProfileError(err: l.errorMessage),
-        (r) => ProfileSuccess(data: r));
+    final data = await _getProfile.call();
+    data.fold((l) => emit(ProfileError(err: l.errorMessage)),
+        (r) => emit(ProfileSuccess(data: r)));
   }
 }

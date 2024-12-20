@@ -12,6 +12,8 @@ class ProfileEntity {
   final String? phone;
   final String? profiePic;
   final String? aboutYou;
+  final String? gender;
+  final String? dob;
   ProfileEntity({
     this.id,
     this.email,
@@ -21,6 +23,8 @@ class ProfileEntity {
     this.phone,
     this.profiePic,
     this.aboutYou,
+    this.dob,
+    this.gender
   });
 
   factory ProfileEntity.fromJson(Map<String, dynamic> json) =>

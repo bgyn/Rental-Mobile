@@ -8,15 +8,15 @@ sealed class ProfileEvent {}
 
 class ProfileUpdate extends ProfileEvent {
   final File? file;
-  final String fname;
-  final String lname;
   final String phone;
   final String address;
+  final String gender;
+  final String dob;
   final String? aboutYou;
   ProfileUpdate({
     this.file,
-    required this.fname,
-    required this.lname,
+    required this.gender,
+    required this.dob,
     required this.address,
     required this.phone,
     this.aboutYou,
