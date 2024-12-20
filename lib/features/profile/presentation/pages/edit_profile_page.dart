@@ -9,6 +9,7 @@ import 'package:rentpal/core/cubit/image_handler_cubit.dart';
 import 'package:rentpal/core/extension/extension.dart';
 import 'package:rentpal/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:rentpal/features/profile/presentation/bloc/profile_event.dart';
+import 'package:rentpal/features/profile/presentation/bloc/profile_state.dart';
 import 'package:rentpal/features/profile/presentation/widgets/profile_dropdown.dart';
 import 'package:rentpal/features/profile/presentation/widgets/profile_text_field.dart';
 import 'package:rentpal/features/profile/presentation/widgets/profile_text_form_field.dart';
@@ -205,34 +206,51 @@ class _EditProfilePageState extends State<EditProfilePage> {
           ),
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding: EdgeInsets.all(0.015.toRes(context)),
-        child: ElevatedButton(
-          onPressed: () async {
-            if (_key.currentState?.validate() ?? false) {
-              context.read<ProfileBloc>().add(ProfileUpdate(
-                    file: _profile == null ? null : File(_profile!.path),
-                    gender: _gender!,
-                    dob: _dobCtrl.text,
-                    address: _addressCtrl.text,
-                    phone: _phoneCtrl.text,
-                    aboutYou: _aboutCtrl.text,
-                  ));
-            }
-          },
-          style: ElevatedButton.styleFrom(
-              shape: ContinuousRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
+      bottomNavigationBar: BlocListener<ProfileBloc, ProfileState>(
+        listener: (context, state) {
+          if (state is ProfileUpdateSuccess) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Profile updated successfully!')),
+            );
+          }
+          if (state is ProfileError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Error: ${state.err}')),
+            );
+          }
+        },
+        child:
+            BlocBuilder<ProfileBloc, ProfileState>(builder: (context, state) {
+          return Padding(
+            padding: EdgeInsets.all(0.015.toRes(context)),
+            child: ElevatedButton(
+              onPressed: () async {
+                if (_key.currentState?.validate() ?? false) {
+                  context.read<ProfileBloc>().add(ProfileUpdate(
+                        file: _profile == null ? null : File(_profile!.path),
+                        gender: _gender!,
+                        dob: _dobCtrl.text,
+                        address: _addressCtrl.text,
+                        phone: _phoneCtrl.text,
+                        aboutYou: _aboutCtrl.text,
+                      ));
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                  shape: ContinuousRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  backgroundColor: ColorPalette.primaryColor),
+              child: Text(
+                "Save",
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: Colors.white,
+                      fontSize: 0.013.toRes(context),
+                    ),
               ),
-              backgroundColor: ColorPalette.primaryColor),
-          child: Text(
-            "Save",
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Colors.white,
-                  fontSize: 0.013.toRes(context),
-                ),
-          ),
-        ),
+            ),
+          );
+        }),
       ),
     );
   }

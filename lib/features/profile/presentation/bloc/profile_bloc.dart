@@ -27,13 +27,13 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       dob: event.dob,
       aboutYou: event.aboutYou,
     ));
-    data.fold((l) => ProfileError(err: l.errorMessage),
-        (r) => ProfileUpdateSuccess());
+    data.fold((l) => emit(ProfileError(err: l.errorMessage)),
+        (r) => emit(ProfileUpdateSuccess()));
   }
 
   void _onProfileFetch(ProfileFetch event, Emitter<ProfileState> emit) async {
     final data = await _getProfile.call();
-    data.fold((l) => ProfileError(err: l.errorMessage),
-        (r) => ProfileSuccess(data: r));
+    data.fold((l) => emit(ProfileError(err: l.errorMessage)),
+        (r) => emit(ProfileSuccess(data: r)));
   }
 }
