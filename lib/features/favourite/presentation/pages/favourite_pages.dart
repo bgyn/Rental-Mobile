@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:rentpal/core/constant/url_constant.dart';
 import 'package:rentpal/features/favourite/presentation/bloc/favourite_bloc.dart';
 import 'package:rentpal/features/favourite/presentation/bloc/favourite_event.dart';
 import 'package:rentpal/features/favourite/presentation/bloc/favourite_state.dart';
@@ -68,7 +69,7 @@ class _FavouritePagesState extends State<FavouritePages> {
                                   borderRadius: BorderRadius.circular(10),
                                   clipBehavior: Clip.hardEdge,
                                   child: CachedNetworkImage(
-                                    imageUrl:
+                                    imageUrl: UrlConstant.mediaUrl +
                                         rentitem.thumbnailImage.toString(),
                                     placeholder: (context, url) =>
                                         const CircularProgressIndicator(),

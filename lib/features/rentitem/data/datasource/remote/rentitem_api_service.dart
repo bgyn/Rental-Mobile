@@ -5,6 +5,7 @@ class RentitemApiService {
   Future<http.Response> getRentItem() async {
     final url = ApiRoutes.getRentItem();
     final response = await http.get(Uri.parse(url));
+    print(response.body);
     return response;
   }
 }

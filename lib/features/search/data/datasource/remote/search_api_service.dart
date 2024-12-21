@@ -3,8 +3,12 @@ import 'package:rentpal/config/routes/api_routes.dart';
 
 class SearchApiService {
   Future<http.Response> search(String query) async {
-    final url = ApiRoutes.search();
+    final url = ApiRoutes.search(query);
     final response = await http.get(Uri.parse(url));
     return response;
   }
+
 }
+
+
+
