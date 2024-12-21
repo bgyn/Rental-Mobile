@@ -3,6 +3,7 @@ import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rentpal/config/theme/color_palette.dart';
+import 'package:rentpal/core/constant/url_constant.dart';
 import 'package:rentpal/core/extension/extension.dart';
 import 'package:rentpal/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:rentpal/features/favourite/presentation/bloc/favourite_bloc.dart';
@@ -118,7 +119,8 @@ class _ProductDetailState extends State<ProductDetail> {
                         transitionOnUserGestures: true,
                         child: CachedNetworkImage(
                           fit: BoxFit.fill,
-                          imageUrl: widget.rentitemEntity.thumbnailImage ?? "",
+                          imageUrl: UrlConstant.mediaUrl +
+                              widget.rentitemEntity.thumbnailImage.toString(),
                           placeholder: (context, url) {
                             return SizedBox(
                               width: double.infinity,
@@ -148,6 +150,7 @@ class _ProductDetailState extends State<ProductDetail> {
                           ),
                           Text(widget.rentitemEntity.address ?? ""),
                           Text("Rating : ${widget.rentitemEntity.rating}"),
+                          Text("In stock : ${widget.rentitemEntity.inStock}"),
                         ],
                       ),
                     ),
@@ -330,7 +333,7 @@ class _ProductDetailState extends State<ProductDetail> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Container(
         padding: EdgeInsets.symmetric(
-            vertical: 0.005.toRes(context), horizontal: 0.015.toRes(context)),
+            vertical: 0.002.toRes(context), horizontal: 0.015.toRes(context)),
         color: Colors.grey.shade100,
         child: Row(
           children: [

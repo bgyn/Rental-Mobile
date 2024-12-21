@@ -9,7 +9,7 @@ class RentitemEntity {
   final String? price;
   final String? thumbnailImage;
   final String? description;
-  final int? quantity;
+  final int? inStock;
   final String? rating;
   final int? numOfReviews;
   final String? address;
@@ -22,7 +22,7 @@ class RentitemEntity {
     this.price,
     this.thumbnailImage,
     this.description,
-    this.quantity,
+    this.inStock,
     this.rating,
     this.numOfReviews,
     this.address,
@@ -59,7 +59,7 @@ class RentitemEntity {
         title.hashCode ^
         price.hashCode ^
         thumbnailImage.hashCode ^
-        quantity.hashCode ^
+        inStock.hashCode ^
         rating.hashCode ^
         numOfReviews.hashCode ^
         address.hashCode ^
