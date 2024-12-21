@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:rentpal/core/constant/url_constant.dart';
 import 'package:rentpal/core/extension/extension.dart';
 import 'package:rentpal/features/rentitem/domain/entity/rentitem_entity.dart';
 import 'package:shimmer/shimmer.dart';
@@ -16,8 +17,7 @@ class RentItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        context.push("/product-detail",
-            extra: rentItem);
+        context.push("/product-detail", extra: rentItem);
       },
       child: Padding(
         padding: const EdgeInsets.all(10),
@@ -27,8 +27,7 @@ class RentItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Hero(
-                tag: rentItem.thumbnailImage ??
-                    "",
+                tag: rentItem.thumbnailImage ?? "",
                 transitionOnUserGestures: true,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(5),
@@ -36,10 +35,9 @@ class RentItem extends StatelessWidget {
                   child: CachedNetworkImage(
                     height: 0.13.h(context),
                     width: 0.4.w(context),
-                    imageUrl: rentItem
-                            .thumbnailImage ??
-                        "",
-                        alignment: Alignment.center,
+                    imageUrl: UrlConstant.mediaUrl +
+                        rentItem.thumbnailImage.toString(),
+                    alignment: Alignment.center,
                     fit: BoxFit.cover,
                     placeholder: (context, url) => SizedBox(
                       width: 0.4.w(context),
@@ -57,10 +55,7 @@ class RentItem extends StatelessWidget {
               Flexible(
                 child: Text(
                   "Rs. ${rentItem.price}",
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium
-                      ?.copyWith(
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         fontSize: 0.012.toRes(context),
                       ),
                 ),
@@ -70,10 +65,7 @@ class RentItem extends StatelessWidget {
                   "${rentItem.title}",
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium
-                      ?.copyWith(
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         fontSize: 0.012.toRes(context),
                       ),
                 ),
@@ -82,10 +74,7 @@ class RentItem extends StatelessWidget {
                 child: Text(
                   "${rentItem.address}",
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium
-                      ?.copyWith(
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         fontSize: 0.012.toRes(context),
                       ),
                 ),
