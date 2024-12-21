@@ -20,6 +20,7 @@ import 'package:rentpal/features/favourite/presentation/bloc/favourite_bloc.dart
 import 'package:rentpal/features/home/presentation/cubit/navigator_cubit.dart';
 import 'package:rentpal/features/my_listing/presentation/bloc/listing_bloc.dart';
 import 'package:rentpal/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:rentpal/features/search/presentation/bloc/search_bloc.dart';
 import 'package:rentpal/features/user/presentation/bloc/user_bloc.dart';
 import 'package:rentpal/injection_container.dart';
 import 'firebase_options.dart';
@@ -67,6 +68,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (_) => AddListingBloc(sl())),
         BlocProvider(create: (_) => AddressBloc(sl())),
         BlocProvider(create: (_) => UserBloc(sl())),
+        BlocProvider(create: (_) => SearchBloc(sl())),
         BlocProvider(
             create: (_) => FavouriteBloc(
                 addFavourite: sl(),

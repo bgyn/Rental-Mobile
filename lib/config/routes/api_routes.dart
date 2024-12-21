@@ -36,4 +36,8 @@ class ApiRoutes {
   static String getListing() {
     return "${UrlConstant.baseUrl}my_listing/";
   }
+
+  static String search() {
+    return "${UrlConstant.baseUrl}search/";
+  }
 }

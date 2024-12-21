@@ -40,6 +40,10 @@ import 'package:rentpal/features/rentitem/data/datasource/remote/rentitem_api_se
 import 'package:rentpal/features/rentitem/data/repository/rentitem_repository_impl.dart';
 import 'package:rentpal/features/rentitem/domain/repository/rentitem_repository.dart';
 import 'package:rentpal/features/rentitem/domain/usercase/get_rentitem.dart';
+import 'package:rentpal/features/search/data/datasource/remote/search_api_service.dart';
+import 'package:rentpal/features/search/data/repository/search_repository_impl.dart';
+import 'package:rentpal/features/search/domain/repository/search_repository.dart';
+import 'package:rentpal/features/search/domain/usecase/search.dart';
 import 'package:rentpal/features/user/data/datasource/user_api_service.dart';
 import 'package:rentpal/features/user/data/repository/user_repository_impl.dart';
 import 'package:rentpal/features/user/domain/repository/user_repository.dart';
@@ -115,4 +119,9 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<IsFavourite>(IsFavourite(sl()));
   sl.registerSingleton<ClearFavourite>(ClearFavourite(sl()));
   sl.registerSingleton<GetFavourite>(GetFavourite(sl()));
+
+  //search
+  sl.registerSingleton<SearchApiService>(SearchApiService());
+  sl.registerSingleton<SearchRepository>(SearchRepositoryImpl(sl()));
+  sl.registerSingleton<Search>(Search(sl()));
 }
