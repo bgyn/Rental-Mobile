@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rentpal/features/search/presentation/bloc/search_bloc.dart';
@@ -6,6 +7,7 @@ import 'package:rentpal/features/search/presentation/bloc/search_state.dart';
 
 class CustomSearchDelegate extends SearchDelegate<String> {
   final SearchBloc searchBloc;
+  Timer? _debounce;
 
   CustomSearchDelegate(this.searchBloc);
 
@@ -35,9 +37,7 @@ class CustomSearchDelegate extends SearchDelegate<String> {
 
   @override
   Widget buildResults(BuildContext context) {
-    // Trigger the search when the user submits a query.
-    searchBloc.add(SearchItem(query: query));
-
+    _triggerSearch(query);
     return BlocBuilder<SearchBloc, SearchState>(
       bloc: searchBloc,
       builder: (context, state) {
@@ -53,13 +53,14 @@ class CustomSearchDelegate extends SearchDelegate<String> {
               return ListTile(
                 title: Text(state.data[index].title.toString()),
                 // onTap: () {
-                //   close(context, state.data[index]);
+                //   close(context, state.data[index].title.toString());
                 // },
               );
             },
           );
         } else if (state is SearchError) {
-          return Center(child: Text(state.err));
+          return const Center(
+              child: Text("Type something to start searching."));
         } else {
           return const Center(child: Text('Start typing to search.'));
         }
@@ -69,13 +70,11 @@ class CustomSearchDelegate extends SearchDelegate<String> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    // Suggestions can be implemented as dynamic or static.
     if (query.isEmpty) {
       return const Center(child: Text('Type something to start searching.'));
     }
 
-    // Trigger the search with partial query updates for suggestions.
-    searchBloc.add(SearchItem(query: query));
+    _triggerSearch(query);
 
     return BlocBuilder<SearchBloc, SearchState>(
       bloc: searchBloc,
@@ -91,10 +90,10 @@ class CustomSearchDelegate extends SearchDelegate<String> {
             itemBuilder: (context, index) {
               return ListTile(
                 title: Text(state.data[index].title.toString()),
-                // onTap: () {
-                //   query = state.data[index];
-                //   showResults(context);
-                // },
+                onTap: () {
+                  query = state.data[index].title.toString();
+                  showResults(context);
+                },
               );
             },
           );
@@ -106,5 +105,21 @@ class CustomSearchDelegate extends SearchDelegate<String> {
         }
       },
     );
+  }
+
+  void _triggerSearch(String input) {
+    // Cancel the previous debounce timer if still active
+    if (_debounce?.isActive ?? false) _debounce?.cancel();
+
+    // Start a new debounce timer
+    _debounce = Timer(const Duration(milliseconds: 500), () {
+      searchBloc.add(SearchItem(query: input));
+    });
+  }
+
+  @override
+  void dispose() {
+    _debounce?.cancel();
+    super.dispose();
   }
 }
