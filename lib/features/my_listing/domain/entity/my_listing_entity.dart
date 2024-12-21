@@ -4,35 +4,51 @@ part 'my_listing_entity.g.dart';
 
 @JsonSerializable()
 class MyListingEntity {
-  final String id;
-  final String name;
+  final int id;
+  final String title;
+  final String price;
+  final String thumbnailImage;
+  final int inStock;
+  final String description;
+  final String address;
+  final String latitude;
+  final String longitude;
+  final List<String> itemRules;
+  final int category;
   final String status;
-  final String image;
   MyListingEntity({
     required this.id,
-    required this.name,
+    required this.title,
+    required this.price,
+    required this.thumbnailImage,
+    required this.description,
+    required this.inStock,
+    required this.address,
+    required this.latitude,
+    required this.longitude,
+    required this.itemRules,
+    required this.category,
     required this.status,
-    required this.image,
   });
 
-  factory MyListingEntity.fromJson(Map<String,dynamic> json)=> _$MyListingEntityFromJson(json);
-  
-  Map<String,dynamic> toJson()=> _$MyListingEntityToJson(this);
+  factory MyListingEntity.fromJson(Map<String, dynamic> json) =>
+      _$MyListingEntityFromJson(json);
 
-  static List<MyListingEntity> fromJsonList(List? json){
-    return json?.map((e) => MyListingEntity.fromJson(e)).toList()??[];
+  Map<String, dynamic> toJson() => _$MyListingEntityToJson(this);
+
+  static List<MyListingEntity> fromJsonList(List? json) {
+    return json?.map((e) => MyListingEntity.fromJson(e)).toList() ?? [];
   }
-
 
   @override
   bool operator ==(Object other) {
-    if(identical(this,other)){
+    if (identical(this, other)) {
       return true;
     }
-    if(other.runtimeType != runtimeType){
+    if (other.runtimeType != runtimeType) {
       return false;
     }
-    if(other is MyListingEntity){
+    if (other is MyListingEntity) {
       other.id == id;
     }
     return false;
@@ -40,10 +56,16 @@ class MyListingEntity {
 
   @override
   int get hashCode {
-    return id.hashCode^
-    name.hashCode^
-    status.hashCode^
-    image.hashCode;
+    return id.hashCode ^
+        price.hashCode ^
+        thumbnailImage.hashCode ^
+        description.hashCode ^
+        inStock.hashCode ^
+        address.hashCode ^
+        latitude.hashCode ^
+        longitude.hashCode ^
+        itemRules.hashCode ^
+        category.hashCode ^
+        status.hashCode;
   }
-  
 }
