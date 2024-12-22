@@ -176,9 +176,12 @@ class _MenuPageState extends State<MenuPage> {
           title: "Password",
           onTap: () => GoRouter.of(context).push(("/forgot-password")),
         ),
-        const MenuOptionTiles(
+        MenuOptionTiles(
           icon: Icons.shopping_bag_outlined,
           title: "My Orders",
+          onTap: () {
+            GoRouter.of(context).push(("/myorder"));
+          },
         ),
       ],
     );

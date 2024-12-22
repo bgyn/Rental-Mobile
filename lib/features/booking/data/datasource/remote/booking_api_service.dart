@@ -15,7 +15,6 @@ class BookingApiService {
     }, headers: {
       "Authorization": "Token ${token!['token']}"
     });
-    print(response.body);
     return response;
   }
 }

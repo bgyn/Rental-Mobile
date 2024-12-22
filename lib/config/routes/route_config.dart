@@ -11,6 +11,7 @@ import 'package:rentpal/features/home/presentation/pages/product_detail.dart';
 import 'package:rentpal/features/menu/presentation/pages/menu_page.dart';
 import 'package:rentpal/features/add_listing/presentation/pages/add_new_listing.dart';
 import 'package:rentpal/features/my_listing/presentation/pages/my_listing_page.dart';
+import 'package:rentpal/features/my_orders/presentation/page/my_order_page.dart';
 import 'package:rentpal/features/profile/presentation/pages/edit_profile_page.dart';
 import 'package:rentpal/features/rentals/presentation/pages/rental_page.dart';
 import 'package:rentpal/features/rentitem/domain/entity/rentitem_entity.dart';
@@ -24,6 +25,10 @@ final routeConfig = GoRouter(
   navigatorKey: _rootNavigatorKey,
   initialLocation: '/splash',
   routes: <RouteBase>[
+    GoRoute(
+      path: "/myorder",
+      builder: (context, state) => const MyOrderPage(),
+    ),
     GoRoute(
       path: "/splash",
       builder: (context, state) => const SplashScreen(),
