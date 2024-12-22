@@ -42,6 +42,6 @@ class ApiRoutes {
   }
 
   static String booking() {
-    return "${UrlConstant.baseUrl}booking/";
+    return "${UrlConstant.baseUrl}my_booking/";
   }
 }

@@ -6,7 +6,7 @@ class MyOrderApiService {
   Future<http.Response> getOrders() async {
     final url = ApiRoutes.booking();
     final token = await LocalStorage.getToken();
-    final response = http.get(Uri.parse(url),
+    final response = await http.get(Uri.parse(url),
         headers: {"Authorization": "Token ${token!['token']}"});
     return response;
   }
