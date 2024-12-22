@@ -5,10 +5,7 @@ class SearchApiService {
   Future<http.Response> search(String query) async {
     final url = ApiRoutes.search(query);
     final response = await http.get(Uri.parse(url));
+    print("search result ${response.body}");
     return response;
   }
-
 }
-
-
-

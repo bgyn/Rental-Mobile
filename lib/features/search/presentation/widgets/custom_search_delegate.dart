@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rentpal/features/search/presentation/bloc/search_bloc.dart';
 import 'package:rentpal/features/search/presentation/bloc/search_event.dart';
 import 'package:rentpal/features/search/presentation/bloc/search_state.dart';
+import 'package:rentpal/features/search/presentation/widgets/search_result_item.dart';
 
 class CustomSearchDelegate extends SearchDelegate<String> {
   final SearchBloc searchBloc;
@@ -50,12 +51,7 @@ class CustomSearchDelegate extends SearchDelegate<String> {
           return ListView.builder(
             itemCount: state.data.length,
             itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(state.data[index].title.toString()),
-                // onTap: () {
-                //   close(context, state.data[index].title.toString());
-                // },
-              );
+              return SearchResultItem(item: state.data[index]);
             },
           );
         } else if (state is SearchError) {
@@ -88,13 +84,7 @@ class CustomSearchDelegate extends SearchDelegate<String> {
           return ListView.builder(
             itemCount: state.data.length,
             itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(state.data[index].title.toString()),
-                onTap: () {
-                  query = state.data[index].title.toString();
-                  showResults(context);
-                },
-              );
+              return SearchResultItem(item: state.data[index]);
             },
           );
         } else if (state is SearchError) {

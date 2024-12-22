@@ -38,6 +38,6 @@ class ApiRoutes {
   }
 
   static String search(String query) {
-    return "${UrlConstant.baseUrl}search/${query}/";
+    return "${UrlConstant.baseUrl}rentlist?search=$query";
   }
 }

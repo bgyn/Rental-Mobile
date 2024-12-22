@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:fpdart/fpdart.dart';
@@ -14,7 +15,7 @@ class SearchRepositoryImpl extends SearchRepository {
     try {
       final result = await _searchApiService.search(query);
       if (result.statusCode == 200) {
-        final List jsonList = result.body as List;
+        final List jsonList = jsonDecode(result.body);
         final rentitemList = RentitemEntity.fromJsonList(jsonList);
         return right(rentitemList);
       }
