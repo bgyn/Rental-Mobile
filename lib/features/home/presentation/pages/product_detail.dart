@@ -354,6 +354,11 @@ class _ProductDetailState extends State<ProductDetail> {
                       config: CalendarDatePicker2WithActionButtonsConfig(
                           calendarType: CalendarDatePicker2Type.range),
                       dialogSize: const Size(1.0, 1.0));
+                  if (values != null) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text("Selected date range $values "),
+                    ));
+                  }
                 },
                 child: const Text(
                   "Choose your date",

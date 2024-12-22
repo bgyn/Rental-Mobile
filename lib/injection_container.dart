@@ -15,6 +15,10 @@ import 'package:rentpal/features/auth/domain/usecase/is_loggedin.dart';
 import 'package:rentpal/features/auth/domain/usecase/user_login.dart';
 import 'package:rentpal/features/auth/domain/usecase/user_sign_up.dart';
 import 'package:rentpal/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:rentpal/features/booking/data/datasource/remote/booking_api_service.dart';
+import 'package:rentpal/features/booking/data/repository/booking_repository_impl.dart';
+import 'package:rentpal/features/booking/domain/repository/booking_repository.dart';
+import 'package:rentpal/features/booking/domain/usecase/book_rentItem.dart';
 import 'package:rentpal/features/categories/data/data_source/remote/category_api_service.dart';
 import 'package:rentpal/features/categories/data/repository/category_list_repository_impl.dart';
 import 'package:rentpal/features/categories/domain/repository/category_list_repository.dart';
@@ -124,4 +128,9 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<SearchApiService>(SearchApiService());
   sl.registerSingleton<SearchRepository>(SearchRepositoryImpl(sl()));
   sl.registerSingleton<Search>(Search(sl()));
+
+  //book
+  sl.registerSingleton<BookingApiService>(BookingApiService());
+  sl.registerSingleton<BookingRepository>(BookingRepositoryImpl(sl()));
+  sl.registerSingleton<BookRentitem>(BookRentitem(sl()));
 }

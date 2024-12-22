@@ -14,6 +14,7 @@ import 'package:rentpal/features/add_listing/presentation/bloc/add_listing_bloc.
 import 'package:rentpal/features/address/bloc/address_bloc.dart';
 import 'package:rentpal/features/address/cubit/address_cubit.dart';
 import 'package:rentpal/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:rentpal/features/booking/presentation/bloc/bookgin_bloc.dart';
 import 'package:rentpal/features/categories/presentation/bloc/category_list_bloc.dart';
 import 'package:rentpal/features/categories/presentation/bloc/category_list_event.dart';
 import 'package:rentpal/features/favourite/presentation/bloc/favourite_bloc.dart';
@@ -69,6 +70,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (_) => AddressBloc(sl())),
         BlocProvider(create: (_) => UserBloc(sl())),
         BlocProvider(create: (_) => SearchBloc(sl())),
+        BlocProvider(create: (_) => BookingBloc(sl())),
         BlocProvider(
             create: (_) => FavouriteBloc(
                 addFavourite: sl(),
