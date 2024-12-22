@@ -77,7 +77,7 @@ class _MyListingPageState extends State<MyListingPage> {
               _filteredListings = _allListings;
             }
 
-            return _filteredListings.isEmpty
+            return _allListings.isEmpty
                 ? const Center(child: Text("No listings found"))
                 : Padding(
                     padding: EdgeInsets.all(0.015.toRes(context)),
@@ -122,117 +122,131 @@ class _MyListingPageState extends State<MyListingPage> {
                         SizedBox(height: 0.02.h(context)),
                         // Listings ListView
                         Expanded(
-                          child: ListView.builder(
-                            itemCount: _filteredListings.length,
-                            itemBuilder: (context, index) {
-                              final listing = _filteredListings[index];
-                              return Card(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                elevation: 4,
-                                margin: const EdgeInsets.symmetric(
-                                    vertical: 8, horizontal: 12),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(12.0),
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(8),
-                                        child: CachedNetworkImage(
-                                          imageUrl: UrlConstant.mediaUrl +
-                                              listing.thumbnailImage,
-                                          width: 0.25.w(context),
-                                          height: 0.15.h(context),
-                                          fit: BoxFit.cover,
-                                          placeholder: (context, url) =>
-                                              Container(
-                                            width: 0.25.w(context),
-                                            height: 0.15.h(context),
-                                            color: Colors.grey.shade300,
-                                            child: const Center(
-                                              child: CircularProgressIndicator(
-                                                  strokeWidth: 2),
-                                            ),
-                                          ),
-                                          errorWidget: (context, url, error) =>
-                                              Container(
-                                            width: 0.25.w(context),
-                                            height: 0.15.h(context),
-                                            color: Colors.grey.shade300,
-                                            child: const Icon(
-                                                Icons.broken_image,
-                                                color: Colors.red),
-                                          ),
-                                        ),
+                          child: _filteredListings.isEmpty
+                              ? const Center(child: Text("No listings found"))
+                              : ListView.builder(
+                                  itemCount: _filteredListings.length,
+                                  itemBuilder: (context, index) {
+                                    final listing = _filteredListings[index];
+                                    return Card(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(12),
                                       ),
-                                      SizedBox(width: 0.04.w(context)),
-                                      Expanded(
-                                        child: Column(
+                                      elevation: 4,
+                                      margin: const EdgeInsets.symmetric(
+                                          vertical: 8, horizontal: 12),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(12.0),
+                                        child: Row(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Text(
-                                              listing.title,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .titleMedium
-                                                  ?.copyWith(
-                                                    fontSize:
-                                                        0.018.toRes(context),
-                                                    fontWeight: FontWeight.bold,
+                                            ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              child: CachedNetworkImage(
+                                                imageUrl: UrlConstant.mediaUrl +
+                                                    listing.thumbnailImage,
+                                                width: 0.25.w(context),
+                                                height: 0.15.h(context),
+                                                fit: BoxFit.cover,
+                                                placeholder: (context, url) =>
+                                                    Container(
+                                                  width: 0.25.w(context),
+                                                  height: 0.15.h(context),
+                                                  color: Colors.grey.shade300,
+                                                  child: const Center(
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                            strokeWidth: 2),
                                                   ),
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                            SizedBox(height: 0.01.h(context)),
-                                            Text(
-                                              "${listing.price} / day",
-                                              style: TextStyle(
-                                                fontSize: 0.016.toRes(context),
-                                                color: Colors.green.shade700,
-                                                fontWeight: FontWeight.w500,
+                                                ),
+                                                errorWidget:
+                                                    (context, url, error) =>
+                                                        Container(
+                                                  width: 0.25.w(context),
+                                                  height: 0.15.h(context),
+                                                  color: Colors.grey.shade300,
+                                                  child: const Icon(
+                                                      Icons.broken_image,
+                                                      color: Colors.red),
+                                                ),
                                               ),
                                             ),
-                                            SizedBox(height: 0.01.h(context)),
-                                            Row(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                const Icon(
-                                                  Icons.location_on,
-                                                  size: 16,
-                                                  color: Colors.grey,
-                                                ),
-                                                SizedBox(
-                                                    width: 0.01.w(context)),
-                                                Expanded(
-                                                  child: Text(
-                                                    listing.address,
-                                                    maxLines: 2,
+                                            SizedBox(width: 0.04.w(context)),
+                                            Expanded(
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    listing.title,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .titleMedium
+                                                        ?.copyWith(
+                                                          fontSize: 0.018
+                                                              .toRes(context),
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                    maxLines: 1,
                                                     overflow:
                                                         TextOverflow.ellipsis,
+                                                  ),
+                                                  SizedBox(
+                                                      height: 0.01.h(context)),
+                                                  Text(
+                                                    "${listing.price} / day",
                                                     style: TextStyle(
                                                       fontSize:
-                                                          0.014.toRes(context),
+                                                          0.016.toRes(context),
                                                       color:
-                                                          Colors.grey.shade600,
+                                                          Colors.green.shade700,
+                                                      fontWeight:
+                                                          FontWeight.w500,
                                                     ),
                                                   ),
-                                                ),
-                                              ],
+                                                  SizedBox(
+                                                      height: 0.01.h(context)),
+                                                  Row(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      const Icon(
+                                                        Icons.location_on,
+                                                        size: 16,
+                                                        color: Colors.grey,
+                                                      ),
+                                                      SizedBox(
+                                                          width:
+                                                              0.01.w(context)),
+                                                      Expanded(
+                                                        child: Text(
+                                                          listing.address,
+                                                          maxLines: 2,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          style: TextStyle(
+                                                            fontSize: 0.014
+                                                                .toRes(context),
+                                                            color: Colors
+                                                                .grey.shade600,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           ],
                                         ),
                                       ),
-                                    ],
-                                  ),
+                                    );
+                                  },
                                 ),
-                              );
-                            },
-                          ),
                         ),
                       ],
                     ),
