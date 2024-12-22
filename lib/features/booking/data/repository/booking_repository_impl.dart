@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:fpdart/src/either.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:rentpal/core/error/faliure.dart';
 import 'package:rentpal/features/booking/data/datasource/remote/booking_api_service.dart';
 import 'package:rentpal/features/booking/domain/repository/booking_repository.dart';
@@ -11,8 +11,8 @@ class BookingRepositoryImpl extends BookingRepository {
   BookingRepositoryImpl(this._apiService);
 
   @override
-  Future<Either<Failure, void>> bookRentItem(String rentItemIdd,
-      DateTime startDate, DateTime endDate, int userId) async {
+  Future<Either<Failure, void>> bookRentItem(
+      int rentItemIdd, String startDate, String endDate, int userId) async {
     try {
       final result = await _apiService.bookRentItem(
           rentItemIdd, startDate, endDate, userId);

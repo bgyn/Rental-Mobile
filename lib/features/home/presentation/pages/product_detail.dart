@@ -6,9 +6,14 @@ import 'package:rentpal/config/theme/color_palette.dart';
 import 'package:rentpal/core/constant/url_constant.dart';
 import 'package:rentpal/core/extension/extension.dart';
 import 'package:rentpal/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:rentpal/features/booking/presentation/bloc/bookgin_bloc.dart';
+import 'package:rentpal/features/booking/presentation/bloc/booking_event.dart';
 import 'package:rentpal/features/favourite/presentation/bloc/favourite_bloc.dart';
 import 'package:rentpal/features/favourite/presentation/bloc/favourite_event.dart';
 import 'package:rentpal/features/favourite/presentation/bloc/favourite_state.dart';
+import 'package:rentpal/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:rentpal/features/profile/presentation/bloc/profile_event.dart';
+import 'package:rentpal/features/profile/presentation/bloc/profile_state.dart';
 import 'package:rentpal/features/rentitem/domain/entity/rentitem_entity.dart';
 import 'package:rentpal/features/rentitem/presentation/bloc/rentitem_bloc.dart';
 import 'package:rentpal/features/rentitem/presentation/bloc/rentitem_event.dart';
@@ -35,6 +40,7 @@ class _ProductDetailState extends State<ProductDetail> {
   void initState() {
     super.initState();
     context.read<FavouriteBloc>().add(const FavouriteLoad());
+    context.read<ProfileBloc>().add(ProfileFetch());
   }
 
   @override
@@ -294,7 +300,7 @@ class _ProductDetailState extends State<ProductDetail> {
                               ),
                               child: Center(
                                   child: Text(
-                                "See all Andrews's listing ${widget.rentitemEntity.userId}",
+                                "See all Andrews's listing ${widget.rentitemEntity.owner}",
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyMedium
@@ -344,30 +350,40 @@ class _ProductDetailState extends State<ProductDetail> {
             SizedBox(
               width: 0.03.w(context),
             ),
-            Expanded(
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: ColorPalette.primaryColor),
-                onPressed: () async {
-                  final values = await showCalendarDatePicker2Dialog(
-                      context: context,
-                      config: CalendarDatePicker2WithActionButtonsConfig(
-                          calendarType: CalendarDatePicker2Type.range),
-                      dialogSize: const Size(1.0, 1.0));
-                  if (values != null) {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text("Selected date range $values "),
-                    ));
-                  }
-                },
-                child: const Text(
-                  "Choose your date",
-                  style: TextStyle(
-                    color: Colors.white,
+            BlocBuilder<ProfileBloc, ProfileState>(builder: (context, state) {
+              return Expanded(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: ColorPalette.primaryColor),
+                  onPressed: () async {
+                    if (state is ProfileSuccess) {
+                      final userId = state.data.userId;
+                      final values = await showCalendarDatePicker2Dialog(
+                          context: context,
+                          config: CalendarDatePicker2WithActionButtonsConfig(
+                              calendarType: CalendarDatePicker2Type.range),
+                          dialogSize: const Size(1.0, 1.0));
+                      if (values != null) {
+                        if (!context.mounted) return;
+                        print(values);
+                        context.read<BookingBloc>().add(BookRenItem(
+                            widget.rentitemEntity.id!,
+                            values.first.toString().split(' ').first,
+                            values.last.toString().split(' ').first,
+                            userId!));
+                      }
+                    }
+                    null;
+                  },
+                  child: const Text(
+                    "Choose your date",
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
                   ),
                 ),
-              ),
-            )
+              );
+            })
           ],
         ),
       ),

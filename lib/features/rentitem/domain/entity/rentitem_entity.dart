@@ -15,7 +15,7 @@ class RentitemEntity {
   final String? address;
   final String? latitude;
   final String? longitude;
-  final int? userId;
+  final int? owner;
   final List<String>? itemRules;
   RentitemEntity({
     this.id,
@@ -30,7 +30,7 @@ class RentitemEntity {
     this.latitude,
     this.longitude,
     this.itemRules,
-    this.userId,
+    this.owner,
   });
 
   factory RentitemEntity.fromJson(Map<String, dynamic> json) =>

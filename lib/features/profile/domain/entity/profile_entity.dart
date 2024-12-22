@@ -4,7 +4,7 @@ part 'profile_entity.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class ProfileEntity {
-  final int? id;
+  final int? userId;
   final String? email;
   final String? firstname;
   final String? lastname;
@@ -15,7 +15,7 @@ class ProfileEntity {
   final String? gender;
   final String? dateOfBirth;
   ProfileEntity(
-      {this.id,
+      {this.userId,
       this.email,
       this.firstname,
       this.lastname,
@@ -39,14 +39,14 @@ class ProfileEntity {
       return false;
     }
     if (other is ProfileEntity) {
-      other.id == id;
+      other.userId == userId;
     }
     return false;
   }
 
   @override
   int get hashCode {
-    return id.hashCode ^
+    return userId.hashCode ^
         email.hashCode ^
         profilePic.hashCode ^
         firstname.hashCode ^

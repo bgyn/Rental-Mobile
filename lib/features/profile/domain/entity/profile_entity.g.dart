@@ -8,7 +8,7 @@ part of 'profile_entity.dart';
 
 ProfileEntity _$ProfileEntityFromJson(Map<String, dynamic> json) =>
     ProfileEntity(
-      id: (json['id'] as num?)?.toInt(),
+      userId: (json['user_id'] as num?)?.toInt(),
       email: json['email'] as String?,
       firstname: json['firstname'] as String?,
       lastname: json['lastname'] as String?,
@@ -22,7 +22,7 @@ ProfileEntity _$ProfileEntityFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$ProfileEntityToJson(ProfileEntity instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'user_id': instance.userId,
       'email': instance.email,
       'firstname': instance.firstname,
       'lastname': instance.lastname,

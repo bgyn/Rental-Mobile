@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rentpal/core/common/show_snackbar.dart';
 import 'package:rentpal/features/booking/domain/usecase/book_rentItem.dart';
 import 'package:rentpal/features/booking/presentation/bloc/booking_event.dart';
 import 'package:rentpal/features/booking/presentation/bloc/booking_state.dart';
@@ -18,8 +19,14 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
             endDate: event.endDate,
             userId: event.userId));
     result.fold(
-      (l) => emit(BookingError(l.errorMessage)),
-      (r) => emit(BookingSuccess()),
+      (l) {
+        showSnackbar(l.errorMessage);
+        emit(BookingError(l.errorMessage));
+      },
+      (r) {
+        showSnackbar('Product booked!');
+        emit(BookingSuccess());
+      },
     );
   }
 }

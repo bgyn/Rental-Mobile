@@ -16,9 +16,9 @@ class BookRentitem extends UseCase<Either<Failure, void>, BookingParmas> {
 }
 
 class BookingParmas {
-  final String rentItemId;
-  final DateTime startDate;
-  final DateTime endDate;
+  final int rentItemId;
+  final String startDate;
+  final String endDate;
   final int userId;
 
   BookingParmas(
