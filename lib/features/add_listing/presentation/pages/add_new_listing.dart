@@ -32,7 +32,7 @@ class _AddNewListingState extends State<AddNewListing> {
   final _pricePerDayController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _quantityController = TextEditingController();
-  String _categoryController  = "17";
+  String? _categoryController;
   final _formKey = GlobalKey<FormState>();
 
   late ImageHandlerCubit _imageHandlerCubit;
@@ -46,7 +46,7 @@ class _AddNewListingState extends State<AddNewListing> {
     _imageHandlerCubit.reset();
     _addressCubit = context.read<AddressCubit>();
     _addressCubit.reset();
-    _rulesCubit=context.read<RulesCubit>();
+    _rulesCubit = context.read<RulesCubit>();
     _rulesCubit.reset();
   }
 
@@ -307,9 +307,10 @@ class _AddNewListingState extends State<AddNewListing> {
                               [],
                       title: "Primary Category",
                       onChanged: (value) {
-                        setState(() {
-                          _categoryController=value!;
-                        });
+                        final selectedCategory = state.categoryList?.firstWhere(
+                          (category) => category.categoryName == value,
+                        );
+                        _categoryController = selectedCategory?.id.toString();
                       },
                       validator: (value) {
                         if (value == null || value == "") {
@@ -369,28 +370,33 @@ class _AddNewListingState extends State<AddNewListing> {
                               borderRadius: BorderRadius.circular(10))),
                       onPressed: () {
                         // if (_formKey.currentState?.validate() ?? false) {
-                          final latitude =
-                              context.read<AddressCubit>().state.first.lat;
-                          final longitude =
-                              context.read<AddressCubit>().state.first.lon;
-                          context.read<AddListingBloc>().add(
-                                PublishProductListing(
-                                  file: File(context.read<ImageHandlerCubit>().state.first.path),
-                                  title: _titleController.text,
-                                  category: "17",
-                                  price:
-                                      double.parse(_pricePerDayController.text),
-                                  description: _descriptionController.text,
-                                  quantity: int.parse(_quantityController.text),
-                                  rating: 0.0,
-                                  noOfReviews: 0,
-                                  address:
-                                      "${context.read<AddressCubit>().state.first.displayName}",
-                                  latitude: "$latitude",
-                                  longitude:"$longitude",
-                                  itemRules: context.read<RulesCubit>().state.rules,
-                                ),
-                              );
+                        final latitude =
+                            context.read<AddressCubit>().state.first.lat;
+                        final longitude =
+                            context.read<AddressCubit>().state.first.lon;
+                        context.read<AddListingBloc>().add(
+                              PublishProductListing(
+                                file: File(context
+                                    .read<ImageHandlerCubit>()
+                                    .state
+                                    .first
+                                    .path),
+                                title: _titleController.text,
+                                category: _categoryController.toString(),
+                                price:
+                                    double.parse(_pricePerDayController.text),
+                                description: _descriptionController.text,
+                                quantity: int.parse(_quantityController.text),
+                                rating: 0.0,
+                                noOfReviews: 0,
+                                address:
+                                    "${context.read<AddressCubit>().state.first.displayName}",
+                                latitude: "$latitude",
+                                longitude: "$longitude",
+                                itemRules:
+                                    context.read<RulesCubit>().state.rules,
+                              ),
+                            );
                         // }
                       },
                       child: Padding(
