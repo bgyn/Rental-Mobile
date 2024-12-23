@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:rentpal/config/theme/color_palette.dart';
 import 'package:rentpal/core/extension/extension.dart';
@@ -41,19 +42,21 @@ class _HomeState extends State<Home> {
     super.initState();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     final currentIndex = context.watch<NavigatorCubit>();
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, authState) {
-        if (authState is AuthSuccess) {
+        if (authState is RegisterSuccess) {
           context.read<NavigatorCubit>().reset();
-        }else if(authState is AuthFaliure){
-           ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(authState.message)),
-              );
+          context.go('/edit-profile/${"register"}');
+        } else if (authState is AuthSuccess) {
+          context.read<NavigatorCubit>().reset();
+         
+        } else if (authState is AuthFaliure) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(authState.message)),
+          );
         }
       },
       child: BlocBuilder<AuthBloc, AuthState>(
@@ -101,8 +104,6 @@ class _HomeState extends State<Home> {
                   )),
                 ),
               )
-             
-            
           ]);
         },
       ),

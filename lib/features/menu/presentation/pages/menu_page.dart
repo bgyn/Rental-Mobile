@@ -156,7 +156,8 @@ class _MenuPageState extends State<MenuPage> {
         MenuOptionTiles(
           icon: Icons.person_2_outlined,
           title: "Edit profile",
-          onTap: () => GoRouter.of(context).push("/edit-profile"),
+          onTap: () =>
+              GoRouter.of(context).push("/edit-profile/${"menu"}",),
         ),
         const MenuOptionTiles(
           icon: Icons.dataset,

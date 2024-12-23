@@ -10,6 +10,7 @@ import 'package:rentpal/core/common/add_photo_option.dart';
 import 'package:rentpal/core/constant/url_constant.dart';
 import 'package:rentpal/core/cubit/image_handler_cubit.dart';
 import 'package:rentpal/core/extension/extension.dart';
+import 'package:rentpal/core/local_storage/local_storage.dart';
 import 'package:rentpal/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:rentpal/features/profile/presentation/bloc/profile_event.dart';
 import 'package:rentpal/features/profile/presentation/bloc/profile_state.dart';
@@ -18,7 +19,8 @@ import 'package:rentpal/features/profile/presentation/widgets/profile_text_field
 import 'package:rentpal/features/profile/presentation/widgets/profile_text_form_field.dart';
 
 class EditProfilePage extends StatefulWidget {
-  const EditProfilePage({super.key});
+  final String from;
+  const EditProfilePage({super.key, required this.from});
 
   @override
   State<EditProfilePage> createState() => _EditProfilePageState();
@@ -38,7 +40,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
   @override
   void initState() {
     super.initState();
-    _fetchProfileData();
+    if (widget.from != "register") {
+      _fetchProfileData();
+    }
     _imageHandlerCubit = context.read<ImageHandlerCubit>();
   }
 
@@ -60,7 +64,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     final state = profileBloc.state;
 
     if (state is ProfileSuccess) {
-      image = state.data.profilePic;
+      image = state.data.profilePic ?? "";
       _addressCtrl.text = state.data.address ?? '';
       _phoneCtrl.text = state.data.phone ?? '';
       _aboutCtrl.text = state.data.aboutYou ?? '';
@@ -90,7 +94,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             ),
           );
         }
-        if (state is ProfileSuccess) {
+        if (state is ProfileSuccess || state is Profieinitial) {
           return Container(
             padding: EdgeInsets.symmetric(horizontal: 0.015.toRes(context)),
             child: SafeArea(
@@ -268,7 +272,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
               const SnackBar(content: Text('Profile updated successfully!')),
             );
             context.read<ProfileBloc>().add(ProfileFetch());
-            context.pop();
+            if (widget.from == "register") {
+              LocalStorage.setProfile();
+              context.go('/');
+            } else {
+              LocalStorage.setProfile();
+              context.pop();
+            }
           }
           if (state is ProfileError) {
             ScaffoldMessenger.of(context).showSnackBar(

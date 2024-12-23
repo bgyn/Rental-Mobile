@@ -14,6 +14,11 @@ final class AuthSuccess extends AuthState {
   const AuthSuccess(this.session);
 }
 
+final class RegisterSuccess extends AuthState{
+  final UserSessionEntity session;  
+  const RegisterSuccess(this.session);
+}
+
 final class AuthFaliure extends AuthState {
   final String message;
   const AuthFaliure(this.message);

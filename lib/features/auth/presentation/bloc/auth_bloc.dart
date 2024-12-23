@@ -52,7 +52,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     );
     res.fold(
       (l) => emit(AuthFaliure(l.errorMessage)),
-      (r) => _emitAuthSuccess(r, emit),
+      (r) => _emitRegisterSuccess(r, emit),
     );
   }
 
@@ -70,8 +70,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     );
   }
 
-  void _onAuthLogout(AuthLogout event, Emitter<AuthState> emit)async {
+  void _onAuthLogout(AuthLogout event, Emitter<AuthState> emit) async {
     LocalStorage.deleteToken();
+    LocalStorage.deleteProfile();
     emit(AuthLoggedOut());
   }
 
@@ -83,5 +84,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     emit(AuthSuccess(session));
   }
 
-  
+  void _emitRegisterSuccess(
+    UserSessionEntity session,
+    Emitter<AuthState> emit,
+  ) {
+    LocalStorage.setToken(session.toJson());
+    emit(RegisterSuccess(session));
+  }
 }

@@ -6,6 +6,8 @@ sealed class ProfileState {
   ProfileState({this.profile, this.error});
 }
 
+class Profieinitial extends ProfileState {}
+
 class ProfileLoading extends ProfileState {}
 
 class ProfileError extends ProfileState {

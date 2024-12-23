@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:rentpal/core/local_storage/local_storage.dart';
 import 'package:rentpal/features/add_listing/presentation/pages/add_listing_page.dart';
 import 'package:rentpal/features/auth/presentation/pages/forgot_password_page.dart';
 import 'package:rentpal/features/auth/presentation/pages/login_page.dart';
@@ -27,6 +28,16 @@ final _shellNavigatorKey = GlobalKey<NavigatorState>();
 final routeConfig = GoRouter(
   navigatorKey: _rootNavigatorKey,
   initialLocation: '/splash',
+  redirect: (context, state) async {
+    final res = await LocalStorage.getProfile();
+    if (state.fullPath == "/") {
+      if (res == false) {
+        return "/edit-profile/${"register"}";
+      }
+      return null;
+    }
+    return null;
+  },
   routes: <RouteBase>[
     GoRoute(
       path: "/myorder",
@@ -71,8 +82,14 @@ final routeConfig = GoRouter(
           );
         }),
     GoRoute(
-        path: "/edit-profile",
-        builder: (context, state) => const EditProfilePage()),
+        path: "/edit-profile/:from",
+        builder: (context, state) {
+          // get the path parameter
+          final from = state.pathParameters["from"];
+          return EditProfilePage(
+            from: from.toString(),
+          );
+        }),
     ShellRoute(
       navigatorKey: _shellNavigatorKey,
       builder: (context, stae, child) => Home(child: child),

@@ -45,7 +45,7 @@ class ProfileRepositoryImpl extends ProfileRepository {
         aboutYou: aboutYou,
         address: address!,
       );
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         return right(null);
       }
       return left(const ConnectionFailure("Failed to update profile"));

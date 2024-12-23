@@ -10,7 +10,6 @@ class ProfileApiService {
     final url = ApiRoutes.getProfile();
     final response = await http.get(Uri.parse(url),
         headers: {"Authorization": "Token ${token!['token']}"});
-    print(response.body);
     return response;
   }
 
@@ -45,6 +44,7 @@ class ProfileApiService {
     }
     final response = await request.send();
     final res = await http.Response.fromStream(response);
+    print(res.statusCode);
     return res;
   }
 }
