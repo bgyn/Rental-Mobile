@@ -23,6 +23,7 @@ import 'package:rentpal/features/my_listing/presentation/bloc/listing_bloc.dart'
 import 'package:rentpal/features/my_orders/presentation/bloc/my_order_bloc.dart';
 import 'package:rentpal/features/product_recommendation/presentation/bloc/recommendation_bloc.dart';
 import 'package:rentpal/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:rentpal/features/profile/presentation/bloc/profile_event.dart';
 import 'package:rentpal/features/search/presentation/bloc/search_bloc.dart';
 import 'package:rentpal/features/user/presentation/bloc/user_bloc.dart';
 import 'package:rentpal/injection_container.dart';
@@ -83,7 +84,8 @@ class _MyAppState extends State<MyApp> {
                 favouriteClear: sl(),
                 removeFavourite: sl())),
         BlocProvider(
-            create: (_) => ProfileBloc(getProfile: sl(), updateProfile: sl())),
+            create: (_) => ProfileBloc(getProfile: sl(), updateProfile: sl())
+              ..add(ProfileFetch())),
         BlocProvider(create: (_) => ListingBloc(getListing: sl())),
         BlocProvider(
             create: (_) =>

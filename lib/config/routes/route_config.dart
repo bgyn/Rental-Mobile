@@ -1,9 +1,11 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rentpal/core/local_storage/local_storage.dart';
 import 'package:rentpal/features/add_listing/presentation/pages/add_listing_page.dart';
+import 'package:rentpal/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:rentpal/features/auth/presentation/pages/forgot_password_page.dart';
 import 'package:rentpal/features/auth/presentation/pages/login_page.dart';
 import 'package:rentpal/features/auth/presentation/pages/register_page.dart';
@@ -30,7 +32,9 @@ final routeConfig = GoRouter(
   initialLocation: '/splash',
   redirect: (context, state) async {
     final res = await LocalStorage.getProfile();
-    if (state.fullPath == "/") {
+    if (!context.mounted) return null;
+    final authState = context.read<AuthBloc>().state;
+    if (state.fullPath == "/" && authState is AuthSuccess) {
       if (res == false) {
         return "/edit-profile/${"register"}";
       }

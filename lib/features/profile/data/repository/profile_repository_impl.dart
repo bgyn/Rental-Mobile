@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:fpdart/fpdart.dart';
 import 'package:rentpal/core/error/faliure.dart';
+import 'package:rentpal/core/local_storage/local_storage.dart';
 import 'package:rentpal/features/profile/data/source/remotesource/profile_api_service.dart';
 import 'package:rentpal/features/profile/domain/entity/profile_entity.dart';
 import 'package:rentpal/features/profile/domain/repository/profile_repository.dart';
@@ -15,8 +16,12 @@ class ProfileRepositoryImpl extends ProfileRepository {
   Future<Either<Failure, ProfileEntity>> getProfile() async {
     try {
       final response = await _profileApiService.getProfile();
-      final profile = ProfileEntity.fromJson(jsonDecode(response.body));
-      return right(profile);
+      if (response.statusCode == 200) {
+        final profile = ProfileEntity.fromJson(jsonDecode(response.body));
+        LocalStorage.setProfile();
+        return right(profile);
+      }
+      return left(const ConnectionFailure("Failed to get profile"));
     } on SocketException {
       return left(const ConnectionFailure("No internet connection"));
     } on HttpException {
