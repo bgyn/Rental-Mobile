@@ -44,7 +44,6 @@ class ProfileApiService {
     }
     final response = await request.send();
     final res = await http.Response.fromStream(response);
-    print(res.statusCode);
     return res;
   }
 }
