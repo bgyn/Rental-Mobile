@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:rentpal/config/routes/api_routes.dart';
 import 'package:rentpal/core/local_storage/local_storage.dart';
+import 'package:rentpal/core/permission/permission_handler.dart';
 
 class ProfileApiService {
   Future<http.Response> getProfile() async {
@@ -20,6 +21,7 @@ class ProfileApiService {
       required String gender,
       required String address,
       String? aboutYou}) async {
+    final location = await PermissionHandler().getCurrentLocation();
     final token = await LocalStorage.getToken();
     final url = ApiRoutes.getProfile();
     final request = http.MultipartRequest("POST", Uri.parse(url));
@@ -39,6 +41,10 @@ class ProfileApiService {
     request.fields['address'] = address;
     request.fields['date_of_birth'] = dob;
     request.fields['gender'] = gender;
+    if (location.latitude != null && location.longitude != null) {
+      request.fields['latitude'] = location.latitude.toString();
+      request.fields['longitude'] = location.longitude.toString();
+    }
     if (aboutYou != null) {
       request.fields['about_you'] = aboutYou;
     }
