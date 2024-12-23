@@ -12,6 +12,8 @@ import 'package:rentpal/features/home/presentation/cubit/navigator_cubit.dart';
 import 'package:rentpal/features/home/presentation/pages/dashboard_page.dart';
 import 'package:rentpal/features/menu/presentation/pages/menu_page.dart';
 import 'package:rentpal/features/my_listing/presentation/pages/my_listing_page.dart';
+import 'package:rentpal/features/profile/presentation/bloc/profile_bloc.dart';
+import 'package:rentpal/features/profile/presentation/bloc/profile_event.dart';
 import 'package:rentpal/features/rentals/presentation/pages/rental_page.dart';
 
 class Home extends StatefulWidget {
@@ -51,8 +53,8 @@ class _HomeState extends State<Home> {
           context.read<NavigatorCubit>().reset();
           context.go('/edit-profile/${"register"}');
         } else if (authState is AuthSuccess) {
+          context.read<ProfileBloc>().add(ProfileFetch());
           context.read<NavigatorCubit>().reset();
-         
         } else if (authState is AuthFaliure) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(authState.message)),
