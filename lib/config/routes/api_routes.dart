@@ -41,6 +41,10 @@ class ApiRoutes {
     return "${UrlConstant.baseUrl}rentlist?search=$query";
   }
 
+  static String book() {
+    return "${UrlConstant.baseUrl}booking/";
+  }
+
   static String booking() {
     return "${UrlConstant.baseUrl}my_booking/";
   }

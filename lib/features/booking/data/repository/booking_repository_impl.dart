@@ -16,7 +16,7 @@ class BookingRepositoryImpl extends BookingRepository {
     try {
       final result = await _apiService.bookRentItem(
           rentItemIdd, startDate, endDate, userId);
-      if (result.statusCode == 200) {
+      if (result.statusCode == 200 || result.statusCode == 201) {
         return right(null);
       }
       return left(const ServerFailure("Booking Failed"));

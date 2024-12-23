@@ -5,7 +5,7 @@ import 'package:rentpal/core/local_storage/local_storage.dart';
 class BookingApiService {
   Future<http.Response> bookRentItem(
       int rentItemId, String startDate, String endDate, int userId) async {
-    final url = ApiRoutes.booking();
+    final url = ApiRoutes.book();
     final token = await LocalStorage.getToken();
 
     final response = await http.post(Uri.parse(url), body: {
