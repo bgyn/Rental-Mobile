@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -53,8 +55,9 @@ class RentalCategoryOption extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () {
-                      GoRouter.of(context).push("/category-product",
-                          extra: state.categoryList?[index].categoryName ?? "");
+                      final jsonString = jsonEncode(state.categoryList?[index].toJson());
+                      GoRouter.of(context)
+                          .push("/category-product", extra: jsonString);
                     },
                     child: Container(
                       margin: const EdgeInsets.only(left: 10, right: 10),

@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rentpal/features/add_listing/presentation/pages/add_listing_page.dart';
 import 'package:rentpal/features/auth/presentation/pages/forgot_password_page.dart';
 import 'package:rentpal/features/auth/presentation/pages/login_page.dart';
 import 'package:rentpal/features/auth/presentation/pages/register_page.dart';
+import 'package:rentpal/features/categories/domain/entities/category_entity.dart';
 import 'package:rentpal/features/favourite/presentation/pages/favourite_pages.dart';
 import 'package:rentpal/features/home/presentation/pages/dashboard_page.dart';
 import 'package:rentpal/features/home/presentation/pages/home.dart';
@@ -61,7 +64,8 @@ final routeConfig = GoRouter(
     GoRoute(
         path: "/category-product",
         builder: (context, state) {
-          final category = state.extra as String;
+          final categoryJson = state.extra as String;
+          final category = CategoryEntity.fromJson(jsonDecode(categoryJson));
           return RentpalCategoryGrid(
             category: category,
           );
