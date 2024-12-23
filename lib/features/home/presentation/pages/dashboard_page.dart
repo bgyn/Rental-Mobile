@@ -24,6 +24,11 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPageState extends State<DashboardPage> {
+
+ void initState() {
+    super.initState();
+    context.read<CategoryListBloc>().add(const FetchCategoryList());
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
