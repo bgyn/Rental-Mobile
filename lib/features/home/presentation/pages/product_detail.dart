@@ -15,10 +15,6 @@ import 'package:rentpal/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:rentpal/features/profile/presentation/bloc/profile_event.dart';
 import 'package:rentpal/features/profile/presentation/bloc/profile_state.dart';
 import 'package:rentpal/features/rentitem/domain/entity/rentitem_entity.dart';
-import 'package:rentpal/features/rentitem/presentation/bloc/rentitem_bloc.dart';
-import 'package:rentpal/features/rentitem/presentation/bloc/rentitem_event.dart';
-import 'package:rentpal/features/rentitem/presentation/pages/rental_category.dart';
-import 'package:rentpal/injection_container.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ProductDetail extends StatefulWidget {
@@ -283,12 +279,12 @@ class _ProductDetailState extends State<ProductDetail> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text("Other listing by Andrew"),
-                          BlocProvider(
-                            create: (context) =>
-                                RentitemBloc(sl())..add(FetchRentItem()),
-                            child: const RentalCategory(),
-                          ),
+                          // const Text("Other listing by Andrew"),
+                          // BlocProvider(
+                          //   create: (context) =>
+                          //       RentitemBloc(sl())..add(FetchRentItem()),
+                          //   child: const RentalCategory(),
+                          // ),
                           GestureDetector(
                             onTap: () {},
                             child: Container(
@@ -320,11 +316,11 @@ class _ProductDetailState extends State<ProductDetail> {
                       decoration: const BoxDecoration(color: Colors.white),
                       padding: const EdgeInsets.symmetric(
                           vertical: 10, horizontal: 20),
-                      child: BlocProvider(
-                        create: (context) =>
-                            RentitemBloc(sl())..add(FetchRentItem()),
-                        child: const RentalCategory(),
-                      ),
+                      // child: BlocProvider(
+                      //   create: (context) =>
+                      //       RentitemBloc(sl())..add(FetchRentItem()),
+                      //   child: const RentalCategory(),
+                      // ),
                     ),
                     const SizedBox(
                       height: 25,
@@ -365,7 +361,6 @@ class _ProductDetailState extends State<ProductDetail> {
                           dialogSize: const Size(1.0, 1.0));
                       if (values != null) {
                         if (!context.mounted) return;
-                        print(values);
                         context.read<BookingBloc>().add(BookRenItem(
                             widget.rentitemEntity.id!,
                             values.first.toString().split(' ').first,

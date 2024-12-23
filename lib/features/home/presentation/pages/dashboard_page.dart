@@ -10,10 +10,7 @@ import 'package:rentpal/features/home/presentation/widgets/carousel.dart';
 import 'package:rentpal/features/categories/presentation/widgets/rental_category_option.dart';
 import 'package:rentpal/features/search/presentation/bloc/search_bloc.dart';
 import 'package:rentpal/features/search/presentation/widgets/custom_search_delegate.dart';
-import 'package:rentpal/features/rentitem/presentation/bloc/rentitem_bloc.dart';
-import 'package:rentpal/features/rentitem/presentation/bloc/rentitem_event.dart';
 import 'package:rentpal/features/rentitem/presentation/pages/rental_category.dart';
-import 'package:rentpal/injection_container.dart';
 import 'package:shimmer/shimmer.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -120,12 +117,8 @@ class _DashboardPageState extends State<DashboardPage> {
 
                         final category = categoryList[index];
 
-                        return BlocProvider(
-                          create: (context) =>
-                              RentitemBloc(sl())..add(FetchRentItem()),
-                          child: RentalCategory(
-                            title: category.categoryName,
-                          ),
+                        return RentalCategory(
+                          category: category,
                         );
                       },
                       childCount: categoryList!
