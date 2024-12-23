@@ -11,6 +11,9 @@ import 'package:rentpal/features/booking/presentation/bloc/booking_event.dart';
 import 'package:rentpal/features/favourite/presentation/bloc/favourite_bloc.dart';
 import 'package:rentpal/features/favourite/presentation/bloc/favourite_event.dart';
 import 'package:rentpal/features/favourite/presentation/bloc/favourite_state.dart';
+import 'package:rentpal/features/product_recommendation/presentation/bloc/recommendatino_event.dart';
+import 'package:rentpal/features/product_recommendation/presentation/bloc/recommendation_bloc.dart';
+import 'package:rentpal/features/product_recommendation/presentation/widgets/product_recommendation.dart';
 import 'package:rentpal/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:rentpal/features/profile/presentation/bloc/profile_event.dart';
 import 'package:rentpal/features/profile/presentation/bloc/profile_state.dart';
@@ -37,6 +40,7 @@ class _ProductDetailState extends State<ProductDetail> {
     super.initState();
     context.read<FavouriteBloc>().add(const FavouriteLoad());
     context.read<ProfileBloc>().add(ProfileFetch());
+    context.read<RecommendationBloc>().add(const FetchRecommendation());
   }
 
   @override
@@ -305,7 +309,11 @@ class _ProductDetailState extends State<ProductDetail> {
                                     ),
                               )),
                             ),
-                          )
+                          ),
+                          SizedBox(
+                            height: 0.02.h(context),
+                          ),
+                          const ProductRecommendation(),
                         ],
                       ),
                     ),

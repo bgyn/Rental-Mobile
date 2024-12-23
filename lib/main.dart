@@ -21,6 +21,7 @@ import 'package:rentpal/features/favourite/presentation/bloc/favourite_bloc.dart
 import 'package:rentpal/features/home/presentation/cubit/navigator_cubit.dart';
 import 'package:rentpal/features/my_listing/presentation/bloc/listing_bloc.dart';
 import 'package:rentpal/features/my_orders/presentation/bloc/my_order_bloc.dart';
+import 'package:rentpal/features/product_recommendation/presentation/bloc/recommendation_bloc.dart';
 import 'package:rentpal/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:rentpal/features/search/presentation/bloc/search_bloc.dart';
 import 'package:rentpal/features/user/presentation/bloc/user_bloc.dart';
@@ -73,6 +74,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (_) => SearchBloc(sl())),
         BlocProvider(create: (_) => BookingBloc(sl())),
         BlocProvider(create: (_) => MyOrderBloc(sl())),
+        BlocProvider(create: (_) => RecommendationBloc(sl())),
         BlocProvider(
             create: (_) => FavouriteBloc(
                 addFavourite: sl(),

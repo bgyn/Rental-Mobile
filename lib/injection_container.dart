@@ -39,6 +39,10 @@ import 'package:rentpal/features/my_orders/data/datasource/remote/my_order_api_s
 import 'package:rentpal/features/my_orders/data/repository/my_order_repository_impl.dart';
 import 'package:rentpal/features/my_orders/domain/repository/my_order_repository.dart';
 import 'package:rentpal/features/my_orders/domain/usecase/get_orders.dart';
+import 'package:rentpal/features/product_recommendation/data/datasource/remote/product_recommendation_api_service.dart';
+import 'package:rentpal/features/product_recommendation/data/repository/producut_recommendatino_repo_impl.dart';
+import 'package:rentpal/features/product_recommendation/domain/repository/product_recommendation_repo.dart';
+import 'package:rentpal/features/product_recommendation/domain/usecase/get_recommendation.dart';
 import 'package:rentpal/features/profile/data/repository/profile_repository_impl.dart';
 import 'package:rentpal/features/profile/data/source/remotesource/profile_api_service.dart';
 import 'package:rentpal/features/profile/domain/repository/profile_repository.dart';
@@ -142,4 +146,9 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<MyOrderApiService>(MyOrderApiService());
   sl.registerSingleton<MyOrderRepository>(MyOrderRepositoryImpl(sl()));
   sl.registerSingleton<GetMyOrders>(GetMyOrders(sl()));
+
+  //recommendation
+  sl.registerSingleton<ProductRecommendationApiService>(ProductRecommendationApiService());
+  sl.registerSingleton<ProductRecommendationRepo>(ProducutRecommendatinoRepoImpl(sl()));
+  sl.registerSingleton<GetRecommendation>(GetRecommendation(sl())); 
 }

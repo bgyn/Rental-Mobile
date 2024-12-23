@@ -48,4 +48,8 @@ class ApiRoutes {
   static String booking() {
     return "${UrlConstant.baseUrl}my_booking/";
   }
+
+  static String recommendation() {
+    return "${UrlConstant.baseUrl}recommended/";
+  }
 }
