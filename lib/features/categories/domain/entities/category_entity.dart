@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:rentpal/features/rentitem/domain/entity/rentitem_entity.dart';
 
 part 'category_entity.g.dart';
 
@@ -6,8 +7,9 @@ part 'category_entity.g.dart';
 class CategoryEntity {
   final int? id;
   final String? categoryName;
+  final List<RentitemEntity>? rentCategory;
 
-  CategoryEntity(this.id, this.categoryName);
+  CategoryEntity(this.id, this.categoryName, this.rentCategory);
 
   factory CategoryEntity.fromJson(Map<String, dynamic> json) =>
       _$CategoryEntityFromJson(json);
