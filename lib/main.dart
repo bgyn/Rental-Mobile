@@ -23,6 +23,7 @@ import 'package:rentpal/features/my_orders/presentation/bloc/my_order_bloc.dart'
 import 'package:rentpal/features/product_recommendation/presentation/bloc/recommendation_bloc.dart';
 import 'package:rentpal/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:rentpal/features/profile/presentation/bloc/profile_event.dart';
+import 'package:rentpal/features/rentals/presentation/bloc/rentals_bloc.dart';
 import 'package:rentpal/features/search/presentation/bloc/search_bloc.dart';
 import 'package:rentpal/features/user/presentation/bloc/user_bloc.dart';
 import 'package:rentpal/injection_container.dart';
@@ -75,6 +76,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (_) => BookingBloc(sl())),
         BlocProvider(create: (_) => MyOrderBloc(sl())),
         BlocProvider(create: (_) => RecommendationBloc(sl())),
+        BlocProvider(create: (_) => RentalsBloc(sl(), sl())),
         BlocProvider(
             create: (_) => FavouriteBloc(
                 addFavourite: sl(),
@@ -86,9 +88,7 @@ class _MyAppState extends State<MyApp> {
             create: (_) => ProfileBloc(getProfile: sl(), updateProfile: sl())
               ..add(ProfileFetch())),
         BlocProvider(create: (_) => ListingBloc(getListing: sl())),
-        BlocProvider(
-            create: (_) =>
-                CategoryListBloc(sl()))
+        BlocProvider(create: (_) => CategoryListBloc(sl()))
       ],
       child: MaterialApp.router(
         scaffoldMessengerKey: scaffoldMessengerKey,

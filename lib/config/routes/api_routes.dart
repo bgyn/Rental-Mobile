@@ -52,4 +52,8 @@ class ApiRoutes {
   static String recommendation() {
     return "${UrlConstant.baseUrl}recommended/";
   }
+
+  static String rentals() {
+    return "${UrlConstant.baseUrl}rentals";
+  }
 }
