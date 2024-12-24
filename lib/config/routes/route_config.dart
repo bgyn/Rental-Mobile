@@ -16,6 +16,7 @@ import 'package:rentpal/features/home/presentation/pages/home.dart';
 import 'package:rentpal/features/home/presentation/pages/product_detail.dart';
 import 'package:rentpal/features/menu/presentation/pages/menu_page.dart';
 import 'package:rentpal/features/add_listing/presentation/pages/add_new_listing.dart';
+import 'package:rentpal/features/my_listing/domain/entity/my_listing_entity.dart';
 import 'package:rentpal/features/my_listing/presentation/pages/my_listing_page.dart';
 import 'package:rentpal/features/my_orders/presentation/page/my_order_page.dart';
 import 'package:rentpal/features/profile/presentation/pages/edit_profile_page.dart';
@@ -52,9 +53,22 @@ final routeConfig = GoRouter(
       builder: (context, state) => const SplashScreen(),
     ),
     GoRoute(
-      path: "/add_listing/add_new_listing",
-      builder: (context, state) => const AddNewListing(),
-    ),
+        path: "/add_listing/add_new_listing",
+        builder: (context, state) {
+          return const AddNewListing();
+        }),
+    GoRoute(
+        path: "/add_listing/add_new_listing/:title/:rentItem",
+        builder: (context, state) {
+          final title = state.pathParameters["title"];
+          final rentItemJson = state.pathParameters["rentItem"];
+          final rentItem = MyListingEntity.fromJson(
+              jsonDecode(Uri.decodeComponent(rentItemJson!)));
+          return AddNewListing(
+            title: title,
+            myListingEntity: rentItem,
+          );
+        }),
     GoRoute(
       path: "/signin",
       builder: (context, state) => const LoginPage(),
@@ -112,7 +126,7 @@ final routeConfig = GoRouter(
         ),
         GoRoute(
           path: "/rentals",
-          builder: (context, state) => RentalPage(),
+          builder: (context, state) => const RentalPage(),
         ),
         GoRoute(
           path: "/add_listing",

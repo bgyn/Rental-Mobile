@@ -19,4 +19,18 @@ abstract class AddListingRepository {
     required List<String> itemRules,
     required String category,
   });
+  Future<Either<Failure, ApiResponse>> updateListing({
+    required String title,
+    required double price,
+    File? file,
+    required String description,
+    required int quantity,
+    required double rating,
+    required int noOfReviews,
+    required String address,
+    required String latitude,
+    required String longitude,
+    required List<String> itemRules,
+    required String category,
+  });
 }

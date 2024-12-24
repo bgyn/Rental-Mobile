@@ -36,11 +36,62 @@ class AddListingRespositoryImpl implements AddListingRepository {
         'address': address,
         'latitude': latitude,
         'longitude': longitude,
-        'itemRules' : itemRules,
-        "category" : category,
+        'itemRules': itemRules,
+        "category": category,
       };
 
-      final response = await _addListingApiService.publishListing(body,file!);
+      final response = await _addListingApiService.publishListing(body, file!);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return right(ApiSuccess(
+          statusCode: response.statusCode,
+          message: response.body,
+        ));
+      } else {
+        return left(
+            ServerFailure("Failed to publish listing: ${response.body}"));
+      }
+    } on SocketException {
+      return left(const ServerFailure("No internet connection"));
+    } on HttpException {
+      return left(const ServerFailure("Couldn't find the resource"));
+    } on FormatException {
+      return left(const ServerFailure("Bad response format"));
+    } catch (e) {
+      return left(ServerFailure("$e"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ApiResponse>> updateListing(
+      {required String title,
+      required double price,
+      File? file,
+      required String description,
+      required int quantity,
+      required double rating,
+      required int noOfReviews,
+      required String address,
+      required String latitude,
+      required String longitude,
+      required List<String> itemRules,
+      required String category}) async {
+    try {
+      final body = {
+        'title': title,
+        'price': price,
+        'description': description,
+        'quantity': quantity,
+        'rating': rating,
+        'noOfReviews': noOfReviews,
+        'address': address,
+        'latitude': latitude,
+        'longitude': longitude,
+        'itemRules': itemRules,
+        "category": category,
+      };
+
+      final response = await _addListingApiService.updateListing(body, file);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         return right(ApiSuccess(

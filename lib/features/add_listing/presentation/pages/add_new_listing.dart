@@ -19,9 +19,12 @@ import 'package:rentpal/features/address/cubit/address_cubit.dart';
 import 'package:rentpal/features/address/domain/entity/address_entity.dart';
 import 'package:rentpal/features/categories/presentation/bloc/category_list_bloc.dart';
 import 'package:rentpal/features/categories/presentation/bloc/category_list_state.dart';
+import 'package:rentpal/features/my_listing/domain/entity/my_listing_entity.dart';
 
 class AddNewListing extends StatefulWidget {
-  const AddNewListing({super.key});
+  final String? title;
+  final MyListingEntity? myListingEntity;
+  const AddNewListing({super.key, this.title, this.myListingEntity});
 
   @override
   State<AddNewListing> createState() => _AddNewListingState();
@@ -33,6 +36,7 @@ class _AddNewListingState extends State<AddNewListing> {
   final _descriptionController = TextEditingController();
   final _quantityController = TextEditingController();
   String? _categoryController;
+  String? _networkImage;
   final _formKey = GlobalKey<FormState>();
 
   late ImageHandlerCubit _imageHandlerCubit;
@@ -48,6 +52,32 @@ class _AddNewListingState extends State<AddNewListing> {
     _addressCubit.reset();
     _rulesCubit = context.read<RulesCubit>();
     _rulesCubit.reset();
+    widget.myListingEntity != null ? initalize() : null;
+  }
+
+  void initalize() async {
+    _networkImage = widget.myListingEntity?.thumbnailImage;
+    _titleController.text = widget.myListingEntity?.title ?? "";
+    _pricePerDayController.text = widget.myListingEntity?.price ?? "";
+    _descriptionController.text = widget.myListingEntity?.description ?? "";
+    _quantityController.text = widget.myListingEntity?.inStock.toString() ?? "";
+    _categoryController = widget.myListingEntity?.category.toString();
+
+    _addressCubit.addAddress(AddressEntity(
+      displayName: widget.myListingEntity?.address ?? "",
+      lat: widget.myListingEntity?.latitude,
+      lon: widget.myListingEntity?.longitude,
+    ));
+
+    widget.myListingEntity?.itemRules.forEach((rule) {
+      _rulesCubit.addRules(rule: rule);
+    });
+
+    final category =
+        context.read<CategoryListBloc>().state.categoryList?.firstWhere(
+              (category) => category.id == widget.myListingEntity?.category,
+            );
+    _categoryController = category?.categoryName;
   }
 
   @override
@@ -73,7 +103,7 @@ class _AddNewListingState extends State<AddNewListing> {
                 Icons.home,
                 color: Colors.white,
               )),
-          title: const Text("Add a new listing"),
+          title: Text(widget.title ?? " Add a new listing"),
           centerTitle: true,
         ),
         body: Padding(
@@ -136,7 +166,20 @@ class _AddNewListingState extends State<AddNewListing> {
                             ),
                             Expanded(
                                 child: state.isEmpty
-                                    ? const SizedBox()
+                                    ? _networkImage != null
+                                        ? SizedBox(
+                                            width: 0.25.w(context),
+                                            height: 0.14.h(context),
+                                            child: FittedBox(
+                                              clipBehavior: Clip.hardEdge,
+                                              fit: BoxFit
+                                                  .cover, // Ensures the image scales within the given width and height
+                                              child: Image.network(
+                                                "http://192.168.1.200:8000${_networkImage!}",
+                                              ),
+                                            ),
+                                          )
+                                        : const SizedBox()
                                     : SizedBox(
                                         height: 0.135.h(context),
                                         child: ListView.builder(
@@ -145,95 +188,52 @@ class _AddNewListingState extends State<AddNewListing> {
                                             itemBuilder: (contex, index) {
                                               final image =
                                                   File(state[index].path);
-                                              return index == 0
-                                                  ? Container(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              5),
-                                                      decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                            color: Colors.blue),
-                                                      ),
-                                                      child: Column(
-                                                        mainAxisSize:
-                                                            MainAxisSize.min,
-                                                        children: [
-                                                          Expanded(
-                                                            child: SizedBox(
-                                                              width: 0.25
-                                                                  .w(context),
-                                                              height: 0.05
-                                                                  .h(context),
-                                                              child: Image.file(
-                                                                image,
-                                                                fit: BoxFit
-                                                                    .cover,
-                                                              ),
-                                                            ),
+
+                                              return GestureDetector(
+                                                onTap: () {
+                                                  context
+                                                      .read<ImageHandlerCubit>()
+                                                      .replaceCover(
+                                                          index: index);
+                                                },
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(5),
+                                                  child: Stack(
+                                                    children: [
+                                                      SizedBox(
+                                                        width: 0.4.w(context),
+                                                        height: 0.14.h(context),
+                                                        child: AspectRatio(
+                                                          aspectRatio: 16 / 9,
+                                                          child: Image.file(
+                                                            image,
+                                                            fit: BoxFit.cover,
                                                           ),
-                                                          const Text(
-                                                              "Cover Photo")
-                                                        ],
-                                                      ),
-                                                    )
-                                                  : GestureDetector(
-                                                      onTap: () {
-                                                        context
-                                                            .read<
-                                                                ImageHandlerCubit>()
-                                                            .replaceCover(
-                                                                index: index);
-                                                      },
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(5),
-                                                        child: Stack(
-                                                          children: [
-                                                            SizedBox(
-                                                              width: 0.25
-                                                                  .w(context),
-                                                              height: 0.1
-                                                                  .h(context),
-                                                              child:
-                                                                  AspectRatio(
-                                                                aspectRatio:
-                                                                    16 / 9,
-                                                                child:
-                                                                    Image.file(
-                                                                  image,
-                                                                  fit: BoxFit
-                                                                      .cover,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Positioned(
-                                                              top: 3,
-                                                              right: 3,
-                                                              child:
-                                                                  GestureDetector(
-                                                                onTap: () => context
-                                                                    .read<
-                                                                        ImageHandlerCubit>()
-                                                                    .deleteImage(
-                                                                        index:
-                                                                            index),
-                                                                child:
-                                                                    const Center(
-                                                                  child: Icon(
-                                                                    size: 22,
-                                                                    Icons
-                                                                        .delete,
-                                                                    color: Colors
-                                                                        .red,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            )
-                                                          ],
                                                         ),
                                                       ),
-                                                    );
+                                                      Positioned(
+                                                        top: 3,
+                                                        right: 3,
+                                                        child: GestureDetector(
+                                                          onTap: () => context
+                                                              .read<
+                                                                  ImageHandlerCubit>()
+                                                              .deleteImage(
+                                                                  index: index),
+                                                          child: const Center(
+                                                            child: Icon(
+                                                              size: 22,
+                                                              Icons.delete,
+                                                              color: Colors.red,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                              );
                                             }),
                                       )),
                           ],
@@ -297,6 +297,7 @@ class _AddNewListingState extends State<AddNewListing> {
                   BlocBuilder<CategoryListBloc, CategoryListState>(
                       builder: (context, state) {
                     return ListingDropDown(
+                      value: _categoryController,
                       items: CategoryListState is CategoryListLoading
                           ? []
                           : state.categoryList
@@ -369,18 +370,48 @@ class _AddNewListingState extends State<AddNewListing> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10))),
                       onPressed: () {
-                        // if (_formKey.currentState?.validate() ?? false) {
                         final latitude =
                             context.read<AddressCubit>().state.first.lat;
                         final longitude =
                             context.read<AddressCubit>().state.first.lon;
+                        // if (_formKey.currentState?.validate() ?? false) {
+                        if (widget.myListingEntity == null) {
+                          context.read<AddListingBloc>().add(
+                                PublishProductListing(
+                                  file: File(context
+                                      .read<ImageHandlerCubit>()
+                                      .state
+                                      .first
+                                      .path),
+                                  title: _titleController.text,
+                                  category: _categoryController.toString(),
+                                  price:
+                                      double.parse(_pricePerDayController.text),
+                                  description: _descriptionController.text,
+                                  quantity: int.parse(_quantityController.text),
+                                  rating: 0.0,
+                                  noOfReviews: 0,
+                                  address:
+                                      "${context.read<AddressCubit>().state.first.displayName}",
+                                  latitude: "$latitude",
+                                  longitude: "$longitude",
+                                  itemRules:
+                                      context.read<RulesCubit>().state.rules,
+                                ),
+                              );
+                        }
+                        // }
+                        final updatedImage =
+                            context.read<ImageHandlerCubit>().state;
                         context.read<AddListingBloc>().add(
-                              PublishProductListing(
-                                file: File(context
-                                    .read<ImageHandlerCubit>()
-                                    .state
-                                    .first
-                                    .path),
+                              UpdateProductListing(
+                                file: updatedImage.isEmpty
+                                    ? null
+                                    : File(context
+                                        .read<ImageHandlerCubit>()
+                                        .state
+                                        .first
+                                        .path),
                                 title: _titleController.text,
                                 category: _categoryController.toString(),
                                 price:
@@ -397,7 +428,6 @@ class _AddNewListingState extends State<AddNewListing> {
                                     context.read<RulesCubit>().state.rules,
                               ),
                             );
-                        // }
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 12),

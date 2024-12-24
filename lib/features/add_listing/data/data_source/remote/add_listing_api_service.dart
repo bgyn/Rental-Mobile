@@ -36,4 +36,38 @@ class AddListingApiService {
     final res = await http.Response.fromStream(response);
     return res;
   }
+
+  Future<http.Response> updateListing(body, File? file) async {
+    final token = await LocalStorage.getToken();
+    final url = ApiRoutes.publishListing();
+    final request = http.MultipartRequest("PATCH", Uri.parse(url));
+    final headers = <String, String>{
+      "Content-Type": "application/json",
+      "Authorization": "Token ${token!['token']}"
+    };
+    request.fields["title"] = body["title"];
+    request.fields["price"] = "${body["price"]}";
+    request.fields["description"] = body["description"];
+    request.fields["inStock"] = "${body["quantity"]}";
+    request.fields["rating"] = "${body["rating"]}";
+    request.fields["noOfReviews"] = "${body["noOfReviews"]}";
+    request.fields["address"] = body["address"];
+    request.fields["latitude"] = "${body["latitude"]}";
+    request.fields["longitude"] = "${body["longitude"]}";
+    request.fields["itemRules"] = "${body["itemRules"]}";
+    request.fields["category"] = "${body["category"]}";
+    request.headers.addAll(headers);
+
+    if (file != null) {
+      final multipartFile = await http.MultipartFile.fromPath(
+        "thumbnailImage",
+        file.path,
+      );
+      request.files.add(multipartFile);
+    }
+    final response = await request.send();
+    final res = await http.Response.fromStream(response);
+
+    return res;
+  }
 }

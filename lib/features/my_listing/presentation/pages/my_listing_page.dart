@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rentpal/config/theme/color_palette.dart';
 import 'package:rentpal/core/constant/url_constant.dart';
 import 'package:rentpal/core/extension/extension.dart';
@@ -139,14 +142,25 @@ class _MyListingPageState extends State<MyListingPage> {
                                         children: [
                                           SlidableAction(
                                             onPressed: (BuildContext context) {
+                                              final rentItem = listing.toJson();
+                                              final rentItemJson =
+                                                  Uri.encodeComponent(
+                                                      jsonEncode(rentItem));
+                                              context.push(
+                                                  "/add_listing/add_new_listing/${"Profile-Edit"}/$rentItemJson");
+                                            },
+                                            icon: Icons.edit,
+                                            foregroundColor: Colors.blue,
+                                          ),
+                                          SlidableAction(
+                                            onPressed: (BuildContext context) {
                                               showDeleteConfirmationDialog(
                                                 context,
                                                 listing.id,
                                               );
                                             },
-                                            backgroundColor: Colors.red,
                                             icon: Icons.delete,
-                                            label: 'Delete',
+                                            foregroundColor: Colors.red,
                                           ),
                                         ],
                                       ),

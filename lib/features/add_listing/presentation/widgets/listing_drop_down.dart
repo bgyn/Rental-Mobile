@@ -49,6 +49,7 @@ class ListingDropDown extends StatelessWidget {
             ),
             dropdownColor: Colors.grey.shade100,
             menuMaxHeight: 0.3.h(context),
+            value: value,
             items: items
                 .map(
                   (item) => DropdownMenuItem(

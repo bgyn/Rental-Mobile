@@ -3,6 +3,7 @@ import 'package:rentpal/features/add_listing/data/data_source/remote/add_listing
 import 'package:rentpal/features/add_listing/data/repository/add_listing_respository_impl.dart';
 import 'package:rentpal/features/add_listing/domain/repository/add_listing_repository.dart';
 import 'package:rentpal/features/add_listing/domain/usecase/publish_listing.dart';
+import 'package:rentpal/features/add_listing/domain/usecase/update_listing.dart';
 import 'package:rentpal/features/address/data/datasource/remote/address_api_service.dart';
 import 'package:rentpal/features/address/data/repository/address_respository_impl.dart';
 import 'package:rentpal/features/address/domain/repository/address_repository.dart';
@@ -101,7 +102,8 @@ Future<void> initializeDependencies() async {
   //add listing
   sl.registerSingleton<AddListingApiService>(AddListingApiService());
   sl.registerSingleton<AddListingRepository>(AddListingRespositoryImpl(sl()));
-  sl.registerSingleton(PublishListing(sl()));
+  sl.registerSingleton<UpdateListing>(UpdateListing(sl()));
+  sl.registerSingleton<PublishListing>(PublishListing(sl()));
 
   //rentlist
   sl.registerSingleton<RentitemApiService>(RentitemApiService());
