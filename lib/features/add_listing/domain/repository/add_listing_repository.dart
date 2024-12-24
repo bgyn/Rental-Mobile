@@ -20,6 +20,7 @@ abstract class AddListingRepository {
     required String category,
   });
   Future<Either<Failure, ApiResponse>> updateListing({
+    required int id,
     required String title,
     required double price,
     File? file,

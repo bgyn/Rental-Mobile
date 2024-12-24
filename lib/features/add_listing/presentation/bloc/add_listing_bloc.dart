@@ -50,6 +50,7 @@ class AddListingBloc extends Bloc<AddListingEvent, AddListingState> {
       UpdateProductListing event, Emitter<AddListingState> emit) async {
     emit(AddListingLoading());
     final params = PublishListingParams(
+      id: event.id,
       title: event.title,
       price: event.price,
       description: event.description,

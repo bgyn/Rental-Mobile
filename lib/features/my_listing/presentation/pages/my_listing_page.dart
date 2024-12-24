@@ -156,7 +156,7 @@ class _MyListingPageState extends State<MyListingPage> {
                                             onPressed: (BuildContext context) {
                                               showDeleteConfirmationDialog(
                                                 context,
-                                                listing.id,
+                                                listing.id!,
                                               );
                                             },
                                             icon: Icons.delete,
@@ -218,7 +218,7 @@ class _MyListingPageState extends State<MyListingPage> {
                                                       CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
-                                                      listing.title,
+                                                      listing.title!,
                                                       style: Theme.of(context)
                                                           .textTheme
                                                           .titleMedium
@@ -263,7 +263,7 @@ class _MyListingPageState extends State<MyListingPage> {
                                                                 .w(context)),
                                                         Expanded(
                                                           child: Text(
-                                                            listing.address,
+                                                            listing.address!,
                                                             maxLines: 2,
                                                             overflow:
                                                                 TextOverflow

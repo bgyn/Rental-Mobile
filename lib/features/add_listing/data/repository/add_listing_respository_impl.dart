@@ -75,7 +75,7 @@ class AddListingRespositoryImpl implements AddListingRepository {
       required String latitude,
       required String longitude,
       required String itemRules,
-      required String category}) async {
+      required String category,required int id}) async {
     try {
       final body = {
         'title': title,
@@ -91,7 +91,7 @@ class AddListingRespositoryImpl implements AddListingRepository {
         "category": category,
       };
 
-      final response = await _addListingApiService.updateListing(body, file);
+      final response = await _addListingApiService.updateListing(body, file,id);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         return right(ApiSuccess(

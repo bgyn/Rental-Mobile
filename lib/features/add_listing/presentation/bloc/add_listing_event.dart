@@ -4,6 +4,7 @@ part of 'add_listing_bloc.dart';
 sealed class AddListingEvent {}
 
 final class PublishProductListing extends AddListingEvent {
+  
   final String title;
   final double price;
   final File? file;
@@ -33,6 +34,7 @@ final class PublishProductListing extends AddListingEvent {
 }
 
 final class UpdateProductListing extends AddListingEvent {
+  final int id;
   final String title;
   final double price;
   final File? file;
@@ -46,6 +48,7 @@ final class UpdateProductListing extends AddListingEvent {
   final String itemRules;
   final String category;
   UpdateProductListing({
+    required this.id,
     required this.title,
     required this.price,
     this.file,

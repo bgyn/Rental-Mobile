@@ -8,18 +8,18 @@ part of 'my_listing_entity.dart';
 
 MyListingEntity _$MyListingEntityFromJson(Map<String, dynamic> json) =>
     MyListingEntity(
-      id: (json['id'] as num).toInt(),
-      title: json['title'] as String,
-      price: json['price'] as String,
+      id: (json['id'] as num?)?.toInt(),
+      title: json['title'] as String?,
+      price: json['price'] as String?,
       thumbnailImage: json['thumbnailImage'] as String,
-      description: json['description'] as String,
-      inStock: (json['inStock'] as num).toInt(),
-      address: json['address'] as String,
-      latitude: json['latitude'] as String,
-      longitude: json['longitude'] as String,
-      itemRules: json['itemRules'] as String,
-      category: (json['category'] as num).toInt(),
-      status: json['status'] as String,
+      description: json['description'] as String?,
+      inStock: (json['inStock'] as num?)?.toInt(),
+      address: json['address'] as String?,
+      latitude: json['latitude'] as String?,
+      longitude: json['longitude'] as String?,
+      rules: json['rules'] as String?,
+      category: (json['category'] as num?)?.toInt(),
+      status: json['status'] as String?,
     );
 
 Map<String, dynamic> _$MyListingEntityToJson(MyListingEntity instance) =>
@@ -33,7 +33,7 @@ Map<String, dynamic> _$MyListingEntityToJson(MyListingEntity instance) =>
       'address': instance.address,
       'latitude': instance.latitude,
       'longitude': instance.longitude,
-      'itemRules': instance.itemRules,
+      'rules': instance.rules,
       'category': instance.category,
       'status': instance.status,
     };

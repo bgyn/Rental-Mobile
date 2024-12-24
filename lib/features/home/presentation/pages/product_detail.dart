@@ -259,28 +259,31 @@ class _ProductDetailState extends State<ProductDetail> {
                             "Rental Rules",
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyMedium
+                                .titleMedium
                                 ?.copyWith(
                                   fontSize: 0.013.toRes(context),
                                 ),
                           ),
-                          ...ProductDetail.rentalRules.map((rules) => ListTile(
-                                dense: true,
-                                visualDensity: VisualDensity.compact,
-                                leading: const Icon(
-                                  Icons.circle,
-                                  size: 5,
-                                ),
-                                title: Text(
-                                  rules,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium
-                                      ?.copyWith(
-                                        fontSize: 0.013.toRes(context),
+                          if (widget.rentitemEntity.rules != null)
+                            ...widget.rentitemEntity.rules!
+                                .split(", ")
+                                .map((rules) => ListTile(
+                                      dense: true,
+                                      visualDensity: VisualDensity.compact,
+                                      leading: const Icon(
+                                        Icons.circle,
+                                        size: 5,
                                       ),
-                                ),
-                              ))
+                                      title: Text(
+                                        rules,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium
+                                            ?.copyWith(
+                                              fontSize: 0.013.toRes(context),
+                                            ),
+                                      ),
+                                    ))
                         ],
                       ),
                     ),

@@ -18,7 +18,6 @@ class MyListingApiService {
     final response = await http.delete(Uri.parse(url), headers: {
       "Authorization": "Token ${token!['token']}",
     });
-    print(response.body);
     return response;
   }
 }

@@ -16,7 +16,7 @@ class RentitemEntity {
   final String? latitude;
   final String? longitude;
   final int? owner;
-  final String? itemRules;
+  final String? rules;
   RentitemEntity({
     this.id,
     this.title,
@@ -29,7 +29,7 @@ class RentitemEntity {
     this.address,
     this.latitude,
     this.longitude,
-    this.itemRules,
+    this.rules,
     this.owner,
   });
 
@@ -67,6 +67,6 @@ class RentitemEntity {
         address.hashCode ^
         latitude.hashCode ^
         longitude.hashCode ^
-        itemRules.hashCode;
+        rules.hashCode;
   }
 }

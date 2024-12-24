@@ -37,6 +37,11 @@ class RulesCubit extends Cubit<RulesState> {
     );
   }
 
+  void initalizeRules({required String rule}) {
+    final newRules = [...state.rules, rule];
+    emit(state.copyWith(rules: newRules));
+  }
+
   void addPremadeRulesToRules({required int index}) {
     final newRules = [...state.tempRules, state.premadeRules[index]];
     final premadeRule = state.premadeRules
@@ -74,11 +79,11 @@ class RulesCubit extends Cubit<RulesState> {
     ));
   }
 
-  void reset(){
+  void reset() {
     emit(RulesState(
-          rules: [],
-          premadeRules: PremadeRule.premadeRules,
-          tempRules: [],
-        ));
+      rules: [],
+      premadeRules: PremadeRule.premadeRules,
+      tempRules: [],
+    ));
   }
 }

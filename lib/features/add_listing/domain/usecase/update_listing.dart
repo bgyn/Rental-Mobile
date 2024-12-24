@@ -15,7 +15,8 @@ class UpdateListing
   Future<Either<Failure, ApiResponse>> call(
       {PublishListingParams? params}) async {
     return await _addListingRepository.updateListing(
-      file: params!.file,
+      id: params!.id!,
+      file: params.file,
       title: params.title,
       price: params.price,
       description: params.description,

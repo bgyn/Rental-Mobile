@@ -36,6 +36,7 @@ class _AddNewListingState extends State<AddNewListing> {
   final _descriptionController = TextEditingController();
   final _quantityController = TextEditingController();
   String? _categoryController;
+  String? _categoryId;
   String? _networkImage;
   final _formKey = GlobalKey<FormState>();
 
@@ -46,11 +47,11 @@ class _AddNewListingState extends State<AddNewListing> {
   @override
   void initState() {
     super.initState();
+    _rulesCubit = context.read<RulesCubit>();
     _imageHandlerCubit = context.read<ImageHandlerCubit>();
     _imageHandlerCubit.reset();
     _addressCubit = context.read<AddressCubit>();
     _addressCubit.reset();
-    _rulesCubit = context.read<RulesCubit>();
     _rulesCubit.reset();
     widget.myListingEntity != null ? initalize() : null;
   }
@@ -61,7 +62,6 @@ class _AddNewListingState extends State<AddNewListing> {
     _pricePerDayController.text = widget.myListingEntity?.price ?? "";
     _descriptionController.text = widget.myListingEntity?.description ?? "";
     _quantityController.text = widget.myListingEntity?.inStock.toString() ?? "";
-    _categoryController = widget.myListingEntity?.category.toString();
 
     _addressCubit.addAddress(AddressEntity(
       displayName: widget.myListingEntity?.address ?? "",
@@ -74,9 +74,12 @@ class _AddNewListingState extends State<AddNewListing> {
               (category) => category.id == widget.myListingEntity?.category,
             );
     _categoryController = category?.categoryName;
-    widget.myListingEntity!.itemRules.split(', ').map((rule) {
-      _rulesCubit.addRules(rule: rule);
-    });
+    _categoryId = category?.id.toString();
+    if (widget.myListingEntity?.rules != null) {
+      widget.myListingEntity!.rules!.split(', ').forEach((rule) {
+        context.read<RulesCubit>().initalizeRules(rule: rule);
+      });
+    }
   }
 
   @override
@@ -311,6 +314,7 @@ class _AddNewListingState extends State<AddNewListing> {
                           (category) => category.categoryName == value,
                         );
                         _categoryController = selectedCategory?.id.toString();
+                        _categoryId = selectedCategory?.id.toString();
                       },
                       validator: (value) {
                         if (value == null || value == "") {
@@ -402,11 +406,11 @@ class _AddNewListingState extends State<AddNewListing> {
                                 ),
                               );
                         }
-                        // }
                         final updatedImage =
                             context.read<ImageHandlerCubit>().state;
                         context.read<AddListingBloc>().add(
                               UpdateProductListing(
+                                id: widget.myListingEntity!.id!,
                                 file: updatedImage.isEmpty
                                     ? null
                                     : File(context
@@ -415,7 +419,7 @@ class _AddNewListingState extends State<AddNewListing> {
                                         .first
                                         .path),
                                 title: _titleController.text,
-                                category: _categoryController.toString(),
+                                category: _categoryId.toString(),
                                 price:
                                     double.parse(_pricePerDayController.text),
                                 description: _descriptionController.text,
@@ -433,6 +437,7 @@ class _AddNewListingState extends State<AddNewListing> {
                                     .join(", "),
                               ),
                             );
+                        // }
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 12),

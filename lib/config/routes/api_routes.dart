@@ -8,6 +8,9 @@ class ApiRoutes {
   static String publishListing() {
     return "${UrlConstant.baseUrl}rentlist/";
   }
+  static String updateListing(int id) {
+    return "${UrlConstant.baseUrl}rentlist/$id/";
+  }
 
   static String getRentItem() {
     return "${UrlConstant.baseUrl}rentlist/";

@@ -4,18 +4,18 @@ part 'my_listing_entity.g.dart';
 
 @JsonSerializable()
 class MyListingEntity {
-  final int id;
-  final String title;
-  final String price;
+  final int? id;
+  final String? title;
+  final String? price;
   final String thumbnailImage;
-  final int inStock;
-  final String description;
-  final String address;
-  final String latitude;
-  final String longitude;
-  final String itemRules;
-  final int category;
-  final String status;
+  final int? inStock;
+  final String? description;
+  final String? address;
+  final String? latitude;
+  final String? longitude;
+  final String? rules;
+  final int? category;
+  final String? status;
   MyListingEntity({
     required this.id,
     required this.title,
@@ -26,7 +26,7 @@ class MyListingEntity {
     required this.address,
     required this.latitude,
     required this.longitude,
-    required this.itemRules,
+    required this.rules,
     required this.category,
     required this.status,
   });
@@ -64,7 +64,7 @@ class MyListingEntity {
         address.hashCode ^
         latitude.hashCode ^
         longitude.hashCode ^
-        itemRules.hashCode ^
+        rules.hashCode ^
         category.hashCode ^
         status.hashCode;
   }

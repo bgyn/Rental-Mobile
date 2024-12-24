@@ -33,6 +33,7 @@ class PublishListing
 }
 
 class PublishListingParams {
+  final int? id;
   final String title;
   final double price;
   final File? file;
@@ -46,6 +47,7 @@ class PublishListingParams {
   final String itemRules;
   final String category;
   PublishListingParams({
+    this.id,
     required this.title,
     required this.price,
     this.file,
