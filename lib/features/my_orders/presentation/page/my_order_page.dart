@@ -45,8 +45,69 @@ class _MyWidgetState extends State<MyOrderPage> {
           return ListView.builder(
               itemCount: state.data!.length,
               itemBuilder: (context, index) {
-                return Center(
-                  child: Text(state.data![index].title.toString()),
+                return Container(
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        width: 1,
+                        color: state.data![index].status == 'pending'
+                            ? Colors.amber
+                            : state.data![index].status == 'completed'
+                                ? Colors.green
+                                : ColorPalette.errorColor,
+                      )),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 40,
+                              height: 40,
+                              alignment: Alignment.center,
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(200)),
+                                color: state.data![index].status == 'pending'
+                                    ? Colors.amber
+                                    : state.data![index].status == 'completed'
+                                        ? Colors.green
+                                        : ColorPalette.errorColor,
+                              ),
+                              child: Text(index.toString(),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w500)),
+                            ),
+                            const SizedBox(width: 10),
+                            Container(
+                              child: Column(
+                                children: [
+                                  Text(
+                                    state.data![index].title.toString(),
+                                    style: const TextStyle(fontSize: 20),
+                                  ),
+                                  Text(
+                                    state.data![index].status.toString(),
+                                    style: const TextStyle(fontSize: 16),
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      Text(
+                        'Rs. ${state.data![index].totalPrice.toString()}',
+                        style: const TextStyle(fontSize: 16),
+                      )
+                    ],
+                  ),
                 );
               });
         }
