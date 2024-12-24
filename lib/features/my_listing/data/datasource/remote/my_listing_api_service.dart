@@ -9,6 +9,15 @@ class MyListingApiService {
     final response = await http.get(Uri.parse(url), headers: {
       "Authorization": "Token ${token!['token']}",
     });
+    return response;
+  }
+
+  Future<http.Response> deleteListing(int id) async {
+    final token = await LocalStorage.getToken();
+    final url = ApiRoutes.deleteListing(id);
+    final response = await http.delete(Uri.parse(url), headers: {
+      "Authorization": "Token ${token!['token']}",
+    });
     print(response.body);
     return response;
   }

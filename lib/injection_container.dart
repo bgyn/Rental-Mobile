@@ -34,6 +34,7 @@ import 'package:rentpal/features/favourite/domain/usecase/remove_favourite.dart'
 import 'package:rentpal/features/my_listing/data/datasource/remote/my_listing_api_service.dart';
 import 'package:rentpal/features/my_listing/data/repository/my_listing_repository_impl.dart';
 import 'package:rentpal/features/my_listing/domain/repository/my_listing_repository.dart';
+import 'package:rentpal/features/my_listing/domain/usercase/delete_listing.dart';
 import 'package:rentpal/features/my_listing/domain/usercase/get_listing.dart';
 import 'package:rentpal/features/my_orders/data/datasource/remote/my_order_api_service.dart';
 import 'package:rentpal/features/my_orders/data/repository/my_order_repository_impl.dart';
@@ -128,6 +129,7 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<MyListingApiService>(MyListingApiService());
   sl.registerSingleton<MyListingRepository>(MyListingRepositoryImpl(sl()));
   sl.registerSingleton<GetListing>(GetListing(sl()));
+  sl.registerSingleton<DeleteListing>(DeleteListing(sl()));
 
   //favourite
   sl.registerSingleton<FavouirteLocalApiService>(FavouirteLocalApiService());

@@ -11,10 +11,10 @@ import 'package:rentpal/features/my_listing/domain/repository/my_listing_reposit
 class MyListingRepositoryImpl extends MyListingRepository {
   final MyListingApiService _apiService;
   MyListingRepositoryImpl(
-     this._apiService,
+    this._apiService,
   );
   @override
-  Future<Either<Failure, List<MyListingEntity>>> getListings() async{
+  Future<Either<Failure, List<MyListingEntity>>> getListings() async {
     try {
       final response = await _apiService.getListings();
       final List jsonList = jsonDecode(response.body);
@@ -34,5 +34,24 @@ class MyListingRepositoryImpl extends MyListingRepository {
       return left(ServerFailure("$e"));
     }
   }
-  }
 
+  @override
+  Future<Either<Failure, void>> deleteListing(int id) async {
+    try {
+      final response = await _apiService.deleteListing(id);
+      if (response.statusCode == 200 || response.statusCode == 204) {
+        return right(null);
+      } else {
+        return left(const ServerFailure("Error deleting rentitem"));
+      }
+    } on SocketException {
+      return left(const ServerFailure("No internet connection"));
+    } on HttpException {
+      return left(const ServerFailure("Eror deleting rentitem"));
+    } on FormatException {
+      return left(const ServerFailure("Bad response format"));
+    } catch (e) {
+      return left(ServerFailure("$e"));
+    }
+  }
+}

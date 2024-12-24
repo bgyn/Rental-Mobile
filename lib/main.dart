@@ -88,7 +88,8 @@ class _MyAppState extends State<MyApp> {
             create: (_) => ProfileBloc(
                 getProfile: sl(), updateProfile: sl(), getProfileById: sl())
               ..add(ProfileFetch())),
-        BlocProvider(create: (_) => ListingBloc(getListing: sl())),
+        BlocProvider(
+            create: (_) => ListingBloc(getListing: sl(), deleteListing: sl())),
         BlocProvider(create: (_) => CategoryListBloc(sl()))
       ],
       child: MaterialApp.router(

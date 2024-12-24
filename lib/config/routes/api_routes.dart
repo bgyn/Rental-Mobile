@@ -41,6 +41,10 @@ class ApiRoutes {
     return "${UrlConstant.baseUrl}my_listing/";
   }
 
+  static String deleteListing(int id) {
+    return "${UrlConstant.baseUrl}rentlist/$id/";
+  }
+
   static String search(String query) {
     return "${UrlConstant.baseUrl}rentlist?search=$query";
   }

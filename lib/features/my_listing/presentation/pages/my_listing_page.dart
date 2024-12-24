@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:rentpal/config/theme/color_palette.dart';
 import 'package:rentpal/core/constant/url_constant.dart';
 import 'package:rentpal/core/extension/extension.dart';
@@ -8,6 +9,7 @@ import 'package:rentpal/features/my_listing/domain/entity/my_listing_entity.dart
 import 'package:rentpal/features/my_listing/presentation/bloc/listing_bloc.dart';
 import 'package:rentpal/features/my_listing/presentation/bloc/listing_event.dart';
 import 'package:rentpal/features/my_listing/presentation/bloc/listing_state.dart';
+import 'package:rentpal/features/my_listing/presentation/widgets/show_delete_confirmation.dart';
 
 class MyListingPage extends StatefulWidget {
   const MyListingPage({super.key});
@@ -128,120 +130,146 @@ class _MyListingPageState extends State<MyListingPage> {
                                   itemCount: _filteredListings.length,
                                   itemBuilder: (context, index) {
                                     final listing = _filteredListings[index];
-                                    return Card(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(12),
+                                    return Slidable(
+                                      key: Key(
+                                          listing.id.toString()), // Unique key
+
+                                      endActionPane: ActionPane(
+                                        motion: const ScrollMotion(),
+                                        children: [
+                                          SlidableAction(
+                                            onPressed: (BuildContext context) {
+                                              showDeleteConfirmationDialog(
+                                                context,
+                                                listing.id,
+                                              );
+                                            },
+                                            backgroundColor: Colors.red,
+                                            icon: Icons.delete,
+                                            label: 'Delete',
+                                          ),
+                                        ],
                                       ),
-                                      elevation: 4,
-                                      margin: const EdgeInsets.symmetric(
-                                          vertical: 8, horizontal: 12),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(12.0),
-                                        child: Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              child: CachedNetworkImage(
-                                                imageUrl: UrlConstant.mediaUrl +
-                                                    listing.thumbnailImage,
-                                                width: 0.25.w(context),
-                                                height: 0.15.h(context),
-                                                fit: BoxFit.cover,
-                                                placeholder: (context, url) =>
-                                                    Container(
+                                      child: Card(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                        ),
+                                        elevation: 4,
+                                        margin: const EdgeInsets.symmetric(
+                                            vertical: 8, horizontal: 12),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(12.0),
+                                          child: Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                child: CachedNetworkImage(
+                                                  imageUrl: UrlConstant
+                                                          .mediaUrl +
+                                                      listing.thumbnailImage,
                                                   width: 0.25.w(context),
                                                   height: 0.15.h(context),
-                                                  color: Colors.grey.shade300,
-                                                  child: const Center(
-                                                    child:
-                                                        CircularProgressIndicator(
-                                                            strokeWidth: 2),
-                                                  ),
-                                                ),
-                                                errorWidget:
-                                                    (context, url, error) =>
-                                                        Container(
-                                                  width: 0.25.w(context),
-                                                  height: 0.15.h(context),
-                                                  color: Colors.grey.shade300,
-                                                  child: const Icon(
-                                                      Icons.broken_image,
-                                                      color: Colors.red),
-                                                ),
-                                              ),
-                                            ),
-                                            SizedBox(width: 0.04.w(context)),
-                                            Expanded(
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    listing.title,
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .titleMedium
-                                                        ?.copyWith(
-                                                          fontSize: 0.018
-                                                              .toRes(context),
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                        ),
-                                                    maxLines: 1,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                  ),
-                                                  SizedBox(
-                                                      height: 0.01.h(context)),
-                                                  Text(
-                                                    "${listing.price} / day",
-                                                    style: TextStyle(
-                                                      fontSize:
-                                                          0.016.toRes(context),
-                                                      color:
-                                                          Colors.green.shade700,
-                                                      fontWeight:
-                                                          FontWeight.w500,
+                                                  fit: BoxFit.cover,
+                                                  placeholder: (context, url) =>
+                                                      Container(
+                                                    width: 0.25.w(context),
+                                                    height: 0.15.h(context),
+                                                    color: Colors.grey.shade300,
+                                                    child: const Center(
+                                                      child:
+                                                          CircularProgressIndicator(
+                                                              strokeWidth: 2),
                                                     ),
                                                   ),
-                                                  SizedBox(
-                                                      height: 0.01.h(context)),
-                                                  Row(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      const Icon(
-                                                        Icons.location_on,
-                                                        size: 16,
-                                                        color: Colors.grey,
-                                                      ),
-                                                      SizedBox(
-                                                          width:
-                                                              0.01.w(context)),
-                                                      Expanded(
-                                                        child: Text(
-                                                          listing.address,
-                                                          maxLines: 2,
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                          style: TextStyle(
-                                                            fontSize: 0.014
+                                                  errorWidget:
+                                                      (context, url, error) =>
+                                                          Container(
+                                                    width: 0.25.w(context),
+                                                    height: 0.15.h(context),
+                                                    color: Colors.grey.shade300,
+                                                    child: const Icon(
+                                                        Icons.broken_image,
+                                                        color: Colors.red),
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(width: 0.04.w(context)),
+                                              Expanded(
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      listing.title,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .titleMedium
+                                                          ?.copyWith(
+                                                            fontSize: 0.018
                                                                 .toRes(context),
-                                                            color: Colors
-                                                                .grey.shade600,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                          ),
+                                                      maxLines: 1,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                    ),
+                                                    SizedBox(
+                                                        height:
+                                                            0.01.h(context)),
+                                                    Text(
+                                                      "${listing.price} / day",
+                                                      style: TextStyle(
+                                                        fontSize: 0.016
+                                                            .toRes(context),
+                                                        color: Colors
+                                                            .green.shade700,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                        height:
+                                                            0.01.h(context)),
+                                                    Row(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        const Icon(
+                                                            Icons.location_on,
+                                                            size: 16,
+                                                            color: Colors.grey),
+                                                        SizedBox(
+                                                            width: 0.01
+                                                                .w(context)),
+                                                        Expanded(
+                                                          child: Text(
+                                                            listing.address,
+                                                            maxLines: 2,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                            style: TextStyle(
+                                                              fontSize: 0.014
+                                                                  .toRes(
+                                                                      context),
+                                                              color: Colors.grey
+                                                                  .shade600,
+                                                            ),
                                                           ),
                                                         ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     );
