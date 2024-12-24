@@ -17,8 +17,7 @@ MyListingEntity _$MyListingEntityFromJson(Map<String, dynamic> json) =>
       address: json['address'] as String,
       latitude: json['latitude'] as String,
       longitude: json['longitude'] as String,
-      itemRules:
-          (json['itemRules'] as List<dynamic>).map((e) => e as String).toList(),
+      itemRules: json['itemRules'] as String,
       category: (json['category'] as num).toInt(),
       status: json['status'] as String,
     );

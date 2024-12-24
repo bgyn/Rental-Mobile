@@ -60,39 +60,39 @@ class AddListingPage extends StatelessWidget {
               )
             ],
           ),
-          SizedBox(
-            height: 0.03.h(context),
-          ),
-          Row(
-            children: [
-              SizedBox(
-                  width: 0.2.w(context),
-                  child: Icon(
-                    Icons.payment,
-                    size: iconSize,
-                  )),
-              SizedBox(
-                width: 0.8.w(context),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Fast Payment",
-                      style: titleStyle,
-                    ),
-                    SizedBox(
-                      height: 0.015.h(context),
-                    ),
-                    Text(
-                      overflow: TextOverflow.clip,
-                      "All payment are easy, secure and automatically deposited into your account.",
-                      style: descriptionStyle,
-                    )
-                  ],
-                ),
-              )
-            ],
-          ),
+          // SizedBox(
+          //   height: 0.03.h(context),
+          // ),
+          // Row(
+          //   children: [
+          //     SizedBox(
+          //         width: 0.2.w(context),
+          //         child: Icon(
+          //           Icons.payment,
+          //           size: iconSize,
+          //         )),
+          //     SizedBox(
+          //       width: 0.8.w(context),
+          //       child: Column(
+          //         crossAxisAlignment: CrossAxisAlignment.start,
+          //         children: [
+          //           Text(
+          //             "Fast Payment",
+          //             style: titleStyle,
+          //           ),
+          //           SizedBox(
+          //             height: 0.015.h(context),
+          //           ),
+          //           Text(
+          //             overflow: TextOverflow.clip,
+          //             "All payment are easy, secure and automatically deposited into your account.",
+          //             style: descriptionStyle,
+          //           )
+          //         ],
+          //       ),
+          //     )
+          //   ],
+          // ),
           SizedBox(
             height: 0.03.h(context),
           ),

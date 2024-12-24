@@ -19,9 +19,7 @@ RentitemEntity _$RentitemEntityFromJson(Map<String, dynamic> json) =>
       address: json['address'] as String?,
       latitude: json['latitude'] as String?,
       longitude: json['longitude'] as String?,
-      itemRules: (json['itemRules'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
+      itemRules: json['itemRules'] as String?,
       owner: (json['owner'] as num?)?.toInt(),
     );
 

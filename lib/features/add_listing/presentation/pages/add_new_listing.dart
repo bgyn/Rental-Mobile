@@ -69,15 +69,14 @@ class _AddNewListingState extends State<AddNewListing> {
       lon: widget.myListingEntity?.longitude,
     ));
 
-    widget.myListingEntity?.itemRules.forEach((rule) {
-      _rulesCubit.addRules(rule: rule);
-    });
-
     final category =
         context.read<CategoryListBloc>().state.categoryList?.firstWhere(
               (category) => category.id == widget.myListingEntity?.category,
             );
     _categoryController = category?.categoryName;
+    widget.myListingEntity!.itemRules.split(', ').map((rule) {
+      _rulesCubit.addRules(rule: rule);
+    });
   }
 
   @override
@@ -395,8 +394,11 @@ class _AddNewListingState extends State<AddNewListing> {
                                       "${context.read<AddressCubit>().state.first.displayName}",
                                   latitude: "$latitude",
                                   longitude: "$longitude",
-                                  itemRules:
-                                      context.read<RulesCubit>().state.rules,
+                                  itemRules: context
+                                      .read<RulesCubit>()
+                                      .state
+                                      .rules
+                                      .join(", "),
                                 ),
                               );
                         }
@@ -424,8 +426,11 @@ class _AddNewListingState extends State<AddNewListing> {
                                     "${context.read<AddressCubit>().state.first.displayName}",
                                 latitude: "$latitude",
                                 longitude: "$longitude",
-                                itemRules:
-                                    context.read<RulesCubit>().state.rules,
+                                itemRules: context
+                                    .read<RulesCubit>()
+                                    .state
+                                    .rules
+                                    .join(", "),
                               ),
                             );
                       },

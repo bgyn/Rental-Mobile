@@ -16,7 +16,7 @@ class RentitemEntity {
   final String? latitude;
   final String? longitude;
   final int? owner;
-  final List<String>? itemRules;
+  final String? itemRules;
   RentitemEntity({
     this.id,
     this.title,

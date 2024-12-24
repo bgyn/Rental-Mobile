@@ -13,7 +13,7 @@ class MyListingEntity {
   final String address;
   final String latitude;
   final String longitude;
-  final List<String> itemRules;
+  final String itemRules;
   final int category;
   final String status;
   MyListingEntity({

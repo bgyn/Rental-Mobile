@@ -43,7 +43,7 @@ class PublishListingParams {
   final String address;
   final String latitude;
   final String longitude;
-  final List<String> itemRules;
+  final String itemRules;
   final String category;
   PublishListingParams({
     required this.title,

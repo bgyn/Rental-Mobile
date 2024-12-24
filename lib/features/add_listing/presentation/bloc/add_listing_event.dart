@@ -14,7 +14,7 @@ final class PublishProductListing extends AddListingEvent {
   final String address;
   final String latitude;
   final String longitude;
-  final List<String> itemRules;
+  final String itemRules;
   final String category;
   PublishProductListing({
     required this.title,
@@ -43,7 +43,7 @@ final class UpdateProductListing extends AddListingEvent {
   final String address;
   final String latitude;
   final String longitude;
-  final List<String> itemRules;
+  final String itemRules;
   final String category;
   UpdateProductListing({
     required this.title,

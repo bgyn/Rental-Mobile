@@ -22,7 +22,7 @@ class AddListingRespositoryImpl implements AddListingRepository {
     required String address,
     required String latitude,
     required String longitude,
-    required List<String> itemRules,
+    required String itemRules,
     required String category,
   }) async {
     try {
@@ -74,7 +74,7 @@ class AddListingRespositoryImpl implements AddListingRepository {
       required String address,
       required String latitude,
       required String longitude,
-      required List<String> itemRules,
+      required String itemRules,
       required String category}) async {
     try {
       final body = {
