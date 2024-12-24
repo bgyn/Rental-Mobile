@@ -26,11 +26,12 @@ class RentalsBloc extends Bloc<RentalsEvent, RentalsState> {
   }
 
   void _onUpdateRentals(UpdateRentals event, Emitter<RentalsState> emit) async {
-    emit(RentalsLoading());
-    final result = await _updateRentals.call(params: event.id);
+    final result = await _updateRentals.call(
+        params: update.UpdateRentalsPrams(event.id, event.status));
     result.fold(
       (l) {
         showSnackbar(l.errorMessage);
+        if (l.errorMessage == "Status update failed") return;
         emit(RentalsError(errMessage: l.errorMessage));
       },
       (r) {

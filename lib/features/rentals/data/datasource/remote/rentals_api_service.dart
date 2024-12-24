@@ -11,10 +11,14 @@ class RentalsApiService {
     return response;
   }
 
-  Future<http.Response> updateRentals(int id) async {
+  Future<http.Response> updateRentals(int id, String status) async {
     final token = await LocalStorage.getToken();
-    final url = ApiRoutes.rentals();
-    final response = await http.patch(Uri.parse(url),
+    final url = ApiRoutes.updateRentals(id);
+    final response = await http.patch(
+        Uri.parse(
+          url,
+        ),
+        body: {"status": status},
         headers: {"Authorization": "Token ${token!['token']}"});
     return response;
   }

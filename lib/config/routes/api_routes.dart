@@ -58,6 +58,10 @@ class ApiRoutes {
   }
 
   static String rentals() {
-    return "${UrlConstant.baseUrl}rentals";
+    return "${UrlConstant.baseUrl}booking/";
+  }
+
+  static String updateRentals(int id) {
+    return "${UrlConstant.baseUrl}booking/$id";
   }
 }
