@@ -167,7 +167,7 @@ class _ProductDetailState extends State<ProductDetail> {
                     ),
                     BlocBuilder<ProfileBloc, ProfileState>(
                         builder: (context, state) {
-                      if (state is ProfileSuccess) {
+                      if (state is UserProfileSuccess) {
                         return Container(
                           padding: const EdgeInsets.symmetric(
                             vertical: 10,
@@ -195,7 +195,7 @@ class _ProductDetailState extends State<ProductDetail> {
                                             ),
                                       ),
                                       Text(
-                                        "Sell all ${state.userProfile?.rentItems?.length ?? 0} of${state.userProfile?.name} listing",
+                                        "Sell all ${state.userProfile?.rentItems?.length ?? 0} of ${state.userProfile?.name}",
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyMedium
@@ -287,47 +287,47 @@ class _ProductDetailState extends State<ProductDetail> {
                     const SizedBox(
                       height: 5,
                     ),
-                    Container(
-                      decoration: const BoxDecoration(color: Colors.white),
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // const Text("Other listing by Andrew"),
-                          // BlocProvider(
-                          //   create: (context) =>
-                          //       RentitemBloc(sl())..add(FetchRentItem()),
-                          //   child: const RentalCategory(),
-                          // ),
-                          GestureDetector(
-                            onTap: () {},
-                            child: Container(
-                              width: double.infinity,
-                              padding: const EdgeInsets.symmetric(vertical: 10),
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: ColorPalette.primaryColor, width: 2),
-                              ),
-                              child: Center(
-                                  child: Text(
-                                "See all Andrews's listing ${widget.rentitemEntity.owner}",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium
-                                    ?.copyWith(
-                                      fontSize: 0.015.toRes(context),
-                                    ),
-                              )),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 0.02.h(context),
-                          ),
-                          const ProductRecommendation(),
-                        ],
-                      ),
-                    ),
+                    // Container(
+                    //   decoration: const BoxDecoration(color: Colors.white),
+                    //   padding: const EdgeInsets.symmetric(
+                    //       vertical: 10, horizontal: 20),
+                    //   child: Column(
+                    //     crossAxisAlignment: CrossAxisAlignment.start,
+                    //     children: [
+                    //       const Text("Other listing by Andrew"),
+                    //       BlocProvider(
+                    //         create: (context) =>
+                    //             RentitemBloc(sl())..add(FetchRentItem()),
+                    //         child: const RentalCategory(),
+                    //       ),
+                    //       GestureDetector(
+                    //         onTap: () {},
+                    //         child: Container(
+                    //           width: double.infinity,
+                    //           padding: const EdgeInsets.symmetric(vertical: 10),
+                    //           decoration: BoxDecoration(
+                    //             border: Border.all(
+                    //                 color: ColorPalette.primaryColor, width: 2),
+                    //           ),
+                    //           child: Center(
+                    //               child: Text(
+                    //             "See all Andrews's listing ${widget.rentitemEntity.owner}",
+                    //             style: Theme.of(context)
+                    //                 .textTheme
+                    //                 .bodyMedium
+                    //                 ?.copyWith(
+                    //                   fontSize: 0.015.toRes(context),
+                    //                 ),
+                    //           )),
+                    //         ),
+                    //       ),
+                    //       SizedBox(
+                    //         height: 0.02.h(context),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
+                    const ProductRecommendation(),
                     const SizedBox(
                       height: 5,
                     ),

@@ -19,7 +19,6 @@ class ProfileApiService {
     final url = ApiRoutes.getProfileById(id);
     final response = await http.get(Uri.parse(url),
         headers: {"Authorization": "Token ${token!['token']}"});
-    print(response.body);
     return response;
   }
 
