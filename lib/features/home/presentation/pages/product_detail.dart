@@ -39,8 +39,10 @@ class _ProductDetailState extends State<ProductDetail> {
   void initState() {
     super.initState();
     context.read<FavouriteBloc>().add(const FavouriteLoad());
-    context.read<ProfileBloc>().add(ProfileFetch());
     context.read<RecommendationBloc>().add(const FetchRecommendation());
+    context
+        .read<ProfileBloc>()
+        .add(UserProfileFetch(id: widget.rentitemEntity.owner!));
   }
 
   @override
@@ -163,56 +165,65 @@ class _ProductDetailState extends State<ProductDetail> {
                     const SizedBox(
                       height: 5,
                     ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 10,
-                        horizontal: 20,
-                      ),
-                      width: double.infinity,
-                      color: Colors.white,
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    BlocBuilder<ProfileBloc, ProfileState>(
+                        builder: (context, state) {
+                      if (state is ProfileSuccess) {
+                        return Container(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 10,
+                            horizontal: 20,
+                          ),
+                          width: double.infinity,
+                          color: Colors.white,
+                          child: Column(
                             children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                    "Rentals listed by Andrew",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium
-                                        ?.copyWith(
-                                          fontSize: 0.013.toRes(context),
-                                        ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Rentals listed by ${state.userProfile?.name}",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium
+                                            ?.copyWith(
+                                              fontSize: 0.013.toRes(context),
+                                            ),
+                                      ),
+                                      Text(
+                                        "Sell all ${state.userProfile?.rentItems?.length ?? 0} of${state.userProfile?.name} listing",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium
+                                            ?.copyWith(
+                                              fontSize: 0.013.toRes(context),
+                                            ),
+                                      ),
+                                    ],
                                   ),
-                                  Text(
-                                    "Sell all 60 of Andrew's listing",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium
-                                        ?.copyWith(
-                                          fontSize: 0.013.toRes(context),
-                                        ),
-                                  ),
+                                  Container(
+                                    width: 80,
+                                    height: 80,
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: ColorPalette.primaryColor,
+                                            width: 2),
+                                        color: Colors.grey,
+                                        borderRadius:
+                                            BorderRadius.circular(50)),
+                                  )
                                 ],
-                              ),
-                              Container(
-                                width: 80,
-                                height: 80,
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: ColorPalette.primaryColor,
-                                        width: 2),
-                                    color: Colors.grey,
-                                    borderRadius: BorderRadius.circular(50)),
                               )
                             ],
-                          )
-                        ],
-                      ),
-                    ),
+                          ),
+                        );
+                      }
+                      return const SizedBox.shrink();
+                    }),
                     const SizedBox(
                       height: 5,
                     ),
@@ -354,39 +365,33 @@ class _ProductDetailState extends State<ProductDetail> {
             SizedBox(
               width: 0.03.w(context),
             ),
-            BlocBuilder<ProfileBloc, ProfileState>(builder: (context, state) {
-              return Expanded(
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: ColorPalette.primaryColor),
-                  onPressed: () async {
-                    if (state is ProfileSuccess) {
-                      final userId = state.data.userId;
-                      final values = await showCalendarDatePicker2Dialog(
-                          context: context,
-                          config: CalendarDatePicker2WithActionButtonsConfig(
-                              calendarType: CalendarDatePicker2Type.range),
-                          dialogSize: const Size(1.0, 1.0));
-                      if (values != null) {
-                        if (!context.mounted) return;
-                        context.read<BookingBloc>().add(BookRenItem(
-                            widget.rentitemEntity.id!,
-                            values.first.toString().split(' ').first,
-                            values.last.toString().split(' ').first,
-                            userId!));
-                      }
-                    }
-                    null;
-                  },
-                  child: const Text(
-                    "Choose your date",
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
+            Expanded(
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: ColorPalette.primaryColor),
+                onPressed: () async {
+                  final values = await showCalendarDatePicker2Dialog(
+                      context: context,
+                      config: CalendarDatePicker2WithActionButtonsConfig(
+                          calendarType: CalendarDatePicker2Type.range),
+                      dialogSize: const Size(1.0, 1.0));
+                  if (values != null) {
+                    if (!context.mounted) return;
+                    context.read<BookingBloc>().add(BookRenItem(
+                          widget.rentitemEntity.id!,
+                          values.first.toString().split(' ').first,
+                          values.last.toString().split(' ').first,
+                        ));
+                  }
+                },
+                child: const Text(
+                  "Choose your date",
+                  style: TextStyle(
+                    color: Colors.white,
                   ),
                 ),
-              );
-            })
+              ),
+            )
           ],
         ),
       ),

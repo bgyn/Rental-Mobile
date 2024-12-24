@@ -85,7 +85,8 @@ class _MyAppState extends State<MyApp> {
                 favouriteClear: sl(),
                 removeFavourite: sl())),
         BlocProvider(
-            create: (_) => ProfileBloc(getProfile: sl(), updateProfile: sl())
+            create: (_) => ProfileBloc(
+                getProfile: sl(), updateProfile: sl(), getProfileById: sl())
               ..add(ProfileFetch())),
         BlocProvider(create: (_) => ListingBloc(getListing: sl())),
         BlocProvider(create: (_) => CategoryListBloc(sl()))

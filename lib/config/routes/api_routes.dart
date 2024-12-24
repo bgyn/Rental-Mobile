@@ -33,6 +33,10 @@ class ApiRoutes {
     return "${UrlConstant.authUrl}profile/";
   }
 
+  static String getProfileById(int id) {
+    return "${UrlConstant.authUrl}profile/$id/";
+  }
+
   static String getListing() {
     return "${UrlConstant.baseUrl}my_listing/";
   }

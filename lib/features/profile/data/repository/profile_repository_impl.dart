@@ -6,6 +6,7 @@ import 'package:rentpal/core/error/faliure.dart';
 import 'package:rentpal/core/local_storage/local_storage.dart';
 import 'package:rentpal/features/profile/data/source/remotesource/profile_api_service.dart';
 import 'package:rentpal/features/profile/domain/entity/profile_entity.dart';
+import 'package:rentpal/features/profile/domain/entity/user_profile_entity.dart';
 import 'package:rentpal/features/profile/domain/repository/profile_repository.dart';
 
 class ProfileRepositoryImpl extends ProfileRepository {
@@ -56,6 +57,26 @@ class ProfileRepositoryImpl extends ProfileRepository {
       return left(const ConnectionFailure("Failed to update profile"));
     } on SocketException {
       return left(const ServerFailure("No internet connection"));
+    } on HttpException {
+      return left(const ServerFailure("Couldn't find the resource"));
+    } on FormatException {
+      return left(const ServerFailure("Bad response format"));
+    } catch (e) {
+      return left(ServerFailure("$e"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserProfileEntity>> getProfileById(int id) async {
+    try {
+      final response = await _profileApiService.getProfileById(id);
+      if (response.statusCode == 200) {
+        final profile = UserProfileEntity.fromJson(jsonDecode(response.body));
+        return right(profile);
+      }
+      return left(const ConnectionFailure("Failed to get profile"));
+    } on SocketException {
+      return left(const ConnectionFailure("No internet connection"));
     } on HttpException {
       return left(const ServerFailure("Couldn't find the resource"));
     } on FormatException {

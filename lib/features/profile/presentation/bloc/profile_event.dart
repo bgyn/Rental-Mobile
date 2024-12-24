@@ -29,3 +29,10 @@ class ProfileFetch extends ProfileEvent {
     this.id,
   });
 }
+
+class UserProfileFetch extends ProfileEvent {
+  final int? id;
+  UserProfileFetch({
+    this.id,
+  });
+}

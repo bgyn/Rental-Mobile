@@ -12,10 +12,10 @@ class BookingRepositoryImpl extends BookingRepository {
 
   @override
   Future<Either<Failure, void>> bookRentItem(
-      int rentItemIdd, String startDate, String endDate, int userId) async {
+      int rentItemIdd, String startDate, String endDate) async {
     try {
       final result = await _apiService.bookRentItem(
-          rentItemIdd, startDate, endDate, userId);
+          rentItemIdd, startDate, endDate);
       if (result.statusCode == 200 || result.statusCode == 201) {
         return right(null);
       }

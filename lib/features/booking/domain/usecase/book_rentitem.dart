@@ -11,7 +11,7 @@ class BookRentitem extends UseCase<Either<Failure, void>, BookingParmas> {
   @override
   Future<Either<Failure, void>> call({BookingParmas? params}) async {
     return await _repository.bookRentItem(
-        params!.rentItemId, params.startDate, params.endDate, params.userId);
+        params!.rentItemId, params.startDate, params.endDate);
   }
 }
 
@@ -19,11 +19,10 @@ class BookingParmas {
   final int rentItemId;
   final String startDate;
   final String endDate;
-  final int userId;
 
-  BookingParmas(
-      {required this.rentItemId,
-      required this.startDate,
-      required this.endDate,
-      required this.userId});
+  BookingParmas({
+    required this.rentItemId,
+    required this.startDate,
+    required this.endDate,
+  });
 }

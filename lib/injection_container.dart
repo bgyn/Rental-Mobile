@@ -47,6 +47,7 @@ import 'package:rentpal/features/profile/data/repository/profile_repository_impl
 import 'package:rentpal/features/profile/data/source/remotesource/profile_api_service.dart';
 import 'package:rentpal/features/profile/domain/repository/profile_repository.dart';
 import 'package:rentpal/features/profile/domain/usecase/get_profile.dart';
+import 'package:rentpal/features/profile/domain/usecase/get_profile_by_id.dart';
 import 'package:rentpal/features/profile/domain/usecase/update_profile.dart';
 import 'package:rentpal/features/rentals/data/datasource/remote/rentals_api_service.dart';
 import 'package:rentpal/features/rentals/data/repository/rentals_repository_impl.dart';
@@ -120,6 +121,7 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<ProfileApiService>(ProfileApiService());
   sl.registerSingleton<ProfileRepository>(ProfileRepositoryImpl(sl()));
   sl.registerSingleton<UpdateProfile>(UpdateProfile(sl()));
+  sl.registerSingleton<GetProfileById>(GetProfileById(repository: sl()));
   sl.registerSingleton<GetProfile>(GetProfile(sl()));
 
   //mylisting

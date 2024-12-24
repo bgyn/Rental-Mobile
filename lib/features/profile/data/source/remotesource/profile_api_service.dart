@@ -14,6 +14,15 @@ class ProfileApiService {
     return response;
   }
 
+  Future<http.Response> getProfileById(int id) async {
+    final token = await LocalStorage.getToken();
+    final url = ApiRoutes.getProfileById(id);
+    final response = await http.get(Uri.parse(url),
+        headers: {"Authorization": "Token ${token!['token']}"});
+    print(response.body);
+    return response;
+  }
+
   Future<http.Response> updateProfile(
       {File? file,
       required String phone,

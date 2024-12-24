@@ -16,8 +16,7 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
         params: BookingParmas(
             rentItemId: event.rentItemId,
             startDate: event.startDate,
-            endDate: event.endDate,
-            userId: event.userId));
+            endDate: event.endDate,));
     result.fold(
       (l) {
         showSnackbar(l.errorMessage);
