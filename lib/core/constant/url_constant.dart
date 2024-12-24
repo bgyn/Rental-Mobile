@@ -9,5 +9,5 @@ class UrlConstant {
 
   static const locationUrl = "https://us1.locationiq.com/v1/search?";
 
-  static const mediaUrl = "";
+  static const mediaUrl = "https://rentpal.bigyanthanait.com.np";
 }

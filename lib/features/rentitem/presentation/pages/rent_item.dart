@@ -35,8 +35,9 @@ class RentItem extends StatelessWidget {
                   child: CachedNetworkImage(
                     height: 0.13.h(context),
                     width: 0.4.w(context),
-                    imageUrl: UrlConstant.mediaUrl +
-                        rentItem.thumbnailImage.toString(),
+                    imageUrl: rentItem.thumbnailImage!.contains("http")
+                        ? rentItem.thumbnailImage!
+                        : "${UrlConstant.mediaUrl}${rentItem.thumbnailImage}",
                     alignment: Alignment.center,
                     fit: BoxFit.cover,
                     placeholder: (context, url) => SizedBox(

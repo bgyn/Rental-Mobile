@@ -127,8 +127,12 @@ class _ProductDetailState extends State<ProductDetail> {
                         transitionOnUserGestures: true,
                         child: CachedNetworkImage(
                           fit: BoxFit.fill,
-                          imageUrl: UrlConstant.mediaUrl +
-                              widget.rentitemEntity.thumbnailImage.toString(),
+                          imageUrl: widget.rentitemEntity.thumbnailImage!
+                                  .contains("http")
+                              ? widget.rentitemEntity.thumbnailImage.toString()
+                              : UrlConstant.mediaUrl +
+                                  widget.rentitemEntity.thumbnailImage
+                                      .toString(),
                           placeholder: (context, url) {
                             return SizedBox(
                               width: double.infinity,
