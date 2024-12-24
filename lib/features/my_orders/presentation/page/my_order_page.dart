@@ -51,9 +51,15 @@ class _MyWidgetState extends State<MyOrderPage> {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: ColorPalette.primaryColor,
-                  ),
+                      borderRadius: BorderRadius.circular(8),
+                      border: Border.all(
+                        width: 1,
+                        color: state.data![index].status == 'pending'
+                            ? Colors.amber
+                            : state.data![index].status == 'completed'
+                                ? Colors.green
+                                : ColorPalette.errorColor,
+                      )),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -70,7 +76,9 @@ class _MyWidgetState extends State<MyOrderPage> {
                                     Radius.circular(200)),
                                 color: state.data![index].status == 'pending'
                                     ? Colors.amber
-                                    : Colors.red,
+                                    : state.data![index].status == 'completed'
+                                        ? Colors.green
+                                        : ColorPalette.errorColor,
                               ),
                               child: Text(index.toString(),
                                   style: const TextStyle(
